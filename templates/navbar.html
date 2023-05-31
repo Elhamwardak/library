@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg  bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand text-light" href="{% url 'admin-page' %}">LIBRARY MANAGEMENT SYSTEM</a>
+      {% if request.user.is_staff %}
+      <a href="{% url 'admin-page' %}" class="text-light me-4" style="text-decoration: none;">Dashbord</a>
+      <a href="{% url 'books-management' %}" class="text-light" style="text-decoration: none;">Book List</a>
+      {% endif %}
+      {% if not request.user.is_staff %}
+      <a href="{% url 'user-profile' %}" class="text-light me-4" style="text-decoration: none;">Profile</a>
+      <a href="{% url 'my-favourites' %}" class="text-light me-4" style="text-decoration: none;">My Favourites</a>
+      {% endif %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          
+        </ul>
+        <form class="d-flex" role="search">
+          <span class="text-light d-flex me-4 fs-6 align-items-center ">{{request.user}}</span>
+          <a href="{% url 'logout' %}" class="btn btn-danger">Log Out</a>
+      
+        </form>
+      </div>
+    </div>
+  </nav>
+

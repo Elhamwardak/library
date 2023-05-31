@@ -1,0 +1,68 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="container pt-4">
+    <div class="row">
+        <div class="col col-8 offset-2">
+            <div class="card">
+                <div class="card-body p-3">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <h3 class="alert alert-success my-3 text-center">Update User</h3>
+                        <div class="form-group mb-3">
+                            <label >{{form.username.label}}</label>
+                            {{form.username}}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label >{{form.first_name.label}}</label>
+                            {{form.first_name}}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label >{{form.last_name.label}}</label>
+                            {{form.last_name}}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>{{form.email.label}}</label>
+                            {{form.email}}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>{{form.password1.label}}</label>
+                            {{form.password1}}
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{form.password2.label}}</label>
+                            {{form.password2}} 
+                        </div>
+
+                        <div class="form-group">
+                            <label>Role</label>
+                            <select class="form-control" name="group">
+                                <option value="student" {% if user_group == 'student' %}selected{%endif%}>Student</option>
+                                <option value="admin" {% if user_group == 'admin' %}selected{%endif%}>Admin</option>
+                            </select>
+                        </div>
+
+                        {{form.errors}}
+                        <br>
+                        <input type="submit" value="Save Changes" class="btn btn-success w-100 ">
+                    </form>
+                </div>
+            </div> 
+        </div> 
+    </div> 
+</div>
+
+<script>
+    var password1 = document.getElementById('id_password1');
+    password1.className += 'form-control';
+    
+    var password2 = document.getElementById('id_password2');
+    password2.className += 'form-control';
+</script>
+{% endblock %}
