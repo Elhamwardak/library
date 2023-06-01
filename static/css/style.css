@@ -1,0 +1,65 @@
+:root {
+    --offconvas-width: 270px;
+    --topNavbarHeight: 56px;
+}
+.sidebar-nav{
+    width: var(--offconvas-width) !important;
+    margin-top: var(--topNavbarHeight);
+}
+.sidebar-link[aria-expanded="true"] .icon {
+    transform: rotate(180deg);
+}
+.sidebar-link .icon{
+    display: inline-flex;
+}
+.navbar{
+    background-color:#102f48;
+}
+.offcanvas {
+    background-color:#102f48 !important;
+}
+.mycard{
+    text-align: center;
+    line-height: 2;
+}
+.mycard span{
+    font-size: 45px;
+}
+@media(min-width : 920px){
+    body{
+        overflow: hidden !important;
+    }
+    .navbar-brand {
+        font-size: 0.9rem !important;
+    }
+    .offcanvas-backdrop::before{
+        display: none !important;
+    }
+    .mycard{
+        flex-wrap: wrap;
+        margin-top: 100px;
+    }
+    section{
+        margin-left:var(--offconvas-width) ;
+    }
+    .sidebar-nav {
+        transform: none !important;
+        visibility: visible !important;
+        top:var(--topNavbarHeight);
+        height: calc(100% - var(--topNavbarHeight));
+    }
+    
+}
+@media(min-width : 390px){
+    .navbar-brand {
+      font-size: 1rem !important ;
+    }
+    .admin_dashboard{
+        margin-top: 13px !important;
+    }
+    .navbar-nav .dropdown-menu {
+        position: absolute !important;
+    }
+}
+
+

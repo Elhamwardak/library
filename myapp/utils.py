@@ -2,8 +2,8 @@
 from django.db.models import Q
 from .models import Books
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from celery import shared_task
-from django.core.mail import send_mail
+# from celery import shared_task
+
 
 
 
@@ -47,12 +47,12 @@ def searchbooks(request):
 
     return book, search_book
 
-@shared_task
-def send_email_task(subject, message, from_email, recipient_list):
-    send_mail(
-        subject,
-        message,
-        from_email,
-        recipient_list,     
-        )
+# @shared_task
+# def send_email_task(subject, message, from_email, recipient_list):
+#     send_mail(
+#         subject,
+#         message,
+#         from_email,
+#         recipient_list,     
+#         )
     

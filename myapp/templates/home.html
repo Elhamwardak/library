@@ -3,19 +3,20 @@
 
 {% block content %}
 
+
     <div class="container my-5">
         <div class="row">
             <div class="col-md-3">
                 <a class="admin-card-link" href="{% url 'users-management' %}">
-                    <div class="card shadow-sm text-center p-4">
-                        <i class="fa-solid fa-user font-40 mb-2"></i>
+                    <div class="card shadow-sm text-center py-5">
+                        <i class="fa-solid fa-user mb-2"></i>
                         <h6>User Management</h6>
                     </div>
                 </a>
             </div>
             <div class="col-md-3">
-                <a class="admin-card-link" href="{% url 'books-management' %}">
-                    <div class="card shadow-sm text-center p-4">
+                <a class="admin-card-link " href="{% url 'books-management' %}">
+                    <div class="card shadow-sm text-center py-5">
                         <i class="fa-solid fa-book font-40 mb-2"></i>
                         <h6>Books Management</h6>
                     </div>

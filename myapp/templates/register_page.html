@@ -40,6 +40,10 @@ body{
    font-size: 15px;
 
 }
+.errorlist{
+    color:red;
+    list-style-type: none;
+}
     </style>
   <head>
 
@@ -54,20 +58,20 @@ body{
     
       <div class="login">
          <h1 class="text-center">Register</h1>
-          <form class="needs-validated" method="POST" action="">
+          <form class="needs-validated" method="POST" action="" >
             {% csrf_token %}
             <div>
-                <label >{{form.username.label}}</label>
+                <label>{{form.username.label}}</label>
                 {{form.username}}
             </div>
 
             <div>
-                <label >{{form.first_name.label}}</label>
+                <label>{{form.first_name.label}}</label>
                 {{form.first_name}}
             </div>
 
             <div>
-                <label >{{form.last_name.label}}</label>
+                <label>{{form.last_name.label}}</label>
                 {{form.last_name}}
             </div>
 
@@ -77,20 +81,18 @@ body{
             </div>
 
             <div>
-                <label >{{form.password1.label}}</label>
+                <label>{{form.password1.label}}</label>
                 {{form.password1}}
+               
             </div>
 
             <div>
-                <label >{{form.password2.label}}</label>
+                <label>{{form.password2.label}}</label>
                 {{form.password2}} 
             </div>
+            {{form.errors.password2}}
 
-            {{form.errors}}
-            <!-- {% for message in messages %}
-            <p class="d-flex justify-content-center text-success">{{message}}</p>
-            {% endfor %}
-             -->
+            
             <div class="mt-4">
                 <div class="d-flex justify-content-center links">
                    Already have an account ?

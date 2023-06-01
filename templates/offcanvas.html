@@ -1,0 +1,73 @@
+
+
+<div class="offcanvas offcanvas-start  text-white sidebar-nav" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+     
+    <div class="offcanvas-body p-0">
+      <nav class="navbar-dark">
+        <ul class="navbar-nav">
+          <li>
+              <div class="text-muted small fw-bold text-uppercase px-3">
+                <div class="input-group my-lg-2 my-sm-2">
+                  <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
+                  <button class="btn btn-primary" type="button" id="button-addon2"><i class="bi bi-search"></i></button>
+              </div>
+              </div>
+          </li>
+          {% if request.user.is_staff %}
+          <li>
+            <a href="{% url 'admin-page' %}" class="nav-link px-3 active">
+                <span  class="me-2">
+                  <i class="bi bi-speedometer2 "></i>
+                </span>
+                <span>
+                  Dashboard
+                </span>
+            </a>
+          </li>
+          <li>       
+              <a href="{% url 'books-management' %}" class="nav-link px-3 sidebar-link active">
+                <span  class="me-2 icon ms-auto">
+                  <i class="fa-solid fa-book-open"></i>
+                </span>
+                <span>
+                  Books Management
+                </span>
+              </a>
+            </a>     
+          </li>
+        
+          <li>
+            <a class="nav-link px-3 sidebar-link active" href="{% url 'users-management' %}">
+              <span  class="me-2 icon ms-auto">
+                <i class="fa-solid fa-user"></i>
+              </span>
+              <span>
+                Users Management
+              </span>
+            </a>
+          </li>
+          {% endif %}
+          {% if not request.user.is_staff %}
+          <li>
+            <a class="nav-link px-3 sidebar-link active" href="{% url 'my-favourites' %}">
+              <span  class="me-2 icon ms-auto">
+                <i class="bi bi-chevron-right"></i>
+              </span>
+              <span>
+                My Favourites
+              </span>
+            </a>
+          </li>
+          {% endif %}
+          <li class="my-4">
+              <hr class="dropdown-divider"/>
+          </li>
+        </ul>
+      </nav>
+      
+    </div>
+  </div>
+  <!-- offcanvas end -->
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

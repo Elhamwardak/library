@@ -165,6 +165,8 @@ def registerPage(request):
 
             messages.success(request, 'Account was created for ' + username)
             return redirect('login-page')
+        # else:
+        #     messages.info(request, 'Password did not match! or to smiller to username')
 
     context = {'form': form}
     return render(request, 'register_page.html', context)

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg  bg-dark">
+<!-- <nav class="navbar navbar-expand-lg  bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand text-light" href="{% url 'admin-page' %}">LIBRARY MANAGEMENT SYSTEM</a>
       {% if request.user.is_staff %}
@@ -23,5 +23,33 @@
         </form>
       </div>
     </div>
-  </nav>
+  </nav> -->
+
+<!-- new navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container-fluid">
+    <!-- offcanvas trigger start -->
+    <button class="navbar-toggler me-2 " type="button"  data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <span class="navbar-toggler-icon  " data-bs-target="#offcanvasExample"></span>
+    </button>
+    <!-- offcanvas trigger end -->
+
+    <a class="navbar-brand fw-bold me-auto "  href="{% url 'admin-page' %}"><i class="fa-solid fa-book-open-reader me-2"></i> LIBRARY MANAGEMENT SYSTEM</a>
+    <span class="text-light d-flex me-4 fs-6 align-items-center">{{request.user}}</span>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle mt-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-user"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              {% if not request.user.is_staff %}
+              <li><a class="dropdown-item" href="{% url 'user-profile' %}">My Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              {% endif %}
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+  </div>
+</nav>
 
