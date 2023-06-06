@@ -25,6 +25,11 @@
 .mycard span{
     font-size: 45px;
 }
+@media screen and (min-width: 1200px) {
+    .ms-2{
+        font-size: 1.6rem !important;
+    }
+  }
 @media(min-width : 920px){
     .navbar-brand {
         font-size: 0.9rem !important;
@@ -114,5 +119,5 @@
     color:#fff;
 }
 .font-12{
-    font-size:12px;
+    font-size: 20px;
 }

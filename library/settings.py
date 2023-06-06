@@ -129,9 +129,9 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
     
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / 'static',
 ]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 
 # CELERY_BROKER_URL = 'redis://localhost:6379'
 # CELERY_ACCEPT_CONTENT =['json']

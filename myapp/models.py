@@ -12,7 +12,7 @@ class Books(models.Model):
     price = models.IntegerField(default=0, null=True, blank=True)
     author = models.CharField(max_length=20, null=True, blank=True)
     cover_photo = models.ImageField(
-        upload_to='images/', null=True, blank=True, default="default.jpg")
+        upload_to='images/', null=True, blank=True,  default='default.jpg')
     issue_date = models.DateTimeField(auto_now_add=True)
     book_file = models.FileField(
         upload_to='files/', null=False, default="")

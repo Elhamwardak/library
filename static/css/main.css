@@ -2,7 +2,7 @@ body {
     color: #566787;
     background: #f5f5f5;
     font-family: 'Varela Round', sans-serif;
-    font-size: 13px;
+    
 }
 .table-wrapper {
     background: #fff;
@@ -223,11 +223,6 @@ table.table .avatar {
 }
 .font-40{
     font-size:40px;
-}
-
-.admin-card-link{
-    text-decoration: none !important;
-    color:#181818;
 }
 
 .admin-card-link:hover .card{

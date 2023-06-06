@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% block title %}Add Book {% endblock title %}
 
 {% block content %}
 
@@ -6,12 +7,15 @@
 <div class="container">
     <div class="row">
         <div class="col col-8 offset-2">
-            <form action="" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <h1 class="alert alert-success my-5 text-center">Add Book</h1>
-                {{form.as_p}}
-                <input type="submit" value="Save" class="btn btn-primary w-100">
-            </form>
+            <div class="card">
+                    <div class="card-body p-4">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <input type="submit" value="Save" class="btn btn-primary w-100">
+                        </form>
+                    </div>    
+            </div>        
         </div>
     </div> 
 </div>

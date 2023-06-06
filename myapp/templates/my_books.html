@@ -1,10 +1,8 @@
 {% extends 'main.html' %} 
+{% block title %} Favourite Books{% endblock title %}
 {% block content %}
     <div class="container py-4">
         <div class="row">
-            <div class="col-md-12">
-                <h3>My Favourite Books</h3>
-            </div>
             {% for book in books %}
                 <div class="col-md-4">
                     <div class="card mb-3">

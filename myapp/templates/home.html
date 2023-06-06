@@ -1,6 +1,6 @@
 
 {% extends 'main.html' %}
-
+{% block title %} Dashbord{% endblock title %}
 {% block content %}
 
 
@@ -9,7 +9,7 @@
             <div class="col-md-3">
                 <a class="admin-card-link" href="{% url 'users-management' %}">
                     <div class="card shadow-sm text-center py-5">
-                        <i class="fa-solid fa-user mb-2"></i>
+                        <i class="fa-solid fa-user font-40 mb-2"></i>
                         <h6>User Management</h6>
                     </div>
                 </a>
