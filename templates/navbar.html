@@ -1,55 +1,23 @@
-<!-- <nav class="navbar navbar-expand-lg  bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand text-light" href="{% url 'admin-page' %}">LIBRARY MANAGEMENT SYSTEM</a>
-      {% if request.user.is_staff %}
-      <a href="{% url 'admin-page' %}" class="text-light me-4" style="text-decoration: none;">Dashbord</a>
-      <a href="{% url 'books-management' %}" class="text-light" style="text-decoration: none;">Book List</a>
-      {% endif %}
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top px-3 py-2 justify-content-between">
+  <a class="navbar-brand" href="{% url 'admin-page' %}">
+    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M160 96a96 96 0 1 1 192 0A96 96 0 1 1 160 96zm80 152V512l-48.4-24.2c-20.9-10.4-43.5-17-66.8-19.3l-96-9.6C12.5 457.2 0 443.5 0 427V224c0-17.7 14.3-32 32-32H62.3c63.6 0 125.6 19.6 177.7 56zm32 264V248c52.1-36.4 114.1-56 177.7-56H480c17.7 0 32 14.3 32 32V427c0 16.4-12.5 30.2-28.8 31.8l-96 9.6c-23.2 2.3-45.9 8.9-66.8 19.3L272 512z"/></svg>
+    <span class="ms-2">LIBRARY MANAGEMENT SYSTEM</span>
+  </a>
+
+  <div class="dropdown">
+    <a class="dropdown-toggle user-menu-item" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="fa-solid fa-user me-2"></i>
+      {{request.user}}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-lg-end mt-2">
       {% if not request.user.is_staff %}
-      <a href="{% url 'user-profile' %}" class="text-light me-4" style="text-decoration: none;">Profile</a>
-      <a href="{% url 'my-favourites' %}" class="text-light me-4" style="text-decoration: none;">My Favourites</a>
+        <li>
+          <a class="dropdown-item" href="{% url 'user-profile' %}">My Profile</a>
+        </li>
       {% endif %}
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          
-        </ul>
-        <form class="d-flex" role="search">
-          <span class="text-light d-flex me-4 fs-6 align-items-center ">{{request.user}}</span>
-          <a href="{% url 'logout' %}" class="btn btn-danger">Log Out</a>
-      
-        </form>
-      </div>
-    </div>
-  </nav> -->
-
-<!-- new navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-  <div class="container-fluid">
-    <!-- offcanvas trigger start -->
-    <button class="navbar-toggler me-2 " type="button"  data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-      <span class="navbar-toggler-icon  " data-bs-target="#offcanvasExample"></span>
-    </button>
-    <!-- offcanvas trigger end -->
-
-    <a class="navbar-brand fw-bold me-auto "  href="{% url 'admin-page' %}"><i class="fa-solid fa-book-open-reader me-2"></i> LIBRARY MANAGEMENT SYSTEM</a>
-    <span class="text-light d-flex me-4 fs-6 align-items-center">{{request.user}}</span>
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle mt-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-user"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              {% if not request.user.is_staff %}
-              <li><a class="dropdown-item" href="{% url 'user-profile' %}">My Profile</a></li>
-              <li><hr class="dropdown-divider"></li>
-              {% endif %}
-              <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
-            </ul>
-          </li>
-        </ul>
+      <li>
+        <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+      </li>  
+    </ul>
   </div>
 </nav>
-

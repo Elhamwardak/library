@@ -241,3 +241,11 @@ table.table .avatar {
 .btn-xs{
     font-size:10px;
 }
+
+.text-decoration-none{
+    text-decoration:none;
+}
+
+body{
+    overflow-y:scroll;
+}

@@ -26,9 +26,6 @@
     font-size: 45px;
 }
 @media(min-width : 920px){
-    body{
-        overflow: hidden !important;
-    }
     .navbar-brand {
         font-size: 0.9rem !important;
     }
@@ -62,4 +59,60 @@
     }
 }
 
+.sidebar{
+    height:100vh;
+}
 
+.main-div{
+    padding-top:70px;
+}
+
+.sidebar-sticky{
+    padding-top:60px;
+}
+.sidebar-sticky{
+    padding-top:60px;
+}
+
+.sidebar-sticky svg{
+    padding-right:7px;
+}
+
+.sidebar-sticky ul li a{
+    color:#fff;
+}
+
+.sidebar-sticky ul li{
+    margin-top:5px;
+}
+
+.sidebar-sticky ul li a{
+    border:1px solid #212529;
+    border-radius:5px;
+}
+
+.sidebar-sticky ul li a.active{
+    border:1px solid #484848;
+    border-radius:5px;
+    background-color:#484848;
+    color:#fff;
+}
+
+.sidebar-sticky ul li a:hover{
+    color:#fff;
+    border:1px solid #484848;
+    border-radius:5px;
+}
+
+.user-menu-item{
+    color:#fff;
+    text-decoration:none;
+    cursor: pointer;
+}
+
+.user-menu-item:hover{
+    color:#fff;
+}
+.font-12{
+    font-size:12px;
+}
