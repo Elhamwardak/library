@@ -20,13 +20,17 @@
 }
 body{
   height: 100vh;
-  background-image:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../images/libraryImg.jpg");
+  background-image:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static "images/pic.jpg" %}');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.card-body{
+  height: 500px;
 }
 .login{
   font-family:"Roboto", sans-serif;
   background-color: #f5f5f5;
-  width: 400px;
-  height: min-content;
+  width: 45%;
   padding: 30px;
   border-radius: 5px; 
 }
@@ -49,17 +53,23 @@ body{
   font-size: 15px;
 
 }
+.nav-edit{
+  height: 35%;
+}
+.text-size{
+  font-size: 30px;
+}
    </style>
 <body>
-    <nav class="navbar navbar-dark bg-dark text-light ">
+    <nav class="navbar navbar-dark bg-dark text-light nav-edit ">
         <div class="container d-flex justify-content-center fs-5 d-flex  ">
           <span class="text-uppercase fw-bolder my-5">
-           <p> Welcome To  Library Management System website </p>
+           <p class="text-size"> Welcome To  Library Management System website </p>
           </span>
         </div>
       </nav>
 
-        <div class="container d-flex justify-content-center my-5">
+        <div class="container d-flex justify-content-center align-items-center my-5 card-body">
           <div class="login">
              <h1 class="text-center">Login</h1>
               <form class="needs-validated" method="POST" action="">

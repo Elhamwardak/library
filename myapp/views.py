@@ -16,7 +16,6 @@ from .signals import *
 
 # Create your views here.
 
-
 @login_required(login_url='login-page')
 @admin_only
 def Admin(request):
@@ -26,8 +25,10 @@ def Admin(request):
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def book_list(request):
-    books = Books.objects.all()
-    context = {'books': books}
+    books, search_book = searchbooks(request)
+    custom_range,  books= paginateBooks(request, books, 6)
+
+    context = {'books': books,'search_book':search_book,'custom_range':custom_range}
     return render(request, 'book_list.html', context)
 
 
@@ -95,6 +96,34 @@ def add_user(request):
     context = {'form': form}
     return render(request, 'add_user.html', context)
 
+
+def issue_book(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        book_id = request.POST.get('book_id')
+        expected_return_date = request.POST.get('expected_return_date')
+        
+        user = User.objects.get(pk=user_id)
+        book = Books.objects.get(pk=book_id)
+
+        issuebook = IssueBook.objects.create(
+            user_id=user,
+            book_id=book,
+            expected_return_date=expected_return_date
+        )
+        messages.success(request, 'Book issue created successfully.')
+        return redirect('/view-issuebook')
+    else:
+        users = User.objects.all()
+        books = Books.objects.all()
+        context = {'users':users, 'books':books}
+        return render(request, 'issue_book.html', context)
+
+def ViewIssueBook(request):
+    issuebook = IssueBook.objects.all()
+
+    context = {'issuebook':issuebook}
+    return render(request, 'view_issuebook.html', context)
 
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
@@ -197,7 +226,6 @@ def Profile(request):
 def BooksPage(request):
     books, search_book = searchbooks(request)
     custom_range,  books= paginateBooks(request, books, 6)
-
     for book in books:
         record = StudentBook.objects.filter(user_id=request.user,book_id=book).first()
         if not record:
@@ -207,8 +235,7 @@ def BooksPage(request):
             book.is_liked = record.is_liked
             book.is_favourite = record.is_favourite
 
-    context = {'books': books, 'search_book': search_book,
-               'custom_range': custom_range}
+    context = {'books':books,'search_book':search_book, 'custom_range':custom_range}
     return render(request, 'books.html', context)
 
 

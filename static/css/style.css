@@ -121,3 +121,7 @@
 .font-12{
     font-size: 20px;
 }
+.issue_btn{
+    background: #000 !important;
+    color: #fff !important;
+}

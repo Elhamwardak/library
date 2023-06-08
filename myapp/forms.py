@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from .models import Books
+from .models import Books, IssueBook
 from django.core import validators
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -22,8 +22,6 @@ class BookForm(ModelForm):
             'book_file':forms.FileInput(attrs={'class':'form-control'})
         }
 
-
-
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
@@ -37,3 +35,15 @@ class CreateUserForm(UserCreationForm):
             'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder' : 'Password'}),
             'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder' : 'Password Confirmation'}),
         }
+
+# class issuebookForm(ModelForm):
+#     class Meta:
+#         model = IssueBook
+#         fields = ['user_id','book_id','expected_return_date']
+
+#         widgets = {
+#             'user_id': forms.TextInput(attrs={'class': 'form-select'}),
+#             'book_id': forms.TextInput(attrs={'class': 'form-select'}),
+#             'expected_return_date': forms.DateInput(attrs={'class': 'form-control'}),
+
+#         }

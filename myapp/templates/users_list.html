@@ -3,11 +3,8 @@
 {% block title %}Users Management{% endblock title %}
 
 {% block content %}
-<div class="p-4 shadow">
-    <a href="{% url 'add-user' %}" class="btn btn-success float-end" data-toggle="modal">
-        <i class="fa-solid fa-plus"></i> <span>Add User</span>
-    </a>						
 
+<div class="p-4 shadow">					
     <table class="table table-striped">
         <thead>
             <tr>
@@ -27,10 +24,6 @@
                     <td>{{user.first_name}}</td>
                     <td>{{user.last_name}}</td> 
                     <td>{{user.email}}</td>
-                    
-                    <!-- <td>{{user.address}}</td> -->
-                    <!-- <td>{{user.phone}}</td> -->
-
                     <td>
                         <a href="{% url 'update-user' user.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href="{% url 'delete-user' user.id %}" onclick="return confirm('Do you really want to delete this user?') ;" class="delete" id="deleteBttn" data-toggle="modal"><i class="fa-solid fa-trash"></i></a>
