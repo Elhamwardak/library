@@ -19,7 +19,6 @@ class BookForm(ModelForm):
             'cover_photo':forms.FileInput(attrs={'class':'form-control'}),
             'author': forms.TextInput(attrs={'class': 'form-control'}),
             'issue_date': forms.DateInput(attrs={'class': 'form-control'}),
-            'book_file':forms.FileInput(attrs={'class':'form-control'})
         }
 
 class CreateUserForm(UserCreationForm):

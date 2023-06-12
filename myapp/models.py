@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save 
 
 
+
+     
 class Books(models.Model):
     title = models.CharField(max_length=20)
     description = models.TextField(max_length=100)
@@ -10,9 +12,11 @@ class Books(models.Model):
     author = models.CharField(max_length=20, null=True, blank=True)
     cover_photo = models.ImageField(
         upload_to='images/', null=True, blank=True,  default='images/default.jpg')
-    issue_date = models.DateTimeField(auto_now_add=True)
-    book_file = models.FileField(
-        upload_to='files/', null=False, default="")
+    issue_date = models.DateField(auto_now_add=True)
+
+  
+
+   
 
     def __str__(self):
         return self.title

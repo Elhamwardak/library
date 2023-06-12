@@ -25,7 +25,9 @@ urlpatterns = [
 
     path('view-issue-to-student/', views.issuebook_to_student, name="view-issue-to-student"),
     path('profile/', views.user_profile, name="user-profile"),
-    path('returned-date/<str:id>/', views.return_date, name="return-date")
+    path('returned-date/<str:id>/', views.return_date, name="return-date"),
+
+  
 
 
 ]

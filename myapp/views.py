@@ -26,7 +26,7 @@ def Admin(request):
 @login_required(login_url='login-page')
 def book_list(request):
     books, search_book = searchbooks(request)
-    custom_range,  books= paginateBooks(request, books, 6)
+    custom_range,  books = paginateBooks(request, books, 6)
 
     context = {'books': books,'search_book':search_book,'custom_range':custom_range}
     return render(request, 'book_list.html', context)

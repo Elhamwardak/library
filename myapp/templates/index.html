@@ -90,15 +90,18 @@ body{
                 <p class="d-flex justify-content-center text-success">{{message}}</p>
                 {% endfor %}
                 <div class="mt-4">
-                   <div class="d-flex justify-content-center links">
+                   <div class="d-flex" >
+                    <div class="d-flex justify-content-start links me-5 ">
                       Dont have an account ?
-                      <a href="{% url 'register-page' %}">Sign Up</a>
-    
+                      <a href="{% url 'register-page' %}">Sign Up</a> 
+                    </div>
+                    <div class="ms-5">
+                      <a href="{% url 'reset_password' %}">Forget Password</a>
+                    </div>
                    </div>
                 </div>
     
-                <br>
-                  <button type="submit" class="btn btn-primary w-100">Login</button>
+                  <button type="submit" class="btn btn-primary w-100 mt-2" >Login</button>
               </form>  
           </div>
         </div>

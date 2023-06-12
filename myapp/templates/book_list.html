@@ -32,46 +32,30 @@
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>
-					<span class="custom-checkbox">
-						<input type="checkbox" id="selectAll">
-						<label for="selectAll"></label>
-					</span>
-				</th>
+				<th>Id</th>
 				<th>Cover Photo</th>
 				<th>Title</th>
 				<th>Description</th>
 				<th>Author</th>
 				<th>Issue Date</th>
-				<th>Download</th>
-				<th>Action</th>
+				<th>Stock</th>
+				<th class="text-center">Action</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for book in books %}
 			<tr>
-				<td>
-					<span class="custom-checkbox">
-						<input type="checkbox" id="checkbox1" name="options[]" value="1">
-						<label for="checkbox1"></label>
-					</span>
-				</td>
+				<td>{{book.id}}</td>
 				<td>
 					{% if book.cover_photo %}
 						<img src="{{ book.cover_photo.url }}" style="width:70px;">
 					{% endif %}
 				</td>
 				<td>{{book.title}}</td>
-				<td>{{book.description}}</td>
+				<td>{{book.description |slice:"13"}}</td>
 				<td>{{book.author}}</td>
 				<td>{{book.issue_date}}</td>
-				<td>
-					{% if book.book_file != null and book.book_file != "" %}
-						<a href="{{ book.book_file.url }}" class="btn btn-primary text-white btn-xs">
-							<i class="fa-solid fa-download"></i>
-						</a>
-					{% endif %}
-				</td>
+				<td>none</td>
 				<td>
 					<a href="{% url 'update-book' book.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
 					<a href="{% url 'delete-book' book.id %}" class="delete" data-toggle="modal"><i class="fa-solid fa-trash"></i></a>
@@ -82,6 +66,7 @@
 	</table>
 </div> 
 <br>
+
 	{% include 'pagination.html' with queryset=books custom_range=custom_range %}
 
 {% endblock %}
