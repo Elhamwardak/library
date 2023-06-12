@@ -232,10 +232,8 @@ def BooksPage(request):
     context = {'issuebook':issuebook}
     return render(request, 'books.html', context)
 
-def return_date(request,id):
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>', id)
+def return_date(request,id): 
     if request.method == 'POST':
-        print('>>>>>>>>>>>>',id)
         issuebook = IssueBook.objects.get(pk=id)
         returned_date = request.POST.get('returned_date')
         issuebook.returned_date = returned_date
