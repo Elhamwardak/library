@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
 from .forms import BookForm, CreateUserForm
 from django.contrib.auth.forms import UserCreationForm
@@ -96,7 +96,8 @@ def add_user(request):
     context = {'form': form}
     return render(request, 'add_user.html', context)
 
-
+@allowed_users(allowed_roles=['admin'])
+@login_required(login_url='login-page')
 def issue_book(request):
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
@@ -118,7 +119,9 @@ def issue_book(request):
         books = Books.objects.all()
         context = {'users':users, 'books':books}
         return render(request, 'issue_book.html', context)
-
+    
+@allowed_users(allowed_roles=['admin'])    
+@login_required(login_url='login-page')
 def ViewIssueBook(request):
     issuebook = IssueBook.objects.all()
 
@@ -224,70 +227,22 @@ def Profile(request):
 
 # Books Pages for students
 def BooksPage(request):
-    books, search_book = searchbooks(request)
-    custom_range,  books= paginateBooks(request, books, 6)
-    for book in books:
-        record = StudentBook.objects.filter(user_id=request.user,book_id=book).first()
-        if not record:
-            book.is_liked = False
-            book.is_favourite = False
-        else:
-            book.is_liked = record.is_liked
-            book.is_favourite = record.is_favourite
-
-    context = {'books':books,'search_book':search_book, 'custom_range':custom_range}
+    issuebook = IssueBook.objects.filter(user_id=request.user.id)
+    
+    context = {'issuebook':issuebook}
     return render(request, 'books.html', context)
 
+def return_date(request,id):
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>', id)
+    if request.method == 'POST':
+        print('>>>>>>>>>>>>',id)
+        issuebook = IssueBook.objects.get(pk=id)
+        returned_date = request.POST.get('returned_date')
+        issuebook.returned_date = returned_date
+        issuebook.save()
 
-def MyFavourites(request):
-    favourite_books_ids = StudentBook.objects.filter(user_id=request.user, is_favourite=1).values_list('book_id', flat=True)
-    books = Books.objects.filter(pk__in=favourite_books_ids)
-
-    for book in books:
-        record = StudentBook.objects.filter(user_id=request.user,book_id=book).first()
-        if not record:
-            book.is_liked = False
-            book.is_favourite = False
-        else:
-            book.is_liked = record.is_liked
-            book.is_favourite = record.is_favourite
-
-    context = {'books': books}
-    return render(request, 'my_books.html', context)
-
-
-def like(request, book_id, like):
-    user = request.user
-    book = Books.objects.get(pk=book_id)
-    liked = StudentBook.objects.filter(user_id=user,book_id=book).count()
-
-    if not liked:
-        StudentBook.objects.create(user_id=user,book_id=book, is_liked=like)
+        return redirect('view-issuebook')
     else:
-        liked = StudentBook.objects.filter(user_id=user,book_id=book).first()
-        if like == 1:
-            liked.is_liked = 1
-            liked.save()
-        else:
-            liked.is_liked = 0
-            liked.save()
-    
-    return redirect('books-page')
-
-def favourite(request, book_id, favourite):
-    user = request.user
-    book = Books.objects.get(pk=book_id)
-    record = StudentBook.objects.filter(user_id=user,book_id=book).count()
-
-    if not record:
-        StudentBook.objects.create(user_id=user,book_id=book, is_favourite=favourite)
-    else:
-        record = StudentBook.objects.filter(user_id=user,book_id=book).first()
-        if favourite == 1:
-            record.is_favourite = 1
-            record.save()
-        else:
-            record.is_favourite = 0
-            record.save()
-    return redirect('books-page')
+        
+        return redirect('view-issuebook') 
 

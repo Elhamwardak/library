@@ -25,9 +25,7 @@ urlpatterns = [
 
     path('books/', views.BooksPage, name="books-page"),
     path('profile/', views.Profile, name="user-profile"),
+    path('returned-date/<str:id>/', views.return_date, name="return-date")
 
-    path('like/<int:book_id>/<int:like>', views.like, name="like"),
-    path('favourite/<int:book_id>/<int:favourite>', views.favourite, name="favourite"),
-    path('my-favourites/', views.MyFavourites, name="my-favourites"),
 
 ]

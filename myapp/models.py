@@ -37,6 +37,6 @@ class StudentBook (models.Model):
 class IssueBook(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
-    issue_date = models.DateTimeField(auto_now_add=True)
-    expected_return_date = models.DateTimeField()
-     
+    issue_date = models.DateField(auto_now_add=True)
+    expected_return_date = models.DateField()
+    returned_date = models.DateField(default=None, null=True, blank=True)
