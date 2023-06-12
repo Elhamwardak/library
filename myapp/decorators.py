@@ -34,7 +34,7 @@ def admin_only(view_func):
             group = request.user.groups.all()[0].name
 
         if group == 'student':
-            return redirect('books-page')
+            return redirect('view-issue-to-student')
         if group == 'admin':
             return view_func(request, *args, **kwargs)
 

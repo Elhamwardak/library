@@ -207,7 +207,7 @@ def logoutUser(request):
     logout(request)
     return redirect('login-page')
 
-def Profile(request):
+def user_profile(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = request.user
@@ -226,11 +226,11 @@ def Profile(request):
         return redirect('login-page')
 
 # Books Pages for students
-def BooksPage(request):
+def issuebook_to_student(request):
     issuebook = IssueBook.objects.filter(user_id=request.user.id)
     
     context = {'issuebook':issuebook}
-    return render(request, 'books.html', context)
+    return render(request, 'issue_book_to_student.html', context)
 
 def return_date(request,id): 
     if request.method == 'POST':

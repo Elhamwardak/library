@@ -23,8 +23,8 @@ urlpatterns = [
     path('register-page/', views.registerPage, name="register-page"),
     path('logout/', views.logoutUser, name="logout"),
 
-    path('books/', views.BooksPage, name="books-page"),
-    path('profile/', views.Profile, name="user-profile"),
+    path('view-issue-to-student/', views.issuebook_to_student, name="view-issue-to-student"),
+    path('profile/', views.user_profile, name="user-profile"),
     path('returned-date/<str:id>/', views.return_date, name="return-date")
 
 
