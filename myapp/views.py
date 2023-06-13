@@ -107,7 +107,10 @@ def issue_book(request):
         user = User.objects.get(pk=user_id)
         book = Books.objects.get(pk=book_id)
 
-        issuebook = IssueBook.objects.create(
+        book.available_quantity = book.available_quantity - 1
+        book.save()
+
+        IssueBook.objects.create(
             user_id=user,
             book_id=book,
             expected_return_date=expected_return_date
@@ -116,7 +119,7 @@ def issue_book(request):
         return redirect('/view-issuebook')
     else:
         users = User.objects.all()
-        books = Books.objects.all()
+        books = Books.objects.filter(available_quantity__gt= 0 )
         context = {'users':users, 'books':books}
         return render(request, 'issue_book.html', context)
     
@@ -237,7 +240,10 @@ def return_date(request,id):
         issuebook = IssueBook.objects.get(pk=id)
         returned_date = request.POST.get('returned_date')
         issuebook.returned_date = returned_date
+        book = Books.objects.get(pk=issuebook.book_id.id)
+        book.available_quantity = book.available_quantity + 1
         issuebook.save()
+        book.save()
 
         return redirect('view-issuebook')
     else:

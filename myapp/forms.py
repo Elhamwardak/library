@@ -15,7 +15,7 @@ class BookForm(ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.TextInput(attrs={'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'available_quantity': forms.NumberInput(attrs={'class': 'form-control'}),
             'cover_photo':forms.FileInput(attrs={'class':'form-control'}),
             'author': forms.TextInput(attrs={'class': 'form-control'}),
             'issue_date': forms.DateInput(attrs={'class': 'form-control'}),

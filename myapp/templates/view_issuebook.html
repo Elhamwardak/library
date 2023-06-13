@@ -22,6 +22,7 @@
 				<th>Issue Date</th>
 				<th>Expected Return Date</th>
 				<th>Returned Date</th>
+				<th>Quantity Issued</th>
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
@@ -34,6 +35,7 @@
 				<td>{{book.issue_date}}</td>	
 				<td>{{book.expected_return_date}}</td>	
 				<td>{{book.returned_date}}</td>
+				<th>{{book.quantity_issued}}</th>
 				<td>
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat" value="{{ book.id }}" onclick="set_from_action(this)">Return</button>
 				</td>	
@@ -49,7 +51,8 @@
 			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-			  <form action="" method="POST" id="set_return_date">							{% csrf_token %}
+			  <form action="" method="POST" id="set_return_date">
+				{% csrf_token %}
 				<div class="mb-3">
 				  <label for="recipient-name" class="col-form-label">Returned Date :</label>
 				  <input type="date" class="form-control" id="recipient-name" name="returned_date">
@@ -66,7 +69,6 @@
 	<script>
 		function set_from_action(el) {
 			const id = el.value
-			var a = document.querySelector('#set_return_date').action
 			document.querySelector('#set_return_date').action = `/returned-date/${id}/`
 		}
 		

@@ -38,35 +38,55 @@
 				<th>Description</th>
 				<th>Author</th>
 				<th>Issue Date</th>
-				<th>Stock</th>
+				<th>Quantity</th>
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for book in books %}
-			<tr>
-				<td>{{book.id}}</td>
-				<td>
-					{% if book.cover_photo %}
-						<img src="{{ book.cover_photo.url }}" style="width:70px;">
-					{% endif %}
-				</td>
-				<td>{{book.title}}</td>
-				<td>{{book.description |slice:"13"}}</td>
-				<td>{{book.author}}</td>
-				<td>{{book.issue_date}}</td>
-				<td>none</td>
-				<td>
-					<a href="{% url 'update-book' book.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
-					<a href="{% url 'delete-book' book.id %}" class="delete" data-toggle="modal"><i class="fa-solid fa-trash"></i></a>
-				</td>
-			</tr>					
-				{% endfor %}
+				<tr>
+					<td>{{book.id}}</td>
+					<td>
+						{% if book.cover_photo %}
+							<img src="{{ book.cover_photo.url }}" style="width:70px;">
+						{% endif %}
+					</td>
+					<td>{{book.title}}</td>
+					<td>{{book.description |slice:"13"}}</td>
+					<td>{{book.author}}</td>
+					<td>{{book.issue_date}}</td>
+					<td>{{book.available_quantity}}</td>
+					<td style="width: 108px;">
+						<a href="{% url 'update-book' book.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+						<button  type="button" class="text-danger" style="border:none; background-color: transparent;"  data-bs-toggle="modal" data-bs-target="#exampleModal" role="button">
+							<i class="fa-solid fa-trash" data-toggle="tooltip" title="delete"></i>
+						</button>
+					</td>
+				</tr>				
+			{% endfor %}
 		</tbody>
 	</table>
 </div> 
 <br>
 
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Delete Book</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+		   <p>Are you sure want to delete this Record? </p>
+		   <p class="text-warning"><small>{{book.title}} information Are Delete?</small></p>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		  <a href="" class="btn btn-danger">Delete</a>
+		</div>
+	  </div>
+	</div>
+  </div>
 	{% include 'pagination.html' with queryset=books custom_range=custom_range %}
 
 {% endblock %}

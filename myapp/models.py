@@ -8,8 +8,8 @@ from django.db.models.signals import pre_save, post_save
 class Books(models.Model):
     title = models.CharField(max_length=20)
     description = models.TextField(max_length=100)
-    price = models.IntegerField(default=0, null=True, blank=True)
     author = models.CharField(max_length=20, null=True, blank=True)
+    available_quantity = models.IntegerField(default=0)
     cover_photo = models.ImageField(
         upload_to='images/', null=True, blank=True,  default='images/default.jpg')
     issue_date = models.DateField(auto_now_add=True)
@@ -44,3 +44,4 @@ class IssueBook(models.Model):
     issue_date = models.DateField(auto_now_add=True)
     expected_return_date = models.DateField()
     returned_date = models.DateField(default=None, null=True, blank=True)
+    quantity_issued = models.IntegerField(default=1)

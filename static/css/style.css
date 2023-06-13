@@ -2,6 +2,7 @@
     --offconvas-width: 270px;
     --topNavbarHeight: 56px;
 }
+
 .sidebar-nav{
     width: var(--offconvas-width) !important;
     margin-top: var(--topNavbarHeight);

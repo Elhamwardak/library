@@ -8,19 +8,19 @@
     {% csrf_token %}
     <div class="d-flex flex-column justify-content-center align-items-center" style="height: 600px;">
         <div class="w-50 border py-5 p-5 rounded-3 " style="background-color: #fff;" >
-
+            <label for="">Choose User :</label>
             <select name="user_id" class="form-select mb-4" aria-label="Default select example">
                 {% for user in users %}
                     <option value="{{user.id}}">{{user.first_name}}</option>
                 {% endfor %}
             </select>
-
+            <label for="">Choose Book :</label>
             <select name="book_id" class="form-select mb-4 " aria-label="Default select example">
                 {% for book in books %}
-                <option value="{{book.id}}">{{book.title}}</option>
+                <option value="{{book.id}}">{{book.title}} ({{book.available_quantity}})</option>
                 {% endfor %}
             </select>
-
+            <label for="">Expected return date :</label>
             <input type="date" name="expected_return_date" class="form-control mb-4">
 
             <button type="sumbit" class="btn btn-primary w-100">Issue</button>
