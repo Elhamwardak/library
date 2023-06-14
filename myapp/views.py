@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenicated_user, allowed_users, admin_only
 from django.contrib.auth.models import Group
 from django.db.models import Q
-from .utils import searchbooks, paginateBooks
+from .utils import searchbooks, paginateBooks,paginateUsers,searchuser
 from django.urls import reverse
 from django.contrib import messages
 from .signals import *
@@ -39,6 +39,7 @@ def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
         form.save()
+        messages.success(request,"Book Successfully added")
         return redirect('books-management')
 
     context = {'form': form}
@@ -74,8 +75,11 @@ def Delete_book(request, id):
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def user_list(request):
-    users = User.objects.all()
-    context = {'users': users}
+
+    users, search_user = searchuser(request)
+    custom_range,  users = paginateUsers(request, users, 6)
+
+    context = {'users': users,'search_user':search_user,'custom_range':custom_range}
     return render(request, 'users_list.html', context)
 
 @allowed_users(allowed_roles=['admin'])
@@ -91,6 +95,7 @@ def add_user(request):
             group = Group.objects.get(name=role_group)
             user.groups.add(group)
 
+        messages.success(request,"User successfully added")
         return redirect('users-management')
 
     context = {'form': form}
