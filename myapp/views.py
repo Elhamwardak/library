@@ -11,7 +11,9 @@ from django.db.models import Q
 from .utils import searchbooks, paginateBooks,paginateUsers,searchuser
 from django.urls import reverse
 from django.contrib import messages
+from django.utils import timezone
 from .signals import *
+
 
 
 # Create your views here.
@@ -19,7 +21,18 @@ from .signals import *
 @login_required(login_url='login-page')
 @admin_only
 def Admin(request):
-    return render(request, 'home.html')
+    today = timezone.now().date()
+    
+    total_issued_books_today = IssueBook.objects.filter(issue_date=today).count()
+
+    total_issued = IssueBook.objects.count()
+
+    total_books = Books.objects.count()
+
+    total_users = User.objects.count()
+
+    context = {'totalbooks':total_books,'totalusers':total_users,'total_issued_books_today': total_issued_books_today,'total_issued':total_issued}
+    return render(request, 'home.html',context)
 
 # Books Management
 @allowed_users(allowed_roles=['admin'])

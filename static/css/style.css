@@ -126,3 +126,41 @@
     background: #000 !important;
     color: #fff !important;
 }
+.small-box{
+    border-radius: 5px;
+    height: 100%;
+    background-color: #37494c;
+}  
+.small-size{
+    font-size: 3rem;
+    color: #fff;
+    font-weight: 700;
+}
+.small-size-user{
+    font-size: 3rem;
+    color: #000000;
+    font-weight: 700;
+}
+.small-p-user{
+    font-size: 18px;
+    margin-left: 1px;
+    color: #000000;
+}
+.small-p{
+    font-size: 18px;
+    margin-left: 1px;
+    color: #fff;
+}
+.small-box>.small-box-footer {
+    background-color: rgba(0,0,0,.1);
+    color: rgba(255,255,255,.8);
+    display: block;
+    padding: 9px 0;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    z-index: 10;
+}
+.inner{
+    padding:15px ;
+}

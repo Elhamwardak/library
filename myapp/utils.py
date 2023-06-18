@@ -89,8 +89,6 @@ def paginateUsers(request, users, results):
     custom_range = range(leftIndex, rightIndex)
     return custom_range, user
 
-
-
 # @shared_task
 # def send_email_task(subject, message, from_email, recipient_list):
 #     send_mail(
