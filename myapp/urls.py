@@ -11,7 +11,7 @@ urlpatterns = [
     path('update-book/<str:id>/', views.Update_book, name="update-book"),
     path('delete-book/<str:id>', views.Delete_book, name="delete-book"),
     path('issue-book/', views.issue_book, name="issue-book"),
-    path('view-issuebook/', views.ViewIssueBook, name="view-issuebook"),
+    path('view-issuebook/<str:books>', views.ViewIssueBook, name="view-issuebook"),
 
     
 

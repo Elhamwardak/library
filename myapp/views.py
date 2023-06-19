@@ -22,7 +22,6 @@ from .signals import *
 @admin_only
 def Admin(request):
     today = timezone.now().date()
-    
     total_issued_books_today = IssueBook.objects.filter(issue_date=today).count()
 
     total_issued = IssueBook.objects.count()
@@ -31,7 +30,7 @@ def Admin(request):
 
     total_users = User.objects.count()
 
-    context = {'totalbooks':total_books,'totalusers':total_users,'total_issued_books_today': total_issued_books_today,'total_issued':total_issued}
+    context = {'totalbooks':total_books,'totalusers':total_users,'total_issued':total_issued,'total_issued_books_today':total_issued_books_today}
     return render(request, 'home.html',context)
 
 # Books Management
@@ -143,10 +142,15 @@ def issue_book(request):
     
 @allowed_users(allowed_roles=['admin'])    
 @login_required(login_url='login-page')
-def ViewIssueBook(request):
-    issuebook = IssueBook.objects.all()
-
-    context = {'issuebook':issuebook}
+def ViewIssueBook(request,books):
+    if books == "all":
+        issuebook = IssueBook.objects.all()
+        context = {'issuebook': issuebook}
+    else:
+        today = timezone.now().date()
+        total_issued_books_today = IssueBook.objects.filter(issue_date=today)
+        context = {'total_issued_books_today': total_issued_books_today}
+        
     return render(request, 'view_issuebook.html', context)
 
 @allowed_users(allowed_roles=['admin'])

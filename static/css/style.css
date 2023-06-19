@@ -129,12 +129,25 @@
 .small-box{
     border-radius: 5px;
     height: 100%;
-    background-color: #37494c;
 }  
 .small-size{
     font-size: 3rem;
     color: #fff;
     font-weight: 700;
+}
+.box-4{
+    background-color: #970707;
+}
+.box-1{
+    background-color: #076c10;
+}
+.box-2{
+    background-color: #081c99;
+
+}
+.box-3{
+    background-color: #054b43;
+
 }
 .small-size-user{
     font-size: 3rem;

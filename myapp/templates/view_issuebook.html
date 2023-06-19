@@ -29,20 +29,42 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for book in issuebook %}
-			<tr>
-				<td>{{book.id}}</td>
-				<td>{{book.user_id}}</td>
-				<td>{{book.book_id}}</td>	
-				<td>{{book.issue_date}}</td>	
-				<td>{{book.expected_return_date}}</td>	
-				<td>{{book.returned_date}}</td>
-				<th>{{book.quantity_issued}}</th>
-				<td>
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat" value="{{ book.id }}" onclick="set_from_action(this)">Return</button>
-				</td>	
-			</tr>					
-			{% endfor %}
+			{% if issuebook %}
+				{% for book in issuebook %}
+				<tr>
+					<td>{{book.id}}</td>
+					<td>{{book.user_id}}</td>
+					<td>{{book.book_id}}</td>	
+					<td>{{book.issue_date}}</td>	
+					<td>{{book.expected_return_date}}</td>	
+					<td>{{book.returned_date}}</td>
+					<th>{{book.quantity_issued}}</th>
+					<td>
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat" value="{{ book.id }}" onclick="set_from_action(this)">Return</button>
+					</td>	
+				</tr>					
+				{% endfor %}
+			{% elif total_issued_books_today %}
+				{% for book in total_issued_books_today %}
+				<tr>
+					<td>{{book.id}}</td>
+					<td>{{book.user_id}}</td>
+					<td>{{book.book_id}}</td>	
+					<td>{{book.issue_date}}</td>	
+					<td>{{book.expected_return_date}}</td>	
+					<td>{{book.returned_date}}</td>
+					<th>{{book.quantity_issued}}</th>
+					<td>
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat" value="{{ book.id }}" onclick="set_from_action(this)">Return</button>
+					</td>	
+				</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="3">No books issued.</td>
+				</tr>
+			{% endif %}
+
 		</tbody>
 	</table>
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
