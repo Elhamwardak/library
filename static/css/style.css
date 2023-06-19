@@ -13,12 +13,8 @@
 .sidebar-link .icon{
     display: inline-flex;
 }
-.navbar{
-    background-color:#102f48;
-}
-.offcanvas {
-    background-color:#102f48 !important;
-}
+
+
 .mycard{
     text-align: center;
     line-height: 2;

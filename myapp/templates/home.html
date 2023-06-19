@@ -56,5 +56,35 @@
         </div>
         <!-- ./col -->
       </div>
+      <br>
+      <h3>Deadline return borrowed books in Five days</h3>
+      <hr>
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Book ID</th>
+            <th>Issue Date</th>
+            <th>Expected Return Date</th>
+            <th>Returned Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for book in deadline_returns_book %}
+            <tr>
+              <td>{{book.id}}</td>
+              <td>{{book.user_id}}</td>
+              <td>{{book.book_id}}</td>	
+              <td>{{book.issue_date}}</td>	
+              <td>{{book.expected_return_date}}</td>	
+              <td>{{book.returned_date}}</td>
+              <td></td>	
+            </tr>					
+            {% endfor %}
+        
+        </tbody>
+      </table>
 
 {% endblock content %}

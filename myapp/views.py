@@ -9,9 +9,9 @@ from .decorators import unauthenicated_user, allowed_users, admin_only
 from django.contrib.auth.models import Group
 from django.db.models import Q
 from .utils import searchbooks, paginateBooks,paginateUsers,searchuser
-from django.urls import reverse
 from django.contrib import messages
 from django.utils import timezone
+from datetime import timedelta
 from .signals import *
 
 
@@ -30,7 +30,12 @@ def Admin(request):
 
     total_users = User.objects.count()
 
-    context = {'totalbooks':total_books,'totalusers':total_users,'total_issued':total_issued,'total_issued_books_today':total_issued_books_today}
+    today = timezone.now().date()
+    five_days_later = today + timedelta(days=7)
+    deadline_returns_book = IssueBook.objects.filter(expected_return_date__lte= five_days_later, expected_return_date__gt=today)
+
+    context = {'totalbooks':total_books,'totalusers':total_users,'total_issued':total_issued,
+               'total_issued_books_today':total_issued_books_today,'deadline_returns_book':deadline_returns_book}
     return render(request, 'home.html',context)
 
 # Books Management
@@ -133,7 +138,7 @@ def issue_book(request):
             expected_return_date=expected_return_date
         )
         messages.success(request, 'Book issue created successfully.')
-        return redirect('/view-issuebook')
+        return redirect('view-issuebook',books='all')
     else:
         users = User.objects.all()
         books = Books.objects.filter(available_quantity__gt= 0 )
@@ -145,12 +150,12 @@ def issue_book(request):
 def ViewIssueBook(request,books):
     if books == "all":
         issuebook = IssueBook.objects.all()
-        context = {'issuebook': issuebook}
+        context = {'issuebook': issuebook,'title':'Issued Books'}
     else:
         today = timezone.now().date()
         total_issued_books_today = IssueBook.objects.filter(issue_date=today)
-        context = {'total_issued_books_today': total_issued_books_today}
-        
+        context = {'total_issued_books_today': total_issued_books_today, 'title': 'Today\'s Issued Books'} 
+ 
     return render(request, 'view_issuebook.html', context)
 
 @allowed_users(allowed_roles=['admin'])
@@ -267,8 +272,8 @@ def return_date(request,id):
         issuebook.save()
         book.save()
 
-        return redirect('view-issuebook')
+        return redirect('view-issuebook',books='all')
     else:
         
-        return redirect('view-issuebook') 
+        return redirect('view-issuebook',books='all') 
 
