@@ -27,10 +27,10 @@ class CreateUserForm(UserCreationForm):
         fields = ['username','first_name','last_name', 'email', 'password1', 'password2']
 
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Username'}),
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'First name'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder' : 'Last name'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder' : 'Email'}),
-            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder' : 'Password'}),
-            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder' : 'Password Confirmation'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
         }
