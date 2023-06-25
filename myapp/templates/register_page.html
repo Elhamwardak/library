@@ -62,33 +62,33 @@ body{
           <form class="needs-validated" method="POST" action="" >
             {% csrf_token %}
             <div>
-                <label>{{form.username.label}}</label>
+                <label class="form-label fw-normal">{{form.username.label}}</label>
                 {{form.username}}
             </div>
 
             <div>
-                <label>{{form.first_name.label}}</label>
+                <label class="form-label fw-normal">{{form.first_name.label}}</label>
                 {{form.first_name}}
             </div>
 
             <div>
-                <label>{{form.last_name.label}}</label>
+                <label class="form-label fw-normal">{{form.last_name.label}}</label>
                 {{form.last_name}}
             </div>
 
             <div>
-                <label>{{form.email.label}}</label>
+                <label class="form-label fw-normal">{{form.email.label}}</label>
                 {{form.email}}
             </div>
 
             <div>
-                <label>{{form.password1.label}}</label>
+                <label class="form-label fw-normal">{{form.password1.label}}</label>
                 {{form.password1}}
                
             </div>
 
             <div>
-                <label>{{form.password2.label}}</label>
+                <label class="form-label fw-normal">{{form.password2.label}}</label>
                 {{form.password2}} 
             </div>
             {{form.errors.password2}}

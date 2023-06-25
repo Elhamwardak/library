@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenicated_user, allowed_users, admin_only
 from django.contrib.auth.models import Group
-from django.db.models import Q
 from .utils import searchbooks, paginateBooks,paginateUsers,searchuser
 from django.contrib import messages
 from django.utils import timezone
@@ -33,9 +32,10 @@ def Admin(request):
     today = timezone.now().date()
     five_days_later = today + timedelta(days=7)
     deadline_returns_book = IssueBook.objects.filter(expected_return_date__lte= five_days_later, expected_return_date__gt=today)
+    count_books_not_returned = deadline_returns_book.count()
 
     context = {'totalbooks':total_books,'totalusers':total_users,'total_issued':total_issued,
-               'total_issued_books_today':total_issued_books_today,'deadline_returns_book':deadline_returns_book}
+               'total_issued_books_today':total_issued_books_today,'count_books_not_returned':count_books_not_returned}
     return render(request, 'home.html',context)
 
 # Books Management
@@ -43,7 +43,7 @@ def Admin(request):
 @login_required(login_url='login-page')
 def book_list(request):
     books, search_book = searchbooks(request)
-    custom_range,  books = paginateBooks(request, books, 6)
+    custom_range,  books = paginateBooks(request, books, 5)
 
     context = {'books': books,'search_book':search_book,'custom_range':custom_range}
     return render(request, 'book_list.html', context)
@@ -87,6 +87,15 @@ def Delete_book(request, id):
     book.delete()
     return redirect('books-management')
 
+@allowed_users(allowed_roles=['admin'])
+@login_required(login_url='login-page')
+def booksnotreturnyet(request):
+    today = timezone.now().date()
+    five_days_later = today + timedelta(days=7)
+    deadline_returns_book = IssueBook.objects.filter(expected_return_date__lte= five_days_later, expected_return_date__gt=today)
+
+    context={'deadline_returns_book':deadline_returns_book}
+    return render(request,'books_not_return.html',context)
 
 # Users Managements
 @allowed_users(allowed_roles=['admin'])
@@ -258,9 +267,23 @@ def user_profile(request):
 # Books Pages for students
 def issuebook_to_student(request):
     issuebook = IssueBook.objects.filter(user_id=request.user.id)
-    
-    context = {'issuebook':issuebook}
+    issuebook_count = issuebook.count()
+    total_books = Books.objects.count()
+
+    context = {'issuebook_count':issuebook_count,'total_books':total_books}
     return render(request, 'issue_book_to_student.html', context)
+
+def issue_book_to_student(request):
+    issuebook = IssueBook.objects.filter(user_id=request.user.id)
+    context = {'issuebook':issuebook}
+    return render(request,'issued_book_to_student.html',context)
+
+def booklisttostudnet(request):
+    books, search_book = searchbooks(request)
+    custom_range,  books = paginateBooks(request, books, 5)
+
+    context ={"books":books,'search_book':search_book,'custom_range':custom_range}
+    return render(request, 'book_list_to_student.html',context)
 
 def return_date(request,id): 
     if request.method == 'POST':

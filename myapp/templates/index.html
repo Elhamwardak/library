@@ -35,7 +35,7 @@ body{
 <body>
 
     <div class="card" style="width: 35%;">
-        <h5 class="card-header text-center fs-2 fw-bold">Library Management System</h5>
+        <h5 class="card-header text-center fs-2 fw-bold p-3 ">Library Management System</h5>
           <div class=" " style="height: auto;">
             <h1 class="text-center mt-3"><img src="{% static  'images/favicon-32x32.png' %}" alt="" style="height: 40px;"> Login</h1>
             <form class="needs-validated p-5" method="POST" action="">
@@ -57,11 +57,11 @@ body{
               {% endfor %}
               <div class="mt-4">
                 <div class="login-forget" >
-                  <div class=" links me-5 ">
+                  <div class="links">
                     Dont have an account ?
                     <a href="{% url 'register-page' %}">Sign Up</a> 
                   </div>
-                  <div class="">
+                  <div >
                     <a href="{% url 'reset_password' %}">Forget Password</a>
                   </div>
                 </div>

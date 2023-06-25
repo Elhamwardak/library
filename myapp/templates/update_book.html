@@ -8,11 +8,15 @@
 <div class="container">
     <div class="row">
         <div class="col col-8 offset-2">
-            <form action="" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{form.as_p}}
-                <input type="submit" value="Save Changes" class="btn btn-success w-100">
-            </form>
+            <div class="card">
+                <div class="card-body p-4">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <input type="submit" value="Save Changes" class="btn btn-secondary w-100 border-none">
+                    </form>
+                </div>
+            </div>
         </div>
     </div> 
 </div>

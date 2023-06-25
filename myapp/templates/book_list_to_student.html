@@ -1,12 +1,8 @@
 {% extends 'main.html' %}
 
-{% block title %}Books Management{% endblock title %}
+{% block title %}Books List{% endblock title %}
 
 {% block content %}
-
-
-
-
 <div class="search-customization">
 	<div class="mb-3 w-50">
 	  <form id="searchForm" action="{% url 'books-management' %}" method="GET">
@@ -29,39 +25,24 @@
 		</div>
 	  </form>
 	</div>
-	<div>
-		<a href="{% url 'add-book' %}" class="btn" style="background-color: #455963; color: #fff;"><i class="fa-sharp fa-solid fa-plus me-2"></i>Add Book</a>
-	</div>
 </div>
 
-
-{% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-		{{ message }}
-		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-    {% endfor %}
-{% endif %}
 
 <div class="p-4 shadow bg-white ">
 	<table class="table table-font-size table-hover " >
 		<thead>
 			<tr>
-				<th>Id</th>
-				<th>Cover Photo</th>
+				<th>Cover</th>
 				<th>Title</th>
 				<th>Description</th>
 				<th>Author</th>
 				<th>Issue Date</th>
 				<th>Quantity</th>
-				<th class="text-center">Action</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for book in books %}
 				<tr>
-					<td>{{book.id}}</td>
 					<td>
 						{% if book.cover_photo %}
 							<img src="{{ book.cover_photo.url }}" style="width:70px;">
@@ -72,12 +53,6 @@
 					<td>{{book.author}}</td>
 					<td>{{book.issue_date}}</td>
 					<td>{{book.available_quantity}}</td>
-					<td style="width: 108px;">
-						<a href="{% url 'update-book' book.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square "></i></a>
-						<button  type="button" class="text-danger" value="{{book.id}}" style="border:none; background-color: transparent;"  data-bs-toggle="modal" data-bs-target="#exampleModal" role="button" onclick="checkdelete(this)">
-							<i class="fa-solid fa-trash" data-toggle="tooltip" title="delete"></i>
-						</button>
-					</td>
 				</tr>				
 			{% endfor %}
 		</tbody>
@@ -105,15 +80,5 @@
 	</div>
   </div>
 
-  <script>
-	function checkdelete(el){
-		const id = el.value
-		const booktitle = document.querySelector(`#bookTitle${id}`).innerHTML
-		console.log(booktitle)
-		document.querySelector('#set_url').href = `/delete-book/${id}`
-		document.querySelector('#modalBookTitle').innerHTML = booktitle
-	}
-  </script>
-	{% include 'pagination.html' with queryset=books custom_range=custom_range %}
-
-{% endblock %}
+  {% include 'pagination.html' with queryset=books custom_range=custom_range %}
+{% endblock content %}

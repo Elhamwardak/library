@@ -18,7 +18,7 @@
 }
 
 .backgroundcolor{
-    background-color: #3c515c;
+    background-color: #283e4b;
 }
 .mycard{
     text-align: center;
@@ -29,7 +29,7 @@
 }
 @media screen and (min-width: 1200px) {
     .ms-2{
-        font-size: 1.5rem !important;
+        font-size: 1.1rem !important;
         letter-spacing: 0.1rem;
     }
   }
@@ -73,14 +73,11 @@
 }
 
 .main-div{
-    padding-top:70px;
+    padding-top:60px;
 }
 
 .sidebar-sticky{
-    padding-top:60px;
-}
-.sidebar-sticky{
-    padding-top:60px;
+    padding-top:45px;
 }
 
 .sidebar-sticky svg{
@@ -100,9 +97,9 @@
 }
 
 .sidebar-sticky ul li a.active{
-    border:1px solid #afadad;
+    border:1px solid #324c5b;
     border-radius:5px;
-    background-color:#afadad;
+    background-color:#324c5b;
     color:#fff;
 }
 
@@ -122,7 +119,7 @@
     color:#fff;
 }
 .font-12{
-    font-size: 20px;
+    font-size: 15px;
 }
 .issue_btn{
     background: #000 !important;
@@ -135,16 +132,14 @@
 .cardBox {
     position: relative;
     width: 100%;
-    padding: 20px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
-    box-shadow: ;
 }
 .cardBox .card {
     position: relative;
     background: #fff;
-    padding: 30px;
+    padding: 16px;
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
@@ -159,12 +154,15 @@
     font-weight: 500;
     font-size: 2.5rem;
     color: #1b5672;
+    margin-left: 5px;
 }
 .cardBox .card .cardName {
     color: black;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     margin-top: 5px;
     letter-spacing: 0.1rem;
+    margin-left: 6px;
+
 }
   
 .cardBox .card .iconBx {
@@ -183,7 +181,10 @@
 .card-a{
    text-decoration: none;
 }
-.card-a:hover{
-    font-size: 3rem;
 
+ .edit{
+    color: rgb(9, 221, 236) !important;
+ }
+ .table-font-size{
+    font-size: 0.8rem !important;
  }

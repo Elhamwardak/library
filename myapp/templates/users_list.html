@@ -9,7 +9,7 @@
 	  <form id="searchForm" action="{% url 'users-management' %}" method="GET">
 		<div class="input-group">
 		  <input
-			class="form-control border-end-0 border rounded-pill"
+			class="form-control border-end-0 border"
 			type="search"
 			placeholder="Enter username"
 			id="example-search-input"
@@ -18,7 +18,7 @@
 		  />
 		  <span class="input-group-append">
 			<input
-			  class="btn btn-outline-secondary bg-light border-bottom-0 border rounded-pill ms-n5"
+			  class="btn btn-outline-secondary bg-light border-bottom-0 border ms-n5"
 			  type="submit"
 			  value="search"
 			/>
@@ -40,8 +40,8 @@
     {% endfor %}
 {% endif %}
 
-<div class="p-4 shadow">					
-    <table class="table table-striped">
+<div class="p-4 shadow bg-white">					
+    <table class="table table-hover table-font-size">
         <thead>
             <tr>
                 <th scope="col">Id</th>

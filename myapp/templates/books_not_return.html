@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+{% block title %}Books Not Return Yet{% endblock title %}
+{% block content %}
+
+<div class="p-4 shadow bg-white ">
+    <table class="table table-hover table-font-size">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Book ID</th>
+            <th>Issue Date</th>
+            <th  colspan="2">Expected Return Date</th> 
+          </tr>
+        </thead>
+        <tbody>
+          {% if deadline_returns_book %}
+              {% for book in deadline_returns_book %}
+              <tr>
+                <td>{{book.id}}</td>
+                <td>{{book.user_id}}</td>
+                <td>{{book.book_id}}</td>	
+                <td>{{book.issue_date}}</td>	
+                <td >{{book.expected_return_date}}</td>	
+              </tr>					
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td>empty</td>
+              </tr>
+          {% endif %}
+        
+        </tbody>
+      </table>
+</div> 
+
+
+{% endblock content %}
