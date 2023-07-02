@@ -42,7 +42,7 @@
 
 
 <div class="p-4 shadow bg-white">						
-	<table class="table  table-hover">
+	<table class="table table-font-size table-hover">
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -67,7 +67,7 @@
 					<td>{{book.returned_date}}</td>
 					<th>{{book.quantity_issued}}</th>
 					<td>
-						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat" value="{{ book.id }}" onclick="set_from_action(this)">Return</button>
+						<button type="button" class="btn btn-secondary " style="height: 30px; width: 60px; padding: 0; font-size: 12px;" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat" value="{{ book.id }}" onclick="set_from_action(this)">Return</button>
 					</td>	
 				</tr>					
 				{% endfor %}

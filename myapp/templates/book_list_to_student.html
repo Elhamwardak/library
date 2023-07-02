@@ -34,7 +34,7 @@
 			<tr>
 				<th>Cover</th>
 				<th>Title</th>
-				<th>Description</th>
+				<th>Category</th>
 				<th>Author</th>
 				<th>Issue Date</th>
 				<th>Quantity</th>
@@ -49,7 +49,7 @@
 						{% endif %}
 					</td>
 					<td id="bookTitle{{book.id}}">{{book.title}}</td>
-					<td>{{book.description |slice:"13"}}</td>
+					<td>{{book.category}}</td>
 					<td>{{book.author}}</td>
 					<td>{{book.issue_date}}</td>
 					<td>{{book.available_quantity}}</td>

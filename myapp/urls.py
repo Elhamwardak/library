@@ -15,7 +15,8 @@ urlpatterns = [
     path('issue-book-to-student/',views.issue_book_to_student,name="issue-book-to-student"),
     path('view-issuebook/<str:books>', views.ViewIssueBook, name="view-issuebook"),
     path('books-not-return/', views.booksnotreturnyet, name="books-not-return"),
-
+    path('category/',views.categorylist, name="category-list"),
+    path('add_category/', views.add_category, name='add_category'),
     
 
     path('add-user/', views.add_user, name="add-user"),

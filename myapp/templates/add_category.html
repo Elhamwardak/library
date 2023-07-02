@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block title %}Add Category{% endblock title %}
+
+{% block content %}
+<div class="container w-50">
+    <div class="row">
+        <div class="col col-8 offset-2">
+            <div class="card">
+                    <div class="card-body p-4">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <input type="submit" value="Add category" class="btn btn-secondary w-100 border-none">
+                        </form>
+                    </div>    
+            </div>        
+        </div>
+    </div> 
+</div>
+<br>
+{% endblock content %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
-from .forms import BookForm, CreateUserForm
+from .forms import BookForm, CreateUserForm,CategoryForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -96,6 +96,21 @@ def booksnotreturnyet(request):
 
     context={'deadline_returns_book':deadline_returns_book}
     return render(request,'books_not_return.html',context)
+
+def categorylist(request):
+    category = Category.objects.all()
+    context={'category':category}
+    return render(request,'category_list.html',context)
+
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('category-list')
+    else:
+        form = CategoryForm()
+    return render(request, 'add_category.html', {'form': form})
 
 # Users Managements
 @allowed_users(allowed_roles=['admin'])

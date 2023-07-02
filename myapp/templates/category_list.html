@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+
+{% block title %}Category list{% endblock title %}
+
+{% block content %}
+
+<style>
+    .green{
+    border: 1px solid rgb(10, 201, 10);
+    color: #fff;
+    border-radius: 3px;
+    padding: 3px;
+    background-color: rgb(10, 201, 10);
+ }
+ .red{
+    border: 1px solid rgb(211, 19, 19);
+    color: #fff;
+    border-radius: 3px;
+    padding: 3px;
+    background-color: rgb(211, 19, 19);
+ }
+</style>
+    <div class="text-end mb-2 ">
+        <a href="{% url 'add_category' %}" class="add-category btn btn-secondary">Add Category</a>
+    </div>
+  <div class="p-4 shadow bg-white ">
+	<table class="table table-font-size table-hover " >
+	    <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-center">Action</th>
+            </tr>
+          </thead>
+		<tbody>
+			{% for i in category %}
+				<tr>
+					<td>{{i.name}}</td>
+                    {% if i.status %}
+					<td><span class="green">{{i.status_name}}</span></td>
+                    {% else %}
+					<td><span class="red">{{i.status_name}}</span></td>
+                    {% endif %}
+                    <td style="width: 108px;">
+						<a href="" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square "></i></a>
+                        <a href=""><i class="fa-solid fa-trash text-danger" data-toggle="tooltip" title="delete"></i></a>
+					</td>
+				</tr>			
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock content %}

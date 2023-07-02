@@ -3,11 +3,20 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save 
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    status = models.BooleanField(default=True)
 
-     
+    @property
+    def status_name(self):
+        return "Active" if self.status else "Inactive"
+    
+    def __str__(self):
+        return self.name
+    
 class Books(models.Model):
     title = models.CharField(max_length=20)
-    description = models.TextField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.CharField(max_length=20, null=True, blank=True)
     available_quantity = models.IntegerField(default=0)
     cover_photo = models.ImageField(
@@ -15,8 +24,6 @@ class Books(models.Model):
     issue_date = models.DateField(auto_now_add=True)
 
   
-
-   
 
     def __str__(self):
         return self.title
@@ -45,3 +52,4 @@ class IssueBook(models.Model):
     expected_return_date = models.DateField()
     returned_date = models.DateField(default=None, null=True, blank=True)
     quantity_issued = models.IntegerField(default=1)
+
