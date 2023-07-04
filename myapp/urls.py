@@ -17,6 +17,13 @@ urlpatterns = [
     path('books-not-return/', views.booksnotreturnyet, name="books-not-return"),
     path('category/',views.categorylist, name="category-list"),
     path('add_category/', views.add_category, name='add_category'),
+    path('update-category/<str:id>/',views.update_category,name='update-category'),
+    path('delete-category/<str:id>', views.delete_category, name="delete-category"),
+     path('Author/',views.authorslist, name="author-list"),
+    path('add_author/', views.add_author, name='add_author'),
+    path('update-author/<str:id>/',views.update_author,name='update-author'),
+    path('delete-author/<str:id>', views.delete_author, name="delete-author"),
+
     
 
     path('add-user/', views.add_user, name="add-user"),

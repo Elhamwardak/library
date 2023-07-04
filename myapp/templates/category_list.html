@@ -33,20 +33,26 @@
             </tr>
           </thead>
 		<tbody>
-			{% for i in category %}
-				<tr>
-					<td>{{i.name}}</td>
-                    {% if i.status %}
-					<td><span class="green">{{i.status_name}}</span></td>
-                    {% else %}
-					<td><span class="red">{{i.status_name}}</span></td>
-                    {% endif %}
-                    <td style="width: 108px;">
-						<a href="" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square "></i></a>
-                        <a href=""><i class="fa-solid fa-trash text-danger" data-toggle="tooltip" title="delete"></i></a>
-					</td>
-				</tr>			
-			{% endfor %}
+            {% if category %}
+                {% for i in category %}
+                    <tr>
+                        <td>{{i.name}}</td>
+                        {% if i.status %}
+                        <td><span class="green">{{i.status_name}}</span></td>
+                        {% else %}
+                        <td><span class="red">{{i.status_name}}</span></td>
+                        {% endif %}
+                        <td style="width: 108px;">
+                            <a href="{% url 'update-category' i.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square "></i></a>
+                            <a href="{% url 'delete-category' i.id %}" onclick="return confirm('Do you really want to delete this Category?');"><i class="fa-solid fa-trash text-danger" data-toggle="tooltip" title="delete"></i></a>
+                        </td>
+                    </tr>			
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">empty</td>  
+                </tr>	
+            {% endif %}   
 		</tbody>
 	</table>
 </div>

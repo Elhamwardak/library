@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+{% block title %}Authors list{% endblock title %}
+
+{% block content %}
+
+    <div class="text-end mb-2 ">
+        <a href="{% url 'add_author' %}" class="add-category btn btn-secondary">Add Author</a>
+    </div>
+  <div class="p-4 shadow bg-white ">
+	<table class="table table-font-size table-hover " >
+	    <thead>
+            <tr>
+              <th scope="col" class="text-center">Author Name</th>
+              <th scope="col" class="text-center" >Action</th>
+            </tr>
+          </thead>
+		<tbody>
+			{% if author %}
+				{% for i in author %}
+					<tr>
+						<td class="text-center">{{i.name}}</td>
+						
+						<td class="text-center" style="width: 108px;">
+							<a href="{% url 'update-author' i.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square "></i></a>
+							<a href="{% url 'delete-author' i.id %}" onclick="return confirm('Do you really want to delete this Author?');"><i class="fa-solid fa-trash text-danger" data-toggle="tooltip" title="delete"></i></a>
+						</td>
+					</tr>			
+				{% endfor %}
+			{% else %}
+					<tr>
+						<td colspan="2" >Empty</td>
+					</tr>
+			{% endif %}
+		</tbody>
+	</table>
+</div>
+{% endblock content %}

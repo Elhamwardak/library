@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from .models import Books, IssueBook,Category
+from .models import Books, IssueBook,Category,Author
 from django.core import validators
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -17,7 +17,7 @@ class BookForm(ModelForm):
             'category': forms.Select(attrs={'class': 'form-select'}),
             'available_quantity': forms.NumberInput(attrs={'class': 'form-control'}),
             'cover_photo':forms.FileInput(attrs={'class':'form-control'}),
-            'author': forms.TextInput(attrs={'class': 'form-control'}),
+            'author': forms.Select(attrs={'class': 'form-select'}),
             'issue_date': forms.DateInput(attrs={'class': 'form-control'}),
         }
 
@@ -47,4 +47,11 @@ class CategoryForm(forms.ModelForm):
         }
 
 
+class AuthorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields =  ['name']
 
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'})   
+        }

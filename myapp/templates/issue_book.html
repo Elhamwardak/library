@@ -6,8 +6,8 @@
 
 <form action="#" method="POST">
     {% csrf_token %}
-    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 600px;">
-        <div class="w-50 border py-5 p-5 rounded-3 " style="background-color: #fff;" >
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 500px;">
+        <div class="w-50 border  p-5 rounded-3 " style="background-color: #fff;" >
             <label for="">Choose User :</label>
             <select name="user_id" class="form-select mb-4" aria-label="Default select example">
                 {% for user in users %}

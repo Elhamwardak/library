@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
-from .forms import BookForm, CreateUserForm,CategoryForm
+from .forms import BookForm, CreateUserForm,CategoryForm,AuthorForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -97,6 +97,7 @@ def booksnotreturnyet(request):
     context={'deadline_returns_book':deadline_returns_book}
     return render(request,'books_not_return.html',context)
 
+# CRUD system for Category section
 def categorylist(request):
     category = Category.objects.all()
     context={'category':category}
@@ -111,6 +112,55 @@ def add_category(request):
     else:
         form = CategoryForm()
     return render(request, 'add_category.html', {'form': form})
+
+def update_category(request, id):
+    category = Category.objects.get(pk=id)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect('category-list')
+    else:
+        form = CategoryForm(instance=category)
+    return render(request,'update_category.html',{'form':form})
+
+def delete_category(request, id):
+    category = Category.objects.get(pk=id)
+    category.delete()
+    return redirect('category-list')
+
+# CRUD system for Authors section
+
+def authorslist(request):
+    author = Author.objects.all()
+    context={'author':author}
+    return render(request,'author_list.html',context)
+
+def add_author(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('author-list')
+    else:
+        form = AuthorForm()
+    return render(request, 'add_author.html', {'form': form})
+
+def update_author(request, id):
+    author = Author.objects.get(pk=id)
+    if request.method == 'POST':
+        form = AuthorForm(request.POST, instance=author)
+        if form.is_valid():
+            form.save()
+            return redirect('author-list')
+    else:
+        form = AuthorForm(instance=author)
+    return render(request,'update_author.html',{'form':form})
+
+def delete_author(request, id):
+    author = Author.objects.get(pk=id)
+    author.delete()
+    return redirect('author-list')
 
 # Users Managements
 @allowed_users(allowed_roles=['admin'])
