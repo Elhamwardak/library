@@ -5,48 +5,64 @@
 {% block content %}
 
 <div class="cardBox">
-  <a href="{% url 'view-issuebook' 'today' %}" class="card-a">
-    <div class="card">
-        <div>
-            <div class="numbers">{{total_issued_books_today}}</div>
-            <div class="cardName">Today's issued <i class="fa-solid fa-chevron-right"></i></div>
+    <a href="{% url 'view-issuebook' 'today' %}" class="card-a">
+        <div class="card">
+            <div>
+                <div class="numbers">{{total_issued_books_today}}</div>
+                <div class="cardName">Today's issued <i class="fa-solid fa-chevron-right"></i></div>
+            </div>
         </div>
-    </div>
-  </a>
+    </a>
 
-  <a href="{% url 'view-issuebook' 'all' %}" class="card-a">
-    <div class="card">
-        <div>
-            <div class="numbers">{{total_issued}}</div>
-            <div class="cardName">Total Issued Books <i class="fa-solid fa-chevron-right"></i></div>
-        </div> 
-    </div>
-  </a>
-
-  <a href="{% url 'users-management' %}" class="card-a">
-    <div class="card">
-        <div>
-            <div class="numbers">{{totalusers}}</div>
-            <div class="cardName">Total Users <i class="fa-solid fa-chevron-right"></i></div>
+    <a href="{% url 'view-issuebook' 'all' %}" class="card-a">
+        <div class="card">
+            <div>
+                <div class="numbers">{{total_issued}}</div>
+                <div class="cardName">Issued Books <i class="fa-solid fa-chevron-right"></i></div>
+            </div> 
         </div>
-    </div>
-  </a>
+    </a>
 
-  <a href="{% url 'books-management' %}" class="card-a">
-  <div class="card">
-      <div>
-          <div class="numbers">{{totalbooks}}</div>
-          <div class="cardName">Total Books <i class="fa-solid fa-chevron-right"></i></div>
-      </div>
-  </div>
-  </a>
-  <a href="{% url 'books-not-return' %}" class="card-a">
-    <div class="card">
-        <div>
-            <div class="numbers">{{count_books_not_returned}}</div>
-            <div class="cardName">Books not return yet <i class="fa-solid fa-chevron-right"></i></div>
+    <a href="{% url 'users-management' %}" class="card-a">
+        <div class="card">
+            <div>
+                <div class="numbers">{{totalusers}}</div>
+                <div class="cardName">Registered Users<i class="fa-solid fa-chevron-right"></i></div>
+            </div>
         </div>
-    </div>
+    </a>
+
+    <a href="{% url 'books-management' %}" class="card-a">
+        <div class="card">
+            <div>
+                <div class="numbers">{{totalbooks}}</div>
+                <div class="cardName">Books Listed <i class="fa-solid fa-chevron-right"></i></div>
+            </div>
+        </div>
+    </a>
+    <a href="{% url 'books-not-return' %}" class="card-a">
+        <div class="card">
+            <div>
+                <div class="numbers">{{count_books_not_returned}}</div>
+                <div class="cardName">Books Not Return Yet <i class="fa-solid fa-chevron-right"></i></div>
+            </div>
+        </div>
+    </a>
+    <a href="{% url 'author-list' %}" class="card-a">
+        <div class="card">
+            <div>
+                <div class="numbers">{{total_authors}}</div>
+                <div class="cardName">Authors Listed<i class="fa-solid fa-chevron-right"></i></div>
+            </div>
+        </div>
+    </a>
+    <a href="{% url 'category-list' %}" class="card-a">
+        <div class="card">
+            <div>
+                <div class="numbers">{{total_categories}}</div>
+                <div class="cardName">Listed Categories<i class="fa-solid fa-chevron-right"></i></div>
+            </div>
+        </div>
     </a>
 </div>
 

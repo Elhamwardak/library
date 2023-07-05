@@ -29,13 +29,18 @@ def Admin(request):
 
     total_users = User.objects.count()
 
+    total_authors = Author.objects.count()
+
+    total_categories = Category.objects.count()
+
     today = timezone.now().date()
     five_days_later = today + timedelta(days=7)
     deadline_returns_book = IssueBook.objects.filter(expected_return_date__lte= five_days_later, expected_return_date__gt=today)
     count_books_not_returned = deadline_returns_book.count()
 
     context = {'totalbooks':total_books,'totalusers':total_users,'total_issued':total_issued,
-               'total_issued_books_today':total_issued_books_today,'count_books_not_returned':count_books_not_returned}
+               'total_issued_books_today':total_issued_books_today,'count_books_not_returned':count_books_not_returned,
+               'total_authors':total_authors,'total_categories':total_categories}
     return render(request, 'home.html',context)
 
 # Books Management

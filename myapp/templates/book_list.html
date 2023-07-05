@@ -59,27 +59,33 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for book in books %}
-				<tr>
-					<td>{{book.id}}</td>
-					<td>
-						{% if book.cover_photo %}
-							<img src="{{ book.cover_photo.url }}" style="width:70px;">
-						{% endif %}
-					</td>
-					<td id="bookTitle{{book.id}}">{{book.title}}</td>
-					<td>{{book.category}}</td>
-					<td>{{book.author}}</td>
-					<td>{{book.issue_date}}</td>
-					<td>{{book.available_quantity}}</td>
-					<td style="width: 108px;">
-						<a href="{% url 'update-book' book.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square "></i></a>
-						<button  type="button" class="text-danger" value="{{book.id}}" style="border:none; background-color: transparent;"  data-bs-toggle="modal" data-bs-target="#exampleModal" role="button" onclick="checkdelete(this)">
-							<i class="fa-solid fa-trash" data-toggle="tooltip" title="delete"></i>
-						</button>
-					</td>
-				</tr>				
-			{% endfor %}
+			{% if book %}
+				{% for book in books %}
+					<tr>
+						<td>{{book.id}}</td>
+						<td>
+							{% if book.cover_photo %}
+								<img src="{{ book.cover_photo.url }}" style="width:70px;">
+							{% endif %}
+						</td>
+						<td id="bookTitle{{book.id}}">{{book.title}}</td>
+						<td>{{book.category}}</td>
+						<td>{{book.author}}</td>
+						<td>{{book.issue_date}}</td>
+						<td>{{book.available_quantity}}</td>
+						<td style="width: 108px;">
+							<a href="{% url 'update-book' book.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square "></i></a>
+							<button  type="button" class="text-danger" value="{{book.id}}" style="border:none; background-color: transparent;"  data-bs-toggle="modal" data-bs-target="#exampleModal" role="button" onclick="checkdelete(this)">
+								<i class="fa-solid fa-trash" data-toggle="tooltip" title="delete"></i>
+							</button>
+						</td>
+					</tr>				
+				{% endfor %}
+			{% else %}
+					<tr>
+						<td colspan="8">Empty</td>
+					</tr>
+			{% endif %}
 		</tbody>
 	</table>
 </div> 
