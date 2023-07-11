@@ -1,6 +1,20 @@
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import pre_save, post_save 
+
+GENDER_CHOICES = (
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('O', 'Other')
+)
+
+class CustomUser(AbstractUser):
+    phone_number = models.CharField(max_length=20,null=True,blank=True)
+    user_id = models.CharField(max_length=50,null=True,blank=True)
+    Group = models.CharField(max_length=200,null=True,blank=True)
+    gender = models.CharField(max_length=1,choices=GENDER_CHOICES,null=True,blank=True)
+
 
 class Author(models.Model):
     name = models.CharField(max_length=100,null=True, blank=True)
@@ -38,20 +52,20 @@ class Books(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     email = models.EmailField(max_length=150)
 
 
 class StudentBook (models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
     is_liked = models.BooleanField(default=False, blank=False, null=False)
     is_favourite = models.BooleanField(default=False, blank=False, null=False)
 
 class IssueBook(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
     issue_date = models.DateField(auto_now_add=True)
     expected_return_date = models.DateField()

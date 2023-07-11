@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
-from .forms import BookForm, CreateUserForm,CategoryForm,AuthorForm
+from django.contrib.auth import get_user_model
+from .forms import BookForm,CategoryForm,AuthorForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenicated_user, allowed_users, admin_only
 from django.contrib.auth.models import Group
-from .utils import searchbooks, paginateBooks,paginateUsers,searchuser
+from .utils import searchbooks, paginateBooks,searchuser,paginateUsers
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
@@ -16,6 +17,7 @@ from .signals import *
 
 
 # Create your views here.
+User = get_user_model()
 
 @login_required(login_url='login-page')
 @admin_only
@@ -102,6 +104,45 @@ def booksnotreturnyet(request):
     context={'deadline_returns_book':deadline_returns_book}
     return render(request,'books_not_return.html',context)
 
+@allowed_users(allowed_roles=['admin'])
+@login_required(login_url='login-page')
+def issue_book(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        book_id = request.POST.get('book_id')
+        expected_return_date = request.POST.get('expected_return_date')
+        
+        user = User.objects.get(pk=user_id)
+        book = Books.objects.get(pk=book_id)
+
+        book.available_quantity = book.available_quantity - 1
+        book.save()
+
+        IssueBook.objects.create(
+            user_id=user,
+            book_id=book,
+            expected_return_date=expected_return_date
+        )
+        messages.success(request, 'Book issue created successfully.')
+        return redirect('view-issuebook',books='all')
+    else:
+        users = User.objects.all()
+        books = Books.objects.filter(available_quantity__gt= 0 )
+        context = {'users':users, 'books':books}
+        return render(request, 'issue_book.html', context)
+    
+@allowed_users(allowed_roles=['admin'])    
+@login_required(login_url='login-page')
+def ViewIssueBook(request,books):
+    if books == "all":
+        issuebook = IssueBook.objects.all()
+        context = {'issuebook': issuebook,'title':'Issued Books'}
+    else:
+        today = timezone.now().date()
+        total_issued_books_today = IssueBook.objects.filter(issue_date=today)
+        context = {'total_issued_books_today': total_issued_books_today, 'title': 'Today\'s Issued Books'} 
+ 
+    return render(request, 'view_issuebook.html', context)
 # CRUD system for Category section
 def categorylist(request):
     category = Category.objects.all()
@@ -181,68 +222,40 @@ def user_list(request):
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def add_user(request):
-    form = CreateUserForm()
     if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        username = request.POST['username']
+        first_name = request.POST['firstname']
+        last_name = request.POST['lastname']
+        email = request.POST['email']
+        phone_number = request.POST['phone_number']
+        user_id = request.POST['user_id']
+        group= request.POST['group']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
 
-            role_group = request.POST['group'].lower()
-            group = Group.objects.get(name=role_group)
-            user.groups.add(group)
+        user = CustomUser.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+                                              email=email,phone_number=phone_number,user_id=user_id,
+                                             group=group,password1=password1,password2=password2)
+        user.save()
+        return redirect('users-management')
+
+            # role_group = request.POST['group'].lower()
+            # group = Group.objects.get(name=role_group)
+            # user.groups.add(group)
 
         messages.success(request,"User successfully added")
         return redirect('users-management')
 
-    context = {'form': form}
-    return render(request, 'add_user.html', context)
+  
+    return render(request, 'add_user.html')
 
-@allowed_users(allowed_roles=['admin'])
-@login_required(login_url='login-page')
-def issue_book(request):
-    if request.method == 'POST':
-        user_id = request.POST.get('user_id')
-        book_id = request.POST.get('book_id')
-        expected_return_date = request.POST.get('expected_return_date')
-        
-        user = User.objects.get(pk=user_id)
-        book = Books.objects.get(pk=book_id)
-
-        book.available_quantity = book.available_quantity - 1
-        book.save()
-
-        IssueBook.objects.create(
-            user_id=user,
-            book_id=book,
-            expected_return_date=expected_return_date
-        )
-        messages.success(request, 'Book issue created successfully.')
-        return redirect('view-issuebook',books='all')
-    else:
-        users = User.objects.all()
-        books = Books.objects.filter(available_quantity__gt= 0 )
-        context = {'users':users, 'books':books}
-        return render(request, 'issue_book.html', context)
-    
-@allowed_users(allowed_roles=['admin'])    
-@login_required(login_url='login-page')
-def ViewIssueBook(request,books):
-    if books == "all":
-        issuebook = IssueBook.objects.all()
-        context = {'issuebook': issuebook,'title':'Issued Books'}
-    else:
-        today = timezone.now().date()
-        total_issued_books_today = IssueBook.objects.filter(issue_date=today)
-        context = {'total_issued_books_today': total_issued_books_today, 'title': 'Today\'s Issued Books'} 
- 
-    return render(request, 'view_issuebook.html', context)
 
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def Update_user(request, id):
     if request.method == 'POST':
-        user = User.objects.get(pk=id)
-        form = CreateUserForm(request.POST, instance=user)
+        user = CustomUser.objects.get(pk=id)
+        form = CustomUser(request.POST, instance=user)
         if form.is_valid():
             user = form.save()
 
@@ -253,7 +266,7 @@ def Update_user(request, id):
         return redirect('users-management')
     else:
         user = User.objects.get(pk=id)
-        form = CreateUserForm(instance=user)
+        form = CustomUser(instance=user)
 
     context = {'form': form, 'user_group' : user.groups.get}
     return render(request, 'update_user.html', context)
@@ -262,7 +275,7 @@ def Update_user(request, id):
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def Delete_user(request, id):
-    users = User.objects.get(pk=id)
+    users = CustomUser.objects.get(pk=id)
     users.delete()
     return redirect('users-management')
 
@@ -293,24 +306,28 @@ def LoginPage(request):
 
 @unauthenicated_user
 def registerPage(request):
-    form = CreateUserForm()
     if request.method == 'POST':
-        
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
+        if request.method == 'POST':
+            username = request.POST['username']
+            first_name = request.POST['firstname']
+            last_name = request.POST['lastname']
+            email = request.POST['email']
+            phone_number = request.POST['phone_number']
+            user_id = request.POST['user_id']
+            group= request.POST['group']
+            password1 = request.POST['password1']
+            password2 = request.POST['password2']
 
-            group = Group.objects.get(name='student')
-            user.groups.add(group)
-
-            messages.success(request, 'Account was created for ' + username)
-            return redirect('login-page')
+            user = CustomUser.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+                                                email=email,phone_number=phone_number,user_id=user_id,
+                                                group=group,password1=password1,password2=password2)
+            user.save()
+        return redirect('users-management')
         # else:
         #     messages.info(request, 'Password did not match! or to smiller to username')
 
-    context = {'form': form}
-    return render(request, 'register_page.html', context)
+   
+    return render(request, 'register_page.html')
 
 def logoutUser(request):
     logout(request)
