@@ -1,6 +1,6 @@
 
 from django.db.models import Q
-from .models import Books 
+from .models import Books ,User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 # from celery import shared_task
 from django.http import JsonResponse

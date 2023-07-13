@@ -1,8 +1,7 @@
 from django.forms import ModelForm, widgets
-from .models import Books, IssueBook,Category,Author
+from .models import Books, IssueBook,Category,Author ,User
 from django.core import validators
-# from django.contrib.auth.forms import UserCreationForm
-# from .models import CustomUser
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
 
@@ -41,4 +40,18 @@ class AuthorForm(forms.ModelForm):
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'})   
+        }
+
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name', 'email', 'password1', 'password2']
+
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control'}),
         }

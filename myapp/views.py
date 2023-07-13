@@ -1,23 +1,22 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
-from django.contrib.auth import get_user_model
-from .forms import BookForm,CategoryForm,AuthorForm
+from .forms import BookForm,CategoryForm,AuthorForm,CreateUserForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenicated_user, allowed_users, admin_only
-from django.contrib.auth.models import Group
 from .utils import searchbooks, paginateBooks,searchuser,paginateUsers
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
 from .signals import *
+from django.db.models import Q
+from django.contrib.auth.models import User,Group
 
 
 
 # Create your views here.
-User = get_user_model()
 
 @login_required(login_url='login-page')
 @admin_only
@@ -222,40 +221,29 @@ def user_list(request):
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def add_user(request):
+    form = CreateUserForm()
     if request.method == 'POST':
-        username = request.POST['username']
-        first_name = request.POST['firstname']
-        last_name = request.POST['lastname']
-        email = request.POST['email']
-        phone_number = request.POST['phone_number']
-        user_id = request.POST['user_id']
-        group= request.POST['group']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
 
-        user = CustomUser.objects.create_user(username=username, first_name=first_name, last_name=last_name,
-                                              email=email,phone_number=phone_number,user_id=user_id,
-                                             group=group,password1=password1,password2=password2)
-        user.save()
-        return redirect('users-management')
-
-            # role_group = request.POST['group'].lower()
-            # group = Group.objects.get(name=role_group)
-            # user.groups.add(group)
+            role_group = request.POST['group'].lower()
+            group = Group.objects.get(name=role_group)
+            user.groups.add(group)
 
         messages.success(request,"User successfully added")
         return redirect('users-management')
 
-  
-    return render(request, 'add_user.html')
+    context = {'form': form}
+    return render(request, 'add_user.html', context)
 
 
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def Update_user(request, id):
     if request.method == 'POST':
-        user = CustomUser.objects.get(pk=id)
-        form = CustomUser(request.POST, instance=user)
+        user = User.objects.get(pk=id)
+        form = CreateUserForm(request.POST, instance=user)
         if form.is_valid():
             user = form.save()
 
@@ -266,7 +254,7 @@ def Update_user(request, id):
         return redirect('users-management')
     else:
         user = User.objects.get(pk=id)
-        form = CustomUser(instance=user)
+        form = CreateUserForm(instance=user)
 
     context = {'form': form, 'user_group' : user.groups.get}
     return render(request, 'update_user.html', context)
@@ -275,7 +263,7 @@ def Update_user(request, id):
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def Delete_user(request, id):
-    users = CustomUser.objects.get(pk=id)
+    users = User.objects.get(pk=id)
     users.delete()
     return redirect('users-management')
 
@@ -306,28 +294,22 @@ def LoginPage(request):
 
 @unauthenicated_user
 def registerPage(request):
+    form = CreateUserForm()
     if request.method == 'POST':
-        if request.method == 'POST':
-            username = request.POST['username']
-            first_name = request.POST['firstname']
-            last_name = request.POST['lastname']
-            email = request.POST['email']
-            phone_number = request.POST['phone_number']
-            user_id = request.POST['user_id']
-            group= request.POST['group']
-            password1 = request.POST['password1']
-            password2 = request.POST['password2']
 
-            user = CustomUser.objects.create_user(username=username, first_name=first_name, last_name=last_name,
-                                                email=email,phone_number=phone_number,user_id=user_id,
-                                                group=group,password1=password1,password2=password2)
-            user.save()
-        return redirect('users-management')
-        # else:
-        #     messages.info(request, 'Password did not match! or to smiller to username')
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
 
+            group = Group.objects.get(name='student')
+            user.groups.add(group)
+
+            messages.success(request, 'Account was created for ' + username)
+            return redirect('login-page')
+    context = {'form':form}
+    return render(request,'register_page.html',context)
    
-    return render(request, 'register_page.html')
 
 def logoutUser(request):
     logout(request)

@@ -18,7 +18,8 @@
 }
 
 .backgroundcolor{
-    background-color: #283e4b;
+    background-color: #ffffff;
+    border-bottom:1px solid #d6d1d1;
 }
 .mycard{
     text-align: center;
@@ -69,7 +70,8 @@
 
 .sidebar{
     height:100vh;
-    background-color:#455963; 
+    background-color:#ffffff; 
+    border-right:1px solid #d6d1d1;
 }
 
 .main-div{
@@ -82,10 +84,11 @@
 
 .sidebar-sticky svg{
     padding-right:7px;
+
 }
 
 .sidebar-sticky ul li a{
-    color:#fff;
+    color:#000000;
 }
 
 .sidebar-sticky ul li{
@@ -97,29 +100,29 @@
 }
 
 .sidebar-sticky ul li a.active{
-    border:1px solid #324c5b;
+    border:1px solid #bdc1c4;
     border-radius:5px;
-    background-color:#324c5b;
-    color:#fff;
+    background-color:#bdc1c4;
+    color:#000000;
 }
 
 .sidebar-sticky ul li a:hover{
-    color:#fff;
-    border:1px solid #fff;
+    color:#000000;
+    border:1px solid #000000;
     border-radius:5px;
 }
 
 .user-menu-item{
-    color:#fff;
+    color:#000000;
     text-decoration:none;
     cursor: pointer;
 }
 
 .user-menu-item:hover{
-    color:#fff;
+    color:#8a8b8a;
 }
 .font-12{
-    font-size: 15px;
+    font-size: 15px; 
 }
 .issue_btn{
     background: #000 !important;
@@ -153,7 +156,7 @@
     position: relative;
     font-weight: 500;
     font-size: 2.5rem;
-    color: #1b5672;
+    color: #000000;
     margin-left: 5px;
 }
 .cardBox .card .cardName {
@@ -171,7 +174,7 @@
 }
   
 .cardBox .card:hover {
-    background:#3c515c;
+    background:#acb0b3;
 }
   .cardBox .card:hover .numbers,
   .cardBox .card:hover .cardName,
