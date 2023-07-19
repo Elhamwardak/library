@@ -1,6 +1,6 @@
 
 from django.db.models import Q
-from .models import Books ,User
+from .models import Books, CustomUser
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 # from celery import shared_task
 from django.http import JsonResponse
@@ -53,7 +53,7 @@ def searchuser(request):
     if request.GET.get('search_user'):
         search_user = request.GET.get('search_user')
 
-    user = User.objects.filter(Q(username__icontains=search_user) | 
+    user = CustomUser.objects.filter(Q(username__icontains=search_user) | 
                                 Q(id__icontains=search_user)
                                 ) 
                                 
