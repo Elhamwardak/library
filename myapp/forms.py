@@ -1,10 +1,7 @@
 from django.forms import ModelForm, widgets
-from .models import Books, IssueBook,Category,Author
+from .models import Books, IssueBook,Category,Author, CustomUser
 from django.core import validators
 from django import forms
-# from django.contrib.auth import get_user_model
-
-# user = get_user_model()
 
 
 class BookForm(ModelForm):
@@ -43,3 +40,9 @@ class AuthorForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'})   
         }
+
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model=CustomUser
+        fields=['username', 'first_name', 'last_name', 'gender', 'phone_number', 'user_id', 'password', 'email', 'group']

@@ -45,10 +45,14 @@
         <thead>
             <tr>
                 <th scope="col">Id</th>
+                <th scope="col">User Id</th>
                 <th scope="col">User Name</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Role</th>
+                <th scope="col">Gender</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -56,10 +60,14 @@
             {% for user in users %}
                 <tr>
                     <td>{{user.id}}</td>
+                    <td>{{user.user_id}}</td>
                     <td>{{user.username}}</td>
                     <td>{{user.first_name}}</td>
                     <td>{{user.last_name}}</td> 
                     <td>{{user.email}}</td>
+                    <td>{{user.phone_number}}</td>
+                    <td>{{user.group}}</td>
+                    <td>{{user.gender}}</td>
                     <td>
                         <a href="{% url 'update-user' user.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href="{% url 'delete-user' user.id %}" onclick="return confirm('Do you really want to delete this user?') ;" class="delete" id="deleteBttn" data-toggle="modal"><i class="fa-solid fa-trash"></i></a>

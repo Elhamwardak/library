@@ -1,12 +1,9 @@
-
-*{
-    font-family: 'Poopins',sans-serif;
-}
 .wrapper{
     background: #ececec;
     padding: 0 20px 0 20px;
 }
 .main{
+    font-family: monospace;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,7 +116,7 @@ i{
 }
 .signin{
     text-align: center;
-    font-size: small;
+    font-size: 14px;
     margin-top: 15px;
 }
 span a{
@@ -172,4 +169,7 @@ span a:hover{
 
 .h1-register{
    font-weight: 700;
+}
+.form-group label{
+    font-family: auto;
 }

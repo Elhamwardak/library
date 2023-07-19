@@ -150,6 +150,7 @@
     box-shadow: 6px 0px 41px 5px rgba(0,0,0,0.1);
     -webkit-box-shadow: 6px 0px 41px 5px rgba(0,0,0,0.1);
     -moz-box-shadow: 6px 0px 41px 5px rgba(0,0,0,0.1);
+
 }
   
 .cardBox .card .numbers {
@@ -190,4 +191,8 @@
  }
  .table-font-size{
     font-size: 0.8rem !important;
+ }
+ .card{
+    font-family:auto;
+
  }

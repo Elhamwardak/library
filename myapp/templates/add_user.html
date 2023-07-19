@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+
 {% block title %}Add User {% endblock title %}
 
 {% block content %}
@@ -9,53 +10,70 @@
         <div class="col col-8 offset-2">
             <div class="card">
                 <div class="card-body p-4">
-                    <form action="" method="POST">
+                    <form action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label >{{form.username.label}}</label>
-                                    {{form.username}}
+                        <div class="row registerform p-2">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="">Username :</label>
+                                        <input type="text" name="username" class="form-control mb-3">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">First Name :</label>
+                                        <input type="text" name="first_name" id="" class="form-control mb-3">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Last Name :</label>
+                                        <input type="text" name="last_name" id="" class="form-control mb-3">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Email :</label>
+                                        <input type="email" name="email" id="" class="form-control mb-3">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="me-2 fw-700">Gender:</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" name="gender" id="male" value="M">
+                                        <label for="male" class="me-5">Male</label>
+                                        <input type="radio" name="gender" id="female" >
+                                        <label for="female" class="me-1" value="F">Female</label>
+                                    </div>
+        
+        
                                 </div>
-
-                                <div class="form-group mb-3">
-                                    <label >{{form.first_name.label}}</label>
-                                    {{form.first_name}}
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label >{{form.last_name.label}}</label>
-                                    {{form.last_name}}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>{{form.email.label}}</label>
-                                    {{form.email}}
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label>{{form.password1.label}}</label>
-                                    {{form.password1}}
-                                </div>
-
-                                <div class="form-group">
-                                    <label>{{form.password2.label}}</label>
-                                    {{form.password2}} 
-                                </div>
-                                
-                                <div class="form-group">
-                                <label>Role</label>
-                                <select class="form-control" name="group">
-                                    <option value="student">Student</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                                </div>
-                            </div>    
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Phone Number :</label>
+                                        <input type="text" name="phone_number" class="form-control mb-3 ">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">User Id :</label>
+                                        <input type="text" name="user_id" class="form-control mb-3">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Group :</label>
+                                        <select class="form-control mb-3" name="group" id="group">
+                                            {%for group in groups%}
+                                                <option value="{{group.id}}">{{group.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Password :</label>
+                                        <input type="password" name="password" id="" class="form-control mb-3">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Password Confirmation :</label>
+                                        <input type="password" name="password1" id="" class="form-control mb-3">
+                                    </div>
+                                </div>   
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-secondary w-100" value="Add">
+                                    </div>  
+                                </div>              
                         </div>
-                        {{form.errors}}
-                        <br>
-                        <input type="submit" value="Save" class="btn btn-secondary w-100 ">
                     </form>
                 </div>
             </div>
@@ -63,12 +81,12 @@
     </div> 
 </div>
 
-<script>
+<!-- <script>
     var password1 = document.getElementById('id_password1');
     password1.className += 'form-control';
     
     var password2 = document.getElementById('id_password2');
     password2.className += 'form-control';
-</script>
+</script> -->
 
 {% endblock %}
