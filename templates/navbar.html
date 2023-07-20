@@ -7,12 +7,12 @@
   <div class="dropdown">
     <a class="dropdown-toggle user-menu-item" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="fa-solid fa-user me-2"></i>
-      {{request.user}}
+      {{request.user.username}}
     </a>
     <ul class="dropdown-menu dropdown-menu-lg-end mt-2">
       {% if not request.user.is_staff %}
         <li>
-          <a class="dropdown-item" href="{% url 'user-profile' %}">My Profile</a>
+          <a class="dropdown-item" href="{% url 'user-profile' %}">Account</a>
         </li>
       {% endif %}
       <li>

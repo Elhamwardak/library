@@ -30,55 +30,59 @@
 
 <div class="p-4 shadow bg-white ">
 	<table class="table table-font-size table-hover " >
-		<thead>
-			<tr>
-				<th>Cover</th>
-				<th>Title</th>
-				<th>Category</th>
-				<th>Author</th>
-				<th>Issue Date</th>
-				<th>Quantity</th>
-			</tr>
-		</thead>
 		<tbody>
-			{% for book in books %}
-				<tr>
-					<td>
-						{% if book.cover_photo %}
-							<img src="{{ book.cover_photo.url }}" style="width:70px;">
-						{% endif %}
-					</td>
-					<td id="bookTitle{{book.id}}">{{book.title}}</td>
-					<td>{{book.category}}</td>
-					<td>{{book.author}}</td>
-					<td>{{book.issue_date}}</td>
-					<td>{{book.available_quantity}}</td>
-				</tr>				
-			{% endfor %}
+				{% for book in books %}
+					<div class="card mb-3" style="max-width: 540px;">
+						<div class="row g-0">
+						  <div class="col-md-4">
+							{% if book.cover_photo %}
+							<img src="{{ book.cover_photo.url }}" class="img-fluid rounded-start" alt="">
+							{% endif %}
+						  </div>
+						  <div class="col-md-8">
+							<div class="card-body">
+							  <h5 class="card-title" id="bookTitle{{book.id}}">Book Title: {{book.title}}</h5>
+							  <p class="card-text">Category: {{book.category}}</p>
+							  <p class="card-text">Author: {{book.author}}</p>
+							  <p class="card-text">Available Quantity in library : {{book.available_quantity}}</p>
+							  <p class="card-text"><small class="text-muted">Issue Date: {{book.issue_date}}</small></p>
+							  <div class="d-flex justify-content-between">
+								{% if book.is_favourite %}
+									  <a href="{% url 'favourite' book_id=book.id favourite=0 %}" class="btn btn-default shadow-sm">
+										   <i class="fa-solid fa-star text-warning"></i>
+									   </a>
+								 {% else %}
+								 <a href="{% url 'favourite' book_id=book.id favourite=1 %}" class="btn btn-default shadow-sm">
+								 <i class="fa-regular fa-star"></i>
+								  </a>
+								 {% endif %}
+						   
+								 {% if book.is_liked %}
+									   <a href="{% url 'like' book_id=book.id like=0 %}" class="btn btn-default shadow-sm">
+										  <i class="fa-solid fa-thumbs-up text-primary"></i>
+									   </a>
+								 {% else %}
+									  <a href="{% url 'like' book_id=book.id like=1 %}"class="btn btn-default shadow-sm">
+										  <i class="fa-regular fa-thumbs-up"></i>
+									  </a>
+								 {% endif %}
+						   
+								 {% if book.book_file != null and book.book_file != "" %}
+									 <a href="{{ book.book_file.url }}" class="btn btn-primary text-white">
+										<i class="fa-solid fa-download"></i>
+									 </a>
+								 {% endif %}
+						   </div>
+							</div>
+						  </div>
+						</div>
+					  </div>			
+				{% endfor %}
+
 		</tbody>
 	</table>
 </div> 
 <br>
-
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h5 class="modal-title" id="exampleModalLabel">Delete Book</h5>
-		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
-		<div class="modal-body">
-		   <p>Are you sure want to delete this Record? </p>
-		   <p class="text-warning">informations will be delete for (<span id="modalBookTitle"></span>)</p>
-		  
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		  <a href="" id="set_url" class="btn btn-danger">Delete</a>
-		</div>
-	  </div>
-	</div>
-  </div>
 
   {% include 'pagination.html' with queryset=books custom_range=custom_range %}
 {% endblock content %}

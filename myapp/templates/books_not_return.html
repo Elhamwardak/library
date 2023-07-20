@@ -19,7 +19,7 @@
               {% for book in deadline_returns_book %}
               <tr>
                 <td>{{book.id}}</td>
-                <td>{{book.user_id}}</td>
+                <td>{{book.user_id.username}}</td>
                 <td>{{book.book_id}}</td>	
                 <td>{{book.issue_date}}</td>	
                 <td >{{book.expected_return_date}}</td>	
