@@ -17,11 +17,11 @@
             <label for="">Choose Book :</label>
             <select name="book_id" class="form-select mb-4 " aria-label="Default select example">
                 {% for book in books %}
-                <option value="{{book.id}}">{{book.title}} ({{book.available_quantity}})</option>
+                <option value="{{book.id}}">{{book.title}}</option>
                 {% endfor %}
             </select>
             <label for="">Expected return date :</label>
-            <input type="date" name="expected_return_date" class="form-control mb-4" required>
+            <input type="date" name="expected_return_date" id="expected_return_date"  class="form-control mb-4" required>
 
             <button type="sumbit" class="btn btn-secondary w-100">Issue</button>
 
@@ -29,4 +29,8 @@
         
     </div>
 </form>
+<script>
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById("expected_return_date").setAttribute("min", today);
+</script>
 {% endblock content %}

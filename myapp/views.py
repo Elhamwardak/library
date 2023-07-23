@@ -37,7 +37,10 @@ def Admin(request):
 
     today = timezone.now().date()
     five_days_later = today + timedelta(days=7)
-    deadline_returns_book = IssueBook.objects.filter(expected_return_date__lte= five_days_later, expected_return_date__gt=today)
+    deadline_returns_book = IssueBook.objects.filter(expected_return_date__lte= five_days_later,
+                                                      expected_return_date__gt=today,
+                                                      returned_date=None
+                                                      )
     count_books_not_returned = deadline_returns_book.count()
 
     context = {'totalbooks':total_books,'totalusers':total_users,'total_issued':total_issued,
@@ -78,6 +81,8 @@ def Update_book(request, id):
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
+
+        messages.success(request,'Successfully Updated!')
         return redirect('books-management')
     else:
         book = Books.objects.get(pk=id)
@@ -92,6 +97,7 @@ def Update_book(request, id):
 def Delete_book(request, id):
     book = Books.objects.get(pk=id)
     book.delete()
+    messages.success(request,'Book Deleted!')
     return redirect('books-management')
 
 @allowed_users(allowed_roles=['admin'])
@@ -99,7 +105,10 @@ def Delete_book(request, id):
 def booksnotreturnyet(request):
     today = timezone.now().date()
     five_days_later = today + timedelta(days=7)
-    deadline_returns_book = IssueBook.objects.filter(expected_return_date__lte= five_days_later, expected_return_date__gt=today)
+    deadline_returns_book = IssueBook.objects.filter(expected_return_date__lte= five_days_later,
+                                                      expected_return_date__gt=today,
+                                                      returned_date=None
+                                                      )
 
     context={'deadline_returns_book':deadline_returns_book}
     return render(request,'books_not_return.html',context)
@@ -240,22 +249,26 @@ def add_user(request):
 @login_required(login_url='login-page')
 def Update_user(request, id):
     if request.method == 'POST':
-        user = CustomUser.objects.get(pk=id)
-        form = CreateUserForm(request.POST, instance=user)
-        if form.is_valid():
-            user = form.save()
-
-            role_group = request.POST['group'].lower()
-            group = Group.objects.get(name=role_group)
-            user.groups.add(group)
-
-        return redirect('users-management')
-    else:
         user = User.objects.get(pk=id)
-        form = CreateUserForm(instance=user)
+        user.username = request.POST['username']
+        user.first_name = request.POST['first_name']
+        user.father_name = request.POST['father_name']
+        user.last_name = request.POST['last_name']
+        user.email = request.POST['email']
+        user.phone_number = request.POST['phone_number']
+        user.user_id = request.POST['user_id']
+        user.gender = request.POST['gender']
+        user = user.save()
 
-    context = {'form': form, 'user_group' : user.groups.get}
-    return render(request, 'update_user.html', context)
+        messages.success(request,'You have Successfully updated the user')
+        return redirect('users-management')
+
+    else:
+       pass
+
+
+    user = User.objects.get(pk=id)
+    return render(request, 'update_user.html', {'user': user} )
 
 
 @allowed_users(allowed_roles=['admin'])
@@ -263,6 +276,7 @@ def Update_user(request, id):
 def Delete_user(request, id):
     users = CustomUser.objects.get(pk=id)
     users.delete()
+    messages.success(request, 'Deleted User')
     return redirect('users-management')
 
 

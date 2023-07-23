@@ -12,5 +12,12 @@
       "fields": {
         "name": "student"
       }
+    },
+    {
+      "model": "auth.group",
+      "pk": 3,
+      "fields": {
+        "name": "teacher"
+      }
     }
 ]

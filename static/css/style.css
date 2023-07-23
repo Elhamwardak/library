@@ -132,6 +132,7 @@
     display: flex;
     justify-content: space-between;
 }
+
 .cardBox {
     position: relative;
     width: 100%;
@@ -190,9 +191,8 @@
     color: rgb(9, 221, 236) !important;
  }
  .table-font-size{
-    font-size: 0.8rem !important;
+    font-size: 0.7rem !important;
  }
  .card{
     font-family:auto;
-
  }
