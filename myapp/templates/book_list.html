@@ -56,6 +56,7 @@
 				<th>Author</th>
 				<th>Issue Date</th>
 				<th>Quantity</th>
+				<th>Book File</th>
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
@@ -75,6 +76,14 @@
 						<td>{{book.author}}</td>
 						<td>{{book.issue_date}}</td>
 						<td>{{book.available_quantity}}</td>
+						{% if book.file %}
+						<td><a href="{{ book.file.url }}" class="btn btn-primary text-white">
+                            <i class="fa-solid fa-download"></i>
+                            </a>
+						</td>
+						{% else %}
+						<td>No File Choosen</td>
+						{% endif %}
 						<td style="width: 108px;">
 							<a href="{% url 'update-book' book.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square "></i></a>
 							<button  type="button" class="text-danger" value="{{book.id}}" style="border:none; background-color: transparent;"  data-bs-toggle="modal" data-bs-target="#exampleModal" role="button" onclick="checkdelete(this)">

@@ -153,6 +153,7 @@ def ViewIssueBook(request,books):
         context = {'total_issued_books_today': total_issued_books_today, 'title': 'Today\'s Issued Books'} 
  
     return render(request, 'view_issuebook.html', context)
+
 # CRUD system for Category section
 def categorylist(request):
     category = Category.objects.all()
@@ -262,11 +263,8 @@ def Update_user(request, id):
 
         messages.success(request,'You have Successfully updated the user')
         return redirect('users-management')
-
     else:
        pass
-
-
     user = User.objects.get(pk=id)
     return render(request, 'update_user.html', {'user': user} )
 
@@ -279,6 +277,15 @@ def Delete_user(request, id):
     messages.success(request, 'Deleted User')
     return redirect('users-management')
 
+def StudentList(request):
+    users = CustomUser.objects.filter(group_id="2")
+    context = {'users':users}
+    return render(request,'studentlist.html', context)
+
+def TeacherList(request):
+    users = CustomUser.objects.filter(group_id="3")
+    context = {'users':users}
+    return render(request,'teacherlist.html',context)
 
 #login , logout
 def Index(request):
@@ -331,23 +338,34 @@ def logoutUser(request):
     logout(request)
     return redirect('login-page')
 
+@login_required
 def user_profile(request):
-    # if request.user.is_authenticated:
-    #     if request.method == 'POST':
-    #         user = request.user
-    #         form = CustomUser(request.POST, instance=user)
-    #         if form.is_valid():
-    #             form.save()
-    #             login(request, user)
-    #         return redirect('user-profile')
-    #     else:
-    #         user = request.user
-    #         form = CustomUser(instance=user)
+    user = request.user
+    context = {
+        'user': user
+    }
+    return render(request, 'user_profile.html', context)
 
-        # context = {'form': form, 'user_group' : user.groups.get}
-    return render(request, 'user_profile.html')
-    # else:
-    #     return redirect('login-page')
+@login_required
+def Update_profile(request, id):
+    if request.method == 'POST':
+        user = User.objects.get(pk=id)
+        user.username = request.POST['username']
+        user.first_name = request.POST['first_name']
+        user.father_name = request.POST['father_name']
+        user.last_name = request.POST['last_name']
+        user.email = request.POST['email']
+        user.phone_number = request.POST['phone_number']
+        user.user_id = request.POST['user_id']
+        user.gender = request.POST['gender']
+        user = user.save()
+
+        # messages.success(request,'You have Successfully updated the user')
+        return redirect('user-profile')
+    else:
+       pass
+    user = User.objects.get(pk=id)
+    return render(request,'update_profile.html', {'user': user})
 
 # Books Pages for students
 def issuebook_to_student(request):
@@ -363,12 +381,7 @@ def issue_book_to_student(request):
     context = {'issuebook':issuebook}
     return render(request,'issued_book_to_student.html',context)
 
-def booklisttostudnet(request):
-    books, search_book = searchbooks(request)
-    custom_range,  books = paginateBooks(request, books, 5)
 
-    context ={"books":books,'search_book':search_book,'custom_range':custom_range}
-    return render(request, 'book_list_to_student.html',context)
 
 def return_date(request,id): 
     if request.method == 'POST':
@@ -401,7 +414,7 @@ def like(request, book_id, like):
             liked.is_liked = 0
             liked.save()
     
-    return redirect('books-page')
+    return redirect('book-list')
 
 def favourite(request, book_id, favourite):
     user = request.user
@@ -418,11 +431,11 @@ def favourite(request, book_id, favourite):
         else:
             record.is_favourite = 0
             record.save()
-    return redirect('books-page')
+    return redirect('book-list')
 
-def BooksPage(request):
+def booklisttostudnet(request):
     books, search_book = searchbooks(request)
-    custom_range,  books= paginateBooks(request, books, 6)
+    custom_range,  books = paginateBooks(request, books, 5)
     for book in books:
         record = StudentBook.objects.filter(user_id=request.user,book_id=book).first()
         if not record:
@@ -432,8 +445,10 @@ def BooksPage(request):
             book.is_liked = record.is_liked
             book.is_favourite = record.is_favourite
 
-    context = {'books':books,'search_book':search_book, 'custom_range':custom_range}
-    return render(request, 'books.html', context)
+    context ={"books":books,'search_book':search_book,'custom_range':custom_range}
+    return render(request, 'book_list_to_student.html',context)
+
+
 
 def MyFavourites(request):
     favourite_books_ids = StudentBook.objects.filter(user_id=request.user, is_favourite=1).values_list('book_id', flat=True)
@@ -450,3 +465,25 @@ def MyFavourites(request):
 
     context = {'books': books}
     return render(request, 'my_books.html', context)
+
+def ChangePassword(request):
+    context = {}
+    if request.method == "POST":
+        current = request.POST["current_password"]
+        new_password = request.POST["new_password"]
+
+        user = CustomUser.objects.get(id=request.user.id)
+        username = user.username
+        check = user.check_password(current)
+        if check == True:
+            user.set_password(new_password)
+            user.save()
+            context["msz"] = "Password Changed Succesfully!"
+            context["col"] = "alert-success"
+            user = CustomUser.objects.get(username=username)
+            login(request, user)
+        else:
+            context["msz"] = "Incorrect Current Password!"
+            context["col"] = "alert-danger"
+
+    return render(request, 'change-password.html', context)

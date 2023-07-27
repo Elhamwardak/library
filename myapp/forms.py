@@ -18,11 +18,14 @@ class BookForm(ModelForm):
             'cover_photo':forms.FileInput(attrs={'class':'form-control'}),
             'author': forms.Select(attrs={'class': 'form-select'}),
             'issue_date': forms.DateInput(attrs={'class': 'form-control'}),
+            'file':forms.FileInput(attrs={'class':'form-control'})
+
         }
 
         labels = {
             'title':'Book Title',
-            'isbn_number':'ISBN'
+            'isbn_number':'ISBN',
+            'file':'Choose File'
         }
 
 

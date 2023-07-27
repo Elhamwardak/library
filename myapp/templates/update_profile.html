@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+
+{% block title %}Update Profile{% endblock title %}
+
+{% block content %}
+
+<div class="container pt-4">
+    <div class="row">
+        <div class="col col-12">
+            <div class="card">
+                <div class="card-body p-4">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="row registerform p-2">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="">Username :</label>
+                                    <input type="text" name="username" class="form-control mb-3" value="{{user.username}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">First Name :</label>
+                                    <input type="text" name="first_name" id="" value="{{user.first_name}}" class="form-control mb-3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Father Name :</label>
+                                    <input type="text" name="father_name" id="" value="{{user.father_name}}" class="form-control mb-3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Last Name :</label>
+                                    <input type="text" name="last_name" id="" value="{{user.last_name}}" class="form-control mb-3">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Email :</label>
+                                    <input type="email" name="email" id="" value="{{user.email}}" class="form-control mb-3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Phone Number :</label>
+                                    <input type="text" name="phone_number" value="{{user.phone_number}}" class="form-control mb-3 ">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">User Id :</label>
+                                    <input type="text" name="user_id" value="{{user.user_id}}" class="form-control mb-3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="me-2 fw-700">Gender:</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="radio" name="gender" id="male" value="M" {% if user.gender == "M" %}checked{% endif %}>
+                                    <label for="male" class="me-5">Male</label>
+                                    <input type="radio" name="gender" id="female" value="F" {% if user.gender == "F" %}checked{% endif %} >
+                                    <label for="female" class="me-1">Female</label>
+                                </div>
+                            </div>   
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-secondary w-100" value="Update">
+                                </div>  
+                            </div>              
+                        </div>
+                    </form>
+                </div>
+            </div> 
+        </div> 
+    </div> 
+</div>
+
+<script>
+    var password1 = document.getElementById('id_password1');
+    password1.className += 'form-control';
+    
+    var password2 = document.getElementById('id_password2');
+    password2.className += 'form-control';
+</script>
+{% endblock %}

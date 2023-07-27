@@ -58,6 +58,7 @@ class Books(models.Model):
     cover_photo = models.ImageField(
         upload_to='images/', null=True, blank=True,  default='images/default.jpg')
     issue_date = models.DateField(auto_now_add=True)
+    file = models.FileField(upload_to="files/", null=True, blank=True)
 
 
     def __str__(self):
@@ -87,4 +88,3 @@ class IssueBook(models.Model):
     expected_return_date = models.DateField()
     returned_date = models.DateField(default=None, null=True, blank=True)
     quantity_issued = models.IntegerField(default=1)
-

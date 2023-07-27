@@ -1,0 +1,82 @@
+{% extends 'main.html' %}
+
+{% block title %}Student List{% endblock title %}
+
+{% block content %}
+
+<div  class="search-customization">
+	<div class="mb-3 w-50">
+	  <form id="searchForm" action="{% url 'users-management' %}" method="GET">
+		<div class="input-group">
+		  <input
+			class="form-control border-end-0 border"
+			type="search"
+			placeholder="Enter username"
+			id="example-search-input"
+			name="search_user"
+			value="{{search_user}}"
+		  />
+		  <span class="input-group-append">
+			<input
+			  class="btn btn-outline-secondary bg-light border-bottom-0 border ms-n5"
+			  type="submit"
+			  value="search"
+			/>
+		  </span>
+		</div>
+	  </form>
+	</div>
+  
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+		{{ message }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+    {% endfor %}
+{% endif %}
+
+<div class="p-4 shadow bg-white">					
+    <table class="table table-hover table-font-size">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User Id</th>
+                <th scope="col">User Name</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Father Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Role</th>
+                <th scope="col">Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.user_id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.father_name}}</td>
+                    <td>{{user.last_name}}</td> 
+                    <td>{{user.email}}</td>
+                    <td>{{user.phone_number}}</td>
+                    <td>{{user.group}}</td>
+                    <td>{{user.gender}}</td>
+                    <td>
+                        <a href="{% url 'update-user' user.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="{% url 'delete-user' user.id %}" onclick="return confirm('Do you really want to delete this user?') ;" class="delete" id="deleteBttn" data-toggle="modal"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br>
+    {% include 'pagination.html' with queryset=users custom_range=custom_range %}
+{% endblock %}

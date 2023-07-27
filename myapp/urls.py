@@ -19,28 +19,36 @@ urlpatterns = [
     path('add_category/', views.add_category, name='add_category'),
     path('update-category/<str:id>/',views.update_category,name='update-category'),
     path('delete-category/<str:id>', views.delete_category, name="delete-category"),
-     path('Author/',views.authorslist, name="author-list"),
+    path('Author/',views.authorslist, name="author-list"),
     path('add_author/', views.add_author, name='add_author'),
     path('update-author/<str:id>/',views.update_author,name='update-author'),
     path('delete-author/<str:id>', views.delete_author, name="delete-author"),
 
-    
+    path('studentlist/',views.StudentList, name ="studentlist"),
+    path('teacherlist/',views.TeacherList, name ="teacherlist"),
+
 
     path('add-user/', views.add_user, name="add-user"),
     path('update-user/<str:id>/', views.Update_user, name="update-user"),
-    path('delete-user/<str:id>', views.Delete_user, name="delete-user"),
+    path('delete-user/<str:id>/', views.Delete_user, name="delete-user"),
 
     path('', views.LoginPage, name="login-page"),
     path('register-page/', views.registerPage, name="register-page"),
     path('logout/', views.logoutUser, name="logout"),
 
     path('view-issue-to-student/', views.issuebook_to_student, name="view-issue-to-student"),
+
     path('profile/', views.user_profile, name="user-profile"),
+    path('update-profile/<str:id>/',views.Update_profile, name="update-profile"),
+
     path('returned-date/<str:id>/', views.return_date, name="return-date"),
 
     path('like/<int:book_id>/<int:like>', views.like, name="like"),
     path('favourite/<int:book_id>/<int:favourite>', views.favourite, name="favourite"),
     path('my-favourites/', views.MyFavourites, name="my-favourites"),
+
+    path('change-password/', views.ChangePassword, name="change-password"),
+
 
 
 ]
