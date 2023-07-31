@@ -19,6 +19,10 @@ from django.core.exceptions import ValidationError
 User = get_user_model() 
 # Create your views here.
 
+
+def Index(request):
+    return render(request,'index.html')
+
 @login_required(login_url='login-page')
 @admin_only
 def Admin(request):
@@ -287,11 +291,7 @@ def TeacherList(request):
     context = {'users':users}
     return render(request,'teacherlist.html',context)
 
-#login , logout
-def Index(request):
-    return render(request, 'login-page.html')
-
-
+# #login , logout
 @unauthenicated_user
 def LoginPage(request):
  
@@ -308,7 +308,7 @@ def LoginPage(request):
             messages.error(request, 'Email or Password is incorrect!')
 
     context = {}
-    return render(request, 'index.html', context)
+    return render(request, 'login.html', context)
 
 
 @unauthenicated_user

@@ -11,15 +11,15 @@
 	<table class="table table-font-size table-hover">
 	    <thead>
             <tr>
-              <th scope="col" class="text-center">Author Name</th>
-              <th scope="col" class="text-center" >Action</th>
+              <th>Author Name</th>
+              <th  class="text-center" >Action</th>
             </tr>
           </thead>
 		<tbody>
 			{% if author %}
 				{% for i in author %}
 					<tr>
-						<td class="text-center">{{i.name}}</td>
+						<td>{{i.name}}</td>
 						
 						<td class="text-center" style="width: 108px;">
 							<a href="{% url 'update-author' i.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square "></i></a>

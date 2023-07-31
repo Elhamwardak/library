@@ -9,13 +9,13 @@
     <div class="d-flex flex-column justify-content-center align-items-center" style="height: 500px;">
         <div class="w-50 border  p-5 rounded-3 " style="background-color: #fff;" >
             <label for="">Choose User :</label>
-            <select name="user_id" class="form-select mb-4" aria-label="Default select example">
+            <select id="my-select" name="user_id" class="form-select mb-4" aria-label="Default select example">
                 {% for user in users %}
                     <option value="{{user.id}}">{{user.first_name}}</option>
                 {% endfor %}
             </select>
             <label for="">Choose Book :</label>
-            <select name="book_id" class="form-select mb-4 " aria-label="Default select example">
+            <select id="my-select2" name="book_id" class="form-select mb-4 " aria-label="Default select example">
                 {% for book in books %}
                 <option value="{{book.id}}">{{book.title}}</option>
                 {% endfor %}
@@ -32,5 +32,14 @@
 <script>
     var today = new Date().toISOString().split('T')[0];
     document.getElementById("expected_return_date").setAttribute("min", today);
+
+    $(document).ready(function() {
+        $('#my-select').select2();
+    });
+    $(document).ready(function() {
+        $('#my-select2').select2();
+    });
 </script>
+
+
 {% endblock content %}
