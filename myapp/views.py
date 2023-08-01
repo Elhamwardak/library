@@ -21,7 +21,11 @@ User = get_user_model()
 
 
 def Index(request):
-    return render(request,'index.html')
+    books, search_book = searchbooks(request)
+    custom_range,  books = paginateBooks(request, books, 5)
+
+    context = {'books': books,'search_book':search_book,'custom_range':custom_range}
+    return render(request,'index.html',context)
 
 @login_required(login_url='login-page')
 @admin_only
@@ -444,8 +448,12 @@ def booklisttostudnet(request):
         else:
             book.is_liked = record.is_liked
             book.is_favourite = record.is_favourite
+    if request.GET.get('filter_by'):
+        category = Category.objects.get(name=request.GET.get('filter_by'))
+        books = Books.objects.filter(category=category.id)
 
-    context ={"books":books,'search_book':search_book,'custom_range':custom_range}
+    categories = Category.objects.all()
+    context ={"books":books,'search_book':search_book,'custom_range':custom_range, 'categories': categories}
     return render(request, 'book_list_to_student.html',context)
 
 
