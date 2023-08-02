@@ -24,16 +24,16 @@
             <div class="col-md-6 side-image">
                 <img src="{% static 'images/open-book (1).png' %}" class="png-image" alt="">
                 <div class="text">
-                    <p>Library Management System</p>
+                    <p>Login Page</p>
                 </div>
              </div>
             <div class="col-md-6 right">
                 <form action="" method="POST">
                     {% csrf_token %}
                     <div class="input-box">
-                        <header>Create account</header>
+                        <header>Login</header>
                         {% for message in messages %}
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class="alert alert-danger alert-dismissible fade show alert-login" role="alert">
                             {{message}}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                           </div>
@@ -46,13 +46,10 @@
                             <input type="password" name="password" class="input" id="email" required >
                             <label for="password">Password</label>
                         </div>
-                        <div class="input-field">
+                        <div class="input-field mb-3">
                             <input type="submit" class="submit" value="Log in">
                         </div>
-                        <div class="signin">
-                            <span>Don't have an account? <a href="{% url 'register-page' %}">Sign Up</a></span>
-                        </div>
-                        <div class="forgetpassword" >
+                        <div class="forgetpassword">
                             <a href="{% url 'reset_password' %}">Forget Password</a>
                         </div>
                     </div>

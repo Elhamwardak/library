@@ -206,18 +206,21 @@
     align-items: start;
     flex-direction: column;
     line-height: 2rem;
-    margin-top: 30px;
 }
-.span-color{
-    color: rgba(0,98, 165, 1);
-}
-.headings{
-    height: 10vh;
+.img-customization{
     display: flex;
     justify-content: center;
+    align-items: end;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 30px;
+}
+.font{
+    font-size: 3rem;
+}
+.landing-img{
+    max-width: 350px;
+    width: 450px;
+    height: 450px;
+    text-align: center;
 }
 .footer{
     min-height: 25vh;
@@ -258,8 +261,6 @@
     max-width: 100%;
     height: auto;
     width: 10rem;
-    background: #efe9e9;
-    border-radius: 24px;
     padding: 2px;
 }
 .navbar-ul{
@@ -268,11 +269,9 @@
     justify-content: center;
     align-items: center;
     color: #fff;
-    margin-right: 1px;
 }
 .navbar-ul li{
     list-style-type: none;
-    margin-right: 30px;
 }
 .navbar-ul a{
     text-decoration: none;
@@ -286,11 +285,36 @@
 .contact{
     font-size: 12px;
 }
-.card-tag{
-    color: #fff;
+.background-color-container{
+    background-image: linear-gradient(to bottom, rgba(0,0,0,3.5), rgba(0,0,0,0.10)), url('../images/janko-ferlic-sfL_QOnmy00-unsplash.jpg');
+    background-size: cover;
+    min-height: 50vh;
+    width: 100%;
+    margin-top: 4rem;
+}
+.card-border{
     border: none;
-    border-radius: 1rem;
-    background-color: rgb(77, 209, 233);
-    padding: 5px;
-    font-size: 15px;
+}
+.book-discription-border{
+    border: none;
+}
+.card-img{
+    height: 240px;
+}
+.book-discription-img{
+    height: 400px;
+}
+.input-group-customization{
+    width: 6rem;
+    height: 26px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+.filter-button{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 80%;
+
 }

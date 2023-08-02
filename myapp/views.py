@@ -24,8 +24,16 @@ def Index(request):
     books, search_book = searchbooks(request)
     custom_range,  books = paginateBooks(request, books, 5)
 
-    context = {'books': books,'search_book':search_book,'custom_range':custom_range}
+    if request.GET.get('filter_by'):
+        category = Category.objects.get(name=request.GET.get('filter_by'))
+        books = Books.objects.filter(category=category.id)
+
+    categories = Category.objects.all()  
+    context = {'books': books,'search_book':search_book,'custom_range':custom_range,'categories':categories}
     return render(request,'index.html',context)
+
+def bookDiscriptions(request, id):
+    return render(request,'books_discriptions.html')
 
 @login_required(login_url='login-page')
 @admin_only
@@ -73,9 +81,10 @@ def add_book(request):
     form = BookForm()
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
-        form.save()
-        messages.success(request,"Book Successfully added")
-        return redirect('books-management')
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Book Successfully added")
+            return redirect('books-management')
 
     context = {'form': form}
     return render(request, 'add_book.html', context)
@@ -89,9 +98,8 @@ def Update_book(request, id):
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
-
-        messages.success(request,'Successfully Updated!')
-        return redirect('books-management')
+            messages.success(request,'Successfully Updated!')
+            return redirect('books-management')
     else:
         book = Books.objects.get(pk=id)
         form = BookForm(instance=book)
@@ -314,29 +322,6 @@ def LoginPage(request):
     context = {}
     return render(request, 'login.html', context)
 
-
-@unauthenicated_user
-def registerPage(request):
-    if request.method == 'POST':
-        if request.method == 'POST':
-            username = request.POST['username']
-            first_name = request.POST['firstname']
-            last_name = request.POST['lastname']
-            email = request.POST['email']
-            phone_number = request.POST['phone_number']
-            user_id = request.POST['user_id']
-            group= request.POST['group']
-            password1 = request.POST['password1']
-            password2 = request.POST['password2']
-
-            user = CustomUser.objects.create_user(username=username, first_name=first_name, last_name=last_name,
-                                                email=email,phone_number=phone_number,user_id=user_id,
-                                                group=group,password1=password1,password2=password2)
-            user.save()
-        return redirect('users-management')
-
-    return render(request, 'register_page.html')
-   
 
 def logoutUser(request):
     logout(request)

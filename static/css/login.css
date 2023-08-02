@@ -173,3 +173,6 @@ span a:hover{
 .form-group label{
     font-family: auto;
 }
+.alert-login{
+    font-size: 12px;
+}

@@ -19,7 +19,6 @@ class BookForm(ModelForm):
             'author': forms.Select(attrs={'class': 'form-select'}),
             'issue_date': forms.DateInput(attrs={'class': 'form-control'}),
             'file':forms.FileInput(attrs={'class':'form-control'})
-
         }
 
         labels = {
