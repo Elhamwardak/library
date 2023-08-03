@@ -305,16 +305,7 @@
     height: 400px;
 }
 .input-group-customization{
-    width: 6rem;
-    height: 26px;
+    width: 5rem;
     border-radius: 5px;
-    border: none;
-    outline: none;
-}
-.filter-button{
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    width: 80%;
 
 }

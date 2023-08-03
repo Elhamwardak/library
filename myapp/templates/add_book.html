@@ -1,5 +1,7 @@
 {% extends 'main.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}Add Book {% endblock title %}
 
 {% block content %}
@@ -10,9 +12,18 @@
         <div class="col col-12">
             <div class="card">
                     <div class="card-body p-4">
-                        <form action="" method="POST" enctype="multipart/form-data">
+                        <form action="" method="POST" enctype="multipart/form-data" novalidate>
                         {% csrf_token %}
-                        {{form.as_p}}
+                        <div class="row">
+                            <div class="col-md-6 ">{{form.isbn_number  | as_crispy_field}}</div>
+                            <div class="col-md-6">{{form.title | as_crispy_field}}</div>
+                            <div class="col-md-6">{{form.category | as_crispy_field}}</div>
+                            <div class="col-md-6">{{form.author | as_crispy_field}}</div>
+                            <div class="col-md-6">{{form.cover_photo | as_crispy_field}}</div>
+                            <div class="col-md-6 required">{{form.book_file | as_crispy_field}}</div>
+                            <div class="col-md-12">{{form.book_descriptions | as_crispy_field}} </div>
+                            <div class="col-md-12">{{form.available_quantity | as_crispy_field}}</div>
+                        </div>
                         <input type="submit" value="Save" class="btn btn-secondary w-100 border-none">
                         </form>
                     </div>    

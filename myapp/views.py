@@ -33,6 +33,7 @@ def Index(request):
     return render(request,'index.html',context)
 
 def bookDiscriptions(request, id):
+    
     return render(request,'books_discriptions.html')
 
 @login_required(login_url='login-page')
@@ -171,11 +172,15 @@ def ViewIssueBook(request,books):
     return render(request, 'view_issuebook.html', context)
 
 # CRUD system for Category section
+@allowed_users(allowed_roles=['admin'])
+@login_required(login_url='login-page')
 def categorylist(request):
     category = Category.objects.all()
     context={'category':category}
     return render(request,'category_list.html',context)
 
+@allowed_users(allowed_roles=['admin'])
+@login_required(login_url='login-page')
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -186,6 +191,8 @@ def add_category(request):
         form = CategoryForm()
     return render(request, 'add_category.html', {'form': form})
 
+@allowed_users(allowed_roles=['admin'])
+@login_required(login_url='login-page')
 def update_category(request, id):
     category = Category.objects.get(pk=id)
     if request.method == 'POST':
@@ -197,17 +204,21 @@ def update_category(request, id):
         form = CategoryForm(instance=category)
     return render(request,'update_category.html',{'form':form})
 
+@allowed_users(allowed_roles=['admin'])
+@login_required(login_url='login-page')
 def delete_category(request, id):
     category = Category.objects.get(pk=id)
     category.delete()
     return redirect('category-list')
 
 # CRUD system for Authors section
-
+@allowed_users(allowed_roles=['admin'])
+@login_required(login_url='login-page')
 def authorslist(request):
     author = Author.objects.all()
     context={'author':author}
     return render(request,'author_list.html',context)
+
 
 def add_author(request):
     if request.method == 'POST':
@@ -422,6 +433,8 @@ def favourite(request, book_id, favourite):
             record.save()
     return redirect('book-list')
 
+@allowed_users(allowed_roles='student')
+@login_required(login_url='login-page')
 def booklisttostudnet(request):
     books, search_book = searchbooks(request)
     custom_range,  books = paginateBooks(request, books, 5)

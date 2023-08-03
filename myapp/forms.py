@@ -1,31 +1,55 @@
 from django.forms import ModelForm, widgets
 from .models import Books, IssueBook,Category,Author, CustomUser
-from django.core import validators
+from django.core.validators import RegexValidator
 from django import forms
 
 
 class BookForm(ModelForm):
 
+    # VALIDATIONS
+    isbn_number = forms.CharField(
+        label = 'ISBN',min_length = 4, max_length = 10,
+        validators=[RegexValidator(message="only id is allowed!")],
+        widget = forms.TextInput(attrs={'placeholder':'isbn number'})
+    )
+    title = forms.CharField(
+        label = 'Title',min_length = 4, max_length = 20,
+        validators=[RegexValidator(message="put the book title here!")],
+        widget = forms.TextInput(attrs={'placeholder':'book title'})
+    )
+    available_quantity = forms.CharField(
+        label = 'Available Quantity',min_length = 0, max_length = 100,
+        required=False,
+        validators=[RegexValidator(message="Only number is allowed!")],
+        widget = forms.TextInput(attrs={'type':'number'})
+    )
+    book_descriptions = forms.CharField(
+        label = 'Descriptions',min_length = 0, max_length = 1000,        
+        required=False,
+        validators=[RegexValidator(message="descriptions about book!")],
+        widget = forms.Textarea(attrs={'placeholder':'Put some informations about book','rows':5})
+    )
+
     class Meta:
         model = Books
         fields = '__all__'
 
-        widgets = {
-            'isbn_number':forms.TextInput(attrs={'class':'form-control'}),
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'category': forms.Select(attrs={'class': 'form-select'}),
-            'available_quantity': forms.NumberInput(attrs={'class': 'form-control'}),
-            'cover_photo':forms.FileInput(attrs={'class':'form-control'}),
-            'author': forms.Select(attrs={'class': 'form-select'}),
-            'issue_date': forms.DateInput(attrs={'class': 'form-control'}),
-            'file':forms.FileInput(attrs={'class':'form-control'})
-        }
-
-        labels = {
-            'title':'Book Title',
-            'isbn_number':'ISBN',
-            'file':'Choose File'
-        }
+        # widgets = {
+        #     'isbn_number':forms.TextInput(attrs={'class':'form-control'}),
+        #     'title': forms.TextInput(attrs={'class': 'form-control'}),
+        #     'book_descriptions': forms.TextInput(attrs={'class': 'form-control'}),
+        #     'category': forms.Select(attrs={'class': 'form-select'}),
+        #     'available_quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+        #     'cover_photo':forms.FileInput(attrs={'class':'form-control'}),
+        #     'author': forms.Select(attrs={'class': 'form-select'}),
+        #     'issue_date': forms.DateInput(attrs={'class': 'form-control'}),
+        #     'book_file':forms.FileInput(attrs={'class':'form-control'})
+        # }
+        # labels = {
+        #     'title':'Book Title',
+        #     'isbn_number':'ISBN',
+        #     'file':'Choose File'
+        # }
 
 
 class CategoryForm(forms.ModelForm):
@@ -54,3 +78,12 @@ class UserForm(forms.ModelForm):
     class Meta:
         model=CustomUser
         fields=['username', 'first_name','father_name', 'last_name', 'gender', 'phone_number', 'user_id', 'password', 'email', 'group']
+
+    widgets = {
+        'phone_number': forms.TextInput(
+            attrs={
+                'placeholder':'+(93)00-000-0000',
+                'data-mask':'+(00)00-000-0000'
+            }
+        )
+    }

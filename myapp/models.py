@@ -52,13 +52,14 @@ class Category(models.Model):
 class Books(models.Model):
     isbn_number = models.CharField(max_length=20,null=True,blank=True)
     title = models.CharField(max_length=20)
+    book_descriptions = models.TextField(max_length=1000, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     available_quantity = models.IntegerField(default=0)
     cover_photo = models.ImageField(
         upload_to='images/', null=True, blank=True,  default='images/default.jpg')
     issue_date = models.DateField(auto_now_add=True)
-    file = models.FileField(upload_to="files/", null=True, blank=True)
+    book_file = models.FileField(upload_to="files/",null=True,blank=True)
 
 
     def __str__(self):

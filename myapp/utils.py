@@ -42,7 +42,9 @@ def searchbooks(request):
     if request.GET.get('search_book'):
         search_book = request.GET.get('search_book')
 
-    book = Books.objects.filter(Q(title__icontains=search_book)
+    book = Books.objects.filter(Q(title__icontains=search_book)|
+                                Q(author__name__icontains=search_book)|
+                                 Q(category__name__icontains=search_book)
                                  ) 
                                 
     return book, search_book
