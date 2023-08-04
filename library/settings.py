@@ -32,6 +32,7 @@ AUTH_USER_MODEL = 'myapp.CustomUser'
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'admin_interface',
     'colorfield',
     'crispy_forms',

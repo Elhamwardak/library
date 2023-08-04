@@ -8,11 +8,10 @@ from django.utils import timezone
 
 
 
-GENDER_CHOICES = (
-    ('M', 'Male'),
-    ('F', 'Female'),
-    ('O', 'Other')
-)
+# GENDER_CHOICES = (
+#     ('M', 'Male'),
+#     ('F', 'Female')
+# )
 class CustomUser(AbstractUser):
 
     email = models.EmailField(max_length=255, unique=True)
@@ -20,10 +19,10 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(null=True, blank=True, max_length=100)
     father_name= models.CharField(null=True, blank=True, max_length=100)
     last_name = models.CharField(null=True, blank=True, max_length=100)
-    phone_number = models.CharField(null=True,blank=True, max_length=20)
+    phone_number = models.CharField(max_length=16)
     user_id = models.CharField(max_length=50,null=True,blank=True)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, default=2)
-    gender = models.CharField(max_length=1,choices=GENDER_CHOICES,null=True,blank=True)
+    gender = models.CharField(max_length=1,null=True,blank=True)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'

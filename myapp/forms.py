@@ -4,6 +4,16 @@ from django.core.validators import RegexValidator
 from django import forms
 
 
+# Every letters to LowerCase
+# class Lowercase(forms.CharField):
+#     def to_python(self, value):
+#         return value.lower()
+
+# Every letters to UpperCase
+# class Uppercase(forms.CharField):
+#     def to_python(self, value):
+#         return value.upper()
+
 class BookForm(ModelForm):
 
     # VALIDATIONS
@@ -75,15 +85,30 @@ class AuthorForm(forms.ModelForm):
 
 class UserForm(forms.ModelForm):
 
+
+    # VALIDATIONS
+
+    username = forms.CharField(
+        label = 'Username',min_length = 4, max_length = 30,
+        validators=[RegexValidator(r'^(?=.*[a-zA-Z])(?=.*\d).+$',message="charecters + number is allowed!")]
+    )
+    email = forms.CharField(
+        label = 'Email address',min_length = 4, max_length = 30,
+        validators=[RegexValidator(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',message="please enter the correct email address!")]
+    )
+    GENDER_CHOICES = [('M','Male'),('F','Female')]
+    gender = forms.CharField(label='Gender',widget=forms.RadioSelect(choices=GENDER_CHOICES))
+    password = forms.CharField(
+        label = 'Password',min_length = 4, max_length = 30,
+        validators=[RegexValidator(r'^(?=.*[a-zA-Z])(?=.*\d).+$',message="please enter the correct password!")]
+    )
     class Meta:
         model=CustomUser
         fields=['username', 'first_name','father_name', 'last_name', 'gender', 'phone_number', 'user_id', 'password', 'email', 'group']
 
-    widgets = {
-        'phone_number': forms.TextInput(
-            attrs={
-                'placeholder':'+(93)00-000-0000',
-                'data-mask':'+(00)00-000-0000'
-            }
-        )
-    }
+        widgets = {
+            'phone_number': forms.TextInput(attrs={'data-mask':'(00)00-000-0000'}),
+            # 'gender':forms.TextInput(attrs={'class':'form-check',type':'radio'}),
+            'user_id': forms.TextInput(attrs={'placeholer':'Example= BCS-98-968'}),
+            # 'gender':forms.RadioSelect(attrs={'type':'radio'})
+        }

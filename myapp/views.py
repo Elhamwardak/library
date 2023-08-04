@@ -260,6 +260,7 @@ def user_list(request):
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def add_user(request):
+    form = UserForm(request.POST)
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
@@ -270,7 +271,7 @@ def add_user(request):
             messages.success(request,"User successfully added")
             return redirect('users-management')
     groups = Group.objects.filter(~Q(name='admin'))
-    return render(request, 'add_user.html', {'groups': groups})
+    return render(request, 'add_user.html', {'groups': groups,'form':form })
 
 
 @allowed_users(allowed_roles=['admin'])
