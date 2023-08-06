@@ -88,3 +88,9 @@ class IssueBook(models.Model):
     expected_return_date = models.DateField()
     returned_date = models.DateField(default=None, null=True, blank=True)
     quantity_issued = models.IntegerField(default=1)
+
+class ContactUs(models.Model):
+    full_name = models.CharField(max_length=30)
+    phone_number = models.IntegerField()
+    email = models.EmailField(max_length=50)
+    message = models.TextField()

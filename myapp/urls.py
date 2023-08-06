@@ -9,6 +9,10 @@ urlpatterns = [
     path('books-management/', views.book_list, name="books-management"),
     path('users-management/', views.user_list, name="users-management"),
     path('book_list/', views.booklisttostudnet,name='book-list'),
+    path('contact_us/', views.contactUs.as_view(),name='contact-us'),
+    path('message/',views.Message.as_view(),name="message"),
+    path('delete/<str:id>/',views.deletemessage,name="delete-message"),
+
 
 
     path('add-book/', views.add_book, name="add-book"),

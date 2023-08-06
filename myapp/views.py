@@ -14,6 +14,8 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
+from django.views.generic import CreateView, ListView,DeleteView
+from django.urls import reverse_lazy
 
 
 User = get_user_model() 
@@ -33,8 +35,26 @@ def Index(request):
     return render(request,'index.html',context)
 
 def bookDiscriptions(request, id):
-    
-    return render(request,'books_discriptions.html')
+    book = Books.objects.get(pk=id)
+    context = {'book':book}
+    return render(request,'books_discriptions.html',context)
+
+class contactUs(CreateView):
+    model = ContactUs
+    fields = '__all__'
+    template_name = 'contact_us.html'
+    success_url = reverse_lazy("contact-us")
+
+class Message(ListView):
+    model = ContactUs
+    template_name = 'message.html'
+    context_object_name = 'contact_us_list'
+
+def deletemessage(request, id):
+    message = ContactUs.objects.get(pk=id)
+    message.delete()
+    messages.success(request,'Message Deleted')
+    return redirect('message')
 
 @login_required(login_url='login-page')
 @admin_only

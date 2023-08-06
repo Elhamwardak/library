@@ -1,21 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load custom_tags %}
 {% block body %}
 <div class="background-color-container">
     <div class="container">
         <div class="row" style="min-height: 500px;">
             <div class="col-md-6 row-customization">
                 <div>
-                    <h1 class="text-white font">Salam <span class="text-white">Library <br> Management System</span></h1>
+                    <h1 class="text-white font">Salam <span class="text-light">Library <br> Management System</span></h1>
                 </div>
                 <div>
                     <p class="text-white">Expand your reading horizons by searching for books across various genres.</p>
-                </div>
-                <div>
-                    <a href="#footer">
-                        <button class="btn btn-primary">Contact Us</button>
-                    </a>
                 </div>
             </div> 
         </div>
@@ -23,9 +18,9 @@
 </div>
 
 <div class="container">
-    <div id="books" class="text-dark text-center mt-5 mb-5 ">
+    <div class="text-dark text-center mt-5 mb-5 ">
         <h3>Library Books</h3>
-    </div>
+    </div> 
 </div>
 
 <div class="container mb-5">
@@ -34,12 +29,6 @@
             <div class="d-flex">
                 <input type="search" class="form-control" name="search_book" value="{{search_book}}" placeholder="Search for books" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <button class="btn btn-outline-secondary search-button" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
-                <select class="input-group-customization" id="inputGroupSelect01" onchange="handleCategoryChange(this)">
-                    <option selected>Filter by</option>
-                    {% for category in categories %}
-                                <option value="{{category.name}}">{{category.name}}</option>
-                    {% endfor %}
-                </select>
             </div>     
         </form>
     </div>
@@ -73,7 +62,7 @@
 </div>
 
 <div class="container mb-5">
-    <div id="category" class="text-center text-dark fw-bolder">
+    <div class="text-center text-dark fw-bolder">
         <h3>Category</h1>
     </div>
 </div>
@@ -87,13 +76,5 @@
 		</a>
 	{% endfor %}
 </div>
-<script>
-    function handleCategoryChange(selectElement) {
-        var selectedCategory = selectElement.value;
-        var baseUrl = "{% url 'index' %}?filter_by=";
-        var newUrl = baseUrl + encodeURIComponent(selectedCategory);
-        window.location.href = newUrl;
-    }
-    
-</script>
+
 {% endblock body %}

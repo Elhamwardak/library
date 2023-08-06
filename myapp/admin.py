@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Books, Profile, StudentBook, IssueBook,Category,Author,CustomUser
+from .models import Books, Profile, StudentBook, IssueBook,Category,Author,CustomUser,ContactUs
 from.forms import UserForm
 from django.utils.html import format_html
 # Register your models here.
@@ -18,6 +18,8 @@ admin.site.register(IssueBook)
 admin.site.register(Category)
 admin.site.register(Author)
 admin.site.register(CustomUser)
+admin.site.register(ContactUs)
+
 
 
 

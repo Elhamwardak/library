@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% block title %}Messages{% endblock title %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+		{{ message }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+    {% endfor %}
+{% endif %}
+
+<div class="p-4 shadow bg-white">
+    {% for message in contact_us_list %}					
+    <div class="row">
+        <div class="col-md-2">
+            <p><span class="text-dark fw-bold">Name: </span>{{message.full_name}}</p>
+            <p><span class="text-dark fw-bold">Number: </span>{{message.phone_number}}</p>
+            <p><span class="text-dark fw-bold">Email: </span>{{message.email}}</p>
+        </div>
+        <div class="col-md-9">
+            <span class="text-dark fw-bold">(Message): </span>{{message.message}}
+        </div>
+        <div class="col-md-1 mb-2">
+            <a href="{% url 'delete-message' message.id %}" class="btn btn-danger" onclick="return confirm('Do you really want to delete this message?') ;">
+                <i class="fa-solid fa-trash text-light "></i>
+            </a>
+        </div>
+        <hr>
+    </div>
+   {% endfor %}
+</div>
+{% endblock %}

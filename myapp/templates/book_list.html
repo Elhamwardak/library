@@ -76,7 +76,7 @@
 						<td>{{book.author}}</td>
 						<td>{{book.issue_date}}</td>
 						<td>{{book.available_quantity}}</td>
-						{% if book.file %}
+						{% if book.book_file %}
 						<td><a href="{{ book.book_file.url }}" class="btn btn-primary text-white">
                             <i class="fa-solid fa-download"></i>
                             </a>
