@@ -49,14 +49,15 @@
   <div class="dropdown">
     {% if request.user.username %}
       {% if request.user.is_staff %}
-        <a href="{% url 'message' %}">
+      <a href="{% url 'message' %}">
           <i class="fa-solid fa-message me-3 text-light"></i>
+          <span class="message-count"></span>
         </a>
       {% endif %}
-    <a class="dropdown-toggle user-menu-item" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="fa-solid fa-user me-2 text-white"></i>
-      <span class="text-white">{{request.user.username}}</span>
-    </a>
+        <a class="dropdown-toggle user-menu-item" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-user me-2 text-white"></i>
+          <span class="text-white">{{request.user.username}}</span>
+        </a>
     
     <ul class="dropdown-menu dropdown-menu-lg-end mt-2">
       {% if not request.user.is_staff %}

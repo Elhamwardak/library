@@ -6,11 +6,25 @@
 
 {% block body %}
 <div class="container">
-    <div class="d-flex justify-content-center align-items-center mt-5" style="margin-top: 6rem !important;">
+    <div class="d-flex justify-content-center align-items-center mt-5" style="margin-top: 6rem !important; margin: auto;">
         <div class="card p-5 shadow">
             <form method="POST">
                 {% csrf_token %}
-               {{form|crispy}}
+               <div class="row">
+                <div class="col-md-6">
+                    {{form.full_name | as_crispy_field}}
+                </div>
+                <div class="col-md-6">
+                    {{form.phone_number | as_crispy_field}}
+
+                </div>
+                <div class="col-md-12">
+                    {{form.email | as_crispy_field}}
+                </div>
+                <div class="col-md-12">
+                    {{form.message | as_crispy_field}}
+                </div>
+               </div>
                <button class="btn btn-primary " type="submit">Submit</button>
             </form>
         </div>  

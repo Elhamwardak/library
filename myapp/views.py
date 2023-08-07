@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
-from .forms import BookForm,CategoryForm,AuthorForm, UserForm
+from .forms import BookForm,CategoryForm,AuthorForm, UserForm,ContactForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenicated_user, allowed_users, admin_only
@@ -14,8 +14,8 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
-from django.views.generic import CreateView, ListView,DeleteView
-from django.urls import reverse_lazy
+
+
 
 
 User = get_user_model() 
@@ -39,22 +39,7 @@ def bookDiscriptions(request, id):
     context = {'book':book}
     return render(request,'books_discriptions.html',context)
 
-class contactUs(CreateView):
-    model = ContactUs
-    fields = '__all__'
-    template_name = 'contact_us.html'
-    success_url = reverse_lazy("contact-us")
 
-class Message(ListView):
-    model = ContactUs
-    template_name = 'message.html'
-    context_object_name = 'contact_us_list'
-
-def deletemessage(request, id):
-    message = ContactUs.objects.get(pk=id)
-    message.delete()
-    messages.success(request,'Message Deleted')
-    return redirect('message')
 
 @login_required(login_url='login-page')
 @admin_only
@@ -493,6 +478,7 @@ def MyFavourites(request):
     context = {'books': books}
     return render(request, 'my_books.html', context)
 
+# Section (ChangePassword)
 def ChangePassword(request):
     context = {}
     if request.method == "POST":
@@ -514,3 +500,30 @@ def ChangePassword(request):
             context["col"] = "alert-danger"
 
     return render(request, 'change-password.html', context)
+
+
+# Section (Contact Us)
+def contactUs(request):
+    if request.method =='POST':
+        form = ContactForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect('contact-us')
+    else:
+        form = ContactForm()
+
+    context = {'form':form}
+    return render(request,'contact_us.html',context)
+
+
+def Message(request):
+    contact_us_list = ContactUs.objects.all()
+
+    context = {'contact_us_list':contact_us_list}
+    return render(request,'message.html',context)
+
+def deletemessage(request, id):
+    message = ContactUs.objects.get(pk=id)
+    message.delete()
+    messages.success(request,'Message Deleted')
+    return redirect('message')

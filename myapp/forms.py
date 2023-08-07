@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from .models import Books, IssueBook,Category,Author, CustomUser
+from .models import Books, IssueBook,Category,Author, CustomUser,ContactUs
 from django.core.validators import RegexValidator
 from django import forms
 
@@ -18,7 +18,7 @@ class BookForm(ModelForm):
 
     # VALIDATIONS
     isbn_number = forms.CharField(
-        label = 'ISBN',min_length = 4, max_length = 10,
+        label = 'ISBN',min_length = 0, max_length = 10,
         validators=[RegexValidator(message="only id is allowed!")],
         widget = forms.TextInput(attrs={'placeholder':'isbn number'})
     )
@@ -98,6 +98,7 @@ class UserForm(forms.ModelForm):
     )
     GENDER_CHOICES = [('M','Male'),('F','Female')]
     gender = forms.CharField(label='Gender',widget=forms.RadioSelect(choices=GENDER_CHOICES))
+    
     password = forms.CharField(
         label = 'Password',min_length = 4, max_length = 30,
         validators=[RegexValidator(r'^(?=.*[a-zA-Z])(?=.*\d).+$',message="please enter the correct password!")]
@@ -112,3 +113,13 @@ class UserForm(forms.ModelForm):
             'user_id': forms.TextInput(attrs={'placeholer':'Example= BCS-98-968'}),
             # 'gender':forms.RadioSelect(attrs={'type':'radio'})
         }
+
+class ContactForm(forms.ModelForm):
+
+    message = forms.CharField(
+        label='Message',
+        widget = forms.Textarea(attrs={'placeholder':'Write your message','rows':7})
+    )
+    class Meta:
+        model = ContactUs
+        fields = '__all__'
