@@ -76,7 +76,10 @@
     background-color:#ffffff; 
     border-right:1px solid #d6d1d1;
 }
-
+/* .sidebar-icons{
+    height: 5px;
+    width: 5px;
+} */
 .main-div{
     padding-top:60px;
 }
@@ -96,6 +99,7 @@
 
 .sidebar-sticky ul li{
     margin-top:5px;
+    width: 100%;
 }
 
 .sidebar-sticky ul li a{
@@ -125,7 +129,7 @@
     color:#8a8b8a;
 }
 .font-12{
-    font-size: 15px; 
+    font-size: 15px;
 }
 .issue_btn{
     background: #000 !important;

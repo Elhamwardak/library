@@ -25,13 +25,36 @@
                             <div class="col-md-4">{{form.group | as_crispy_field}}</div>
                             <div class="col-md-4">{{form.gender | as_crispy_field}}</div>
                             <div class="col-md-12">{{form.password | as_crispy_field}}</div>
+                            <div class="col-md-12">
+                                <label for="" >Password Confirmation</label>
+                                <input type="password" id="cpwd" class="form-control mb-3">
+                            </div>
+                            <div id="showPasswordError"></div>
                         </div>
                         <input type="submit" value="Save" class="btn btn-secondary w-100 border-none">
-                        </form>
+                    </form>
                 </div>
             </div>
         </div>
     </div> 
 </div>
+<script>
+$(document).ready(function(){
+    $('#cpwd').keyup(function(){
+        var password = $('#id_password').val();
+        var cpwd = $('#cpwd').val();
 
+        if(cpwd!=password){
+            $('#showPasswordError').html('** Password are not matching');
+            $('#showPasswordError').css('color','red');
+            return false;
+        }else{
+            $('#showPasswordError').html('');
+            return true;
+        }
+        
+    });
+});
+
+</script>
 {% endblock %}

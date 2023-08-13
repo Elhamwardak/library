@@ -18,7 +18,8 @@
 }
 .side-image{
     /* background-image: url("pexels-ricky-esquivel-1907784.jpg"); */
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("/static/images/peakpx.jpg");
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.1)), url("/static/images/photo-1537202108838-e7072bad1927.jpg");
+    /* background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.1)), url("/static/images/360_F_596902955_4zzO8Y9KIPdeSxJcbz0nWbCY6moXTaOg.jpg"); */
     background-position: center;
     background-size: cover;
     background-repeat:no-repeat;

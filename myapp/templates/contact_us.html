@@ -5,9 +5,20 @@
 {% load static %}
 
 {% block body %}
+
+
+
 <div class="container">
-    <div class="d-flex justify-content-center align-items-center mt-5" style="margin-top: 6rem !important; margin: auto;">
+    <div class="d-flex justify-content-center align-items-center mt-5" style="margin-top: 6rem !important; margin: auto;max-width: 100%;width: 611px;">
         <div class="card p-5 shadow">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            {% endif %} 
             <form method="POST">
                 {% csrf_token %}
                <div class="row">

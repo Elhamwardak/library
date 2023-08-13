@@ -19,7 +19,7 @@ class BookForm(ModelForm):
     # VALIDATIONS
     isbn_number = forms.CharField(
         label = 'ISBN',min_length = 0, max_length = 10,
-        validators=[RegexValidator(message="only id is allowed!")],
+        validators=[RegexValidator(r'^[0-9]+$',message="only number is allowed!")],
         widget = forms.TextInput(attrs={'placeholder':'isbn number'})
     )
     title = forms.CharField(
@@ -87,7 +87,6 @@ class UserForm(forms.ModelForm):
 
 
     # VALIDATIONS
-
     username = forms.CharField(
         label = 'Username',min_length = 4, max_length = 30,
         validators=[RegexValidator(r'^(?=.*[a-zA-Z])(?=.*\d).+$',message="charecters + number is allowed!")]
@@ -101,7 +100,8 @@ class UserForm(forms.ModelForm):
     
     password = forms.CharField(
         label = 'Password',min_length = 4, max_length = 30,
-        validators=[RegexValidator(r'^(?=.*[a-zA-Z])(?=.*\d).+$',message="please enter the correct password!")]
+        validators=[RegexValidator(r'^(?=.*[a-zA-Z])(?=.*\d).+$',message="please enter the correct password!")],
+        widget = forms.PasswordInput(attrs={'type':'password'})
     )
     class Meta:
         model=CustomUser

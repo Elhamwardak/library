@@ -265,7 +265,7 @@ def user_list(request):
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def add_user(request):
-    form = UserForm(request.POST)
+    form = UserForm()
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
@@ -508,7 +508,9 @@ def contactUs(request):
         form = ContactForm(request.POST)
         if form.is_valid:
             form.save()
+            messages.success(request,'Thanks for your Message!')
             return redirect('contact-us')
+            
     else:
         form = ContactForm()
 
