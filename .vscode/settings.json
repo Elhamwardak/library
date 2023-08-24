@@ -1,3 +1,4 @@
 {
-    "workbench.preferredDarkColorTheme": "Quiet Light"
+    "workbench.preferredDarkColorTheme": "Quiet Light",
+    "liveServer.settings.port": 5501
 }
