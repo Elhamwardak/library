@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 :root {
     --offconvas-width: 270px;
     --topNavbarHeight: 56px;
@@ -227,20 +232,19 @@
     text-align: center;
 }
 .footer{
-    min-height: 25vh;
     background-color: rgba(2, 66, 110, 1);
-    margin-top: 3rem;
+    padding: 3rem 0;
 }
 .footertags{
     color: #fff;
-    font-size: 22px;
+    font-size: 100px;
     width: 20%;
     height: 38px;
     text-align: center;
 }
 .footertags:hover{
     color: #fff;
-    font-size: 27px;
+    transform: scale(1);
 }
 .tags{
     color:#fff;
