@@ -25,14 +25,13 @@ SECRET_KEY = 'django-insecure-*$%ct!vdf_zfcixce^n-nnuvf79!apg8(&)0^&*)r$(x71d3%&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'myapp.CustomUser'
 
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
     'admin_interface',
     'colorfield',
     'crispy_forms',

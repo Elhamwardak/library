@@ -12,6 +12,7 @@ urlpatterns = [
     path('contact_us/', views.contactUs,name='contact-us'),
     path('message/',views.Message,name="message"),
     path('delete/<str:id>/',views.deletemessage,name="delete-message"),
+    path('viewmessage/<str:id>/',views.viewMessage,name="viewmessage"),
 
 
 
@@ -26,10 +27,10 @@ urlpatterns = [
     path('add_category/', views.add_category, name='add_category'),
     path('update-category/<str:id>/',views.update_category,name='update-category'),
     path('delete-category/<str:id>', views.delete_category, name="delete-category"),
-    path('Author/',views.authorslist, name="author-list"),
-    path('add_author/', views.add_author, name='add_author'),
-    path('update-author/<str:id>/',views.update_author,name='update-author'),
-    path('delete-author/<str:id>', views.delete_author, name="delete-author"),
+    # path('Author/',views.authorslist, name="author-list"),
+    # path('add_author/', views.add_author, name='add_author'),
+    # path('update-author/<str:id>/',views.update_author,name='update-author'),
+    # path('delete-author/<str:id>', views.delete_author, name="delete-author"),
 
     path('studentlist/',views.StudentList, name ="studentlist"),
     path('teacherlist/',views.TeacherList, name ="teacherlist"),

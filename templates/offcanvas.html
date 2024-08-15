@@ -64,18 +64,7 @@
             </div>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.get_full_path == '/Author/' %}active{% endif %}" href="{% url 'author-list'  %}">
-            <div class="row g-0">
-              <div class="col-md-2 text-center">
-                <i class="fa-solid fa-person"></i>            
-              </div>
-              <div class="col-md-10">
-                <span class="font-12">Authors</span>
-              </div>
-            </div>
-          </a>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link {% if request.get_full_path == '/studentlist/' %}active{% endif %}" href="{% url 'studentlist'  %}">
             <div class="row g-0">

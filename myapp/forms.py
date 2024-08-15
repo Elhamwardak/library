@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from .models import Books, IssueBook,Category,Author, CustomUser,ContactUs
+from .models import Books, IssueBook,Category, CustomUser,ContactUs
 from django.core.validators import RegexValidator
 from django import forms
 
@@ -74,14 +74,14 @@ class CategoryForm(forms.ModelForm):
         }
 
 
-class AuthorForm(forms.ModelForm):
-    class Meta:
-        model = Author
-        fields =  ['name']
+# class AuthorForm(forms.ModelForm):
+#     class Meta:
+#         model = Author
+#         fields =  ['name']
 
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'})   
-        }
+#         widgets = {
+#             'name': forms.TextInput(attrs={'class': 'form-control'})   
+#         }
 
 class UserForm(forms.ModelForm):
 

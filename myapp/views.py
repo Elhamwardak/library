@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
-from .forms import BookForm,CategoryForm,AuthorForm, UserForm,ContactForm
+from .forms import BookForm,CategoryForm, UserForm,ContactForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenicated_user, allowed_users, admin_only
@@ -53,8 +53,6 @@ def Admin(request):
 
     total_users = User.objects.count()
 
-    total_authors = Author.objects.count()
-
     total_categories = Category.objects.count()
 
     today = timezone.now().date()
@@ -67,7 +65,7 @@ def Admin(request):
 
     context = {'totalbooks':total_books,'totalusers':total_users,'total_issued':total_issued,
                'total_issued_books_today':total_issued_books_today,'count_books_not_returned':count_books_not_returned,
-               'total_authors':total_authors,'total_categories':total_categories}
+              'total_categories':total_categories}
     return render(request, 'home.html',context)
 
 # Books Management
@@ -217,43 +215,43 @@ def delete_category(request, id):
     return redirect('category-list')
 
 # CRUD system for Authors section
-@allowed_users(allowed_roles=['admin'])
-@login_required(login_url='login-page')
-def authorslist(request):
-    author = Author.objects.all()
-    context={'author':author}
-    return render(request,'author_list.html',context)
+# @allowed_users(allowed_roles=['admin'])
+# @login_required(login_url='login-page')
+# def authorslist(request):
+#     author = Author.objects.all()
+#     context={'author':author}
+#     return render(request,'author_list.html',context)
 
 
-def add_author(request):
-    if request.method == 'POST':
-        form = AuthorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('author-list')
-    else:
-        form = AuthorForm()
-    return render(request, 'add_author.html', {'form': form})
+# def add_author(request):
+#     if request.method == 'POST':
+#         form = AuthorForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('author-list')
+#     else:
+#         form = AuthorForm()
+#     return render(request, 'add_author.html', {'form': form})
 
-def update_author(request, id):
-    author = Author.objects.get(pk=id)
-    if request.method == 'POST':
-        form = AuthorForm(request.POST, instance=author)
-        if form.is_valid():
-            form.save()
-            return redirect('author-list')
-    else:
-        form = AuthorForm(instance=author)
-    return render(request,'update_author.html',{'form':form})
+# def update_author(request, id):
+#     author = Author.objects.get(pk=id)
+#     if request.method == 'POST':
+#         form = AuthorForm(request.POST, instance=author)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('author-list')
+#     else:
+#         form = AuthorForm(instance=author)
+#     return render(request,'update_author.html',{'form':form})
 
-def delete_author(request, id):
-    author = Author.objects.get(pk=id)
-    author.delete()
-    return redirect('author-list')
+# def delete_author(request, id):
+#     author = Author.objects.get(pk=id)
+#     author.delete()
+#     return redirect('author-list')
 
 # Users Managements
-@allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
+@allowed_users(allowed_roles=['admin'])
 def user_list(request):
 
     users, search_user = searchuser(request)
@@ -262,8 +260,8 @@ def user_list(request):
     context = {'users': users,'search_user':search_user,'custom_range':custom_range}
     return render(request, 'users_list.html', context)
 
-@allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
+@allowed_users(allowed_roles=['admin'])
 def add_user(request):
     form = UserForm()
     if request.method == "POST":
@@ -520,8 +518,8 @@ def contactUs(request):
 
 def Message(request):
     contact_us_list = ContactUs.objects.all()
-
-    context = {'contact_us_list':contact_us_list}
+    unreadCount = contact_us_list.filter(is_read=False).count()
+    context = {'contact_us_list':contact_us_list, 'unreadCount':unreadCount}
     return render(request,'message.html',context)
 
 def deletemessage(request, id):
@@ -529,3 +527,8 @@ def deletemessage(request, id):
     message.delete()
     messages.success(request,'Message Deleted')
     return redirect('message')
+
+def viewMessage(request,id):
+    message = ContactUs.objects.get(pk=id)
+    context= {'message':message}
+    return render(request,'viewmessage.html',context)

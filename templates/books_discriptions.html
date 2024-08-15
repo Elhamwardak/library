@@ -9,30 +9,33 @@
                     <div class="col-md-4">
                         {% if book.cover_photo %}
                             <img src="{{ book.cover_photo.url }}" class="img-fluid book-discription-img rounded-start" alt="">
+                            <div class="w-100 mt-2">
+                                {% if book.book_file %}
+                                <a href="{{ book.book_file.url }}"><button class="btn btn-primary btn-sm">Press for download</button></a>
+                                {% else %}
+                                <p>File not uploaded</p>
+                                {% endif %}
+                            </div>
                         {% endif %}
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <p class="card-title"><span ><h6 class="text-dark fw-bold">Book Title</h6></span>{{book.title}}</p>
+                            <p class="card-title"><span><h6 class="text-dark fw-bold">Book Title</h6></span>{{book.title}}</p>
                             <hr>
-                            <p class="card-text"><span ><h6 class="text-dark fw-bold">Description</h6></span>{{book.book_descriptions}}</p>
+                            <p class="card-text"><span><h6 class="text-dark fw-bold">Description</h6></span>{{book.book_descriptions}}</p>
                             <hr>
-                            <p class="card-text"><span ><h6 class="text-dark fw-bold">Author</h6></span>{{book.author}}</p>
+                            <p class="card-text"><span><h6 class="text-dark fw-bold">Author</h6></span>{{book.author}}</p>
                             <hr>
-                            <p class="card-text"><span ><h6 class="text-dark fw-bold">Category</h6></span>{{book.category}}</p>
+                            <p class="card-text"><span><h6 class="text-dark fw-bold">ISBN</h6></span>{{book.isbn_number}}</p>
                             <hr>
-                            <p class="card-text"><span ><h6 class="text-dark fw-bold">Available Quantity in Library</h6></span>{{book.available_quantity}}</p>
+                            <p class="card-text"><span><h6 class="text-dark fw-bold">Category</h6></span>{{book.category}}</p>
+                            <hr>
+                            <p class="card-text"><span><h6 class="text-dark fw-bold">Available Quantity in Library</h6></span>{{book.available_quantity}}</p>
                             <hr>
                             <p class="card-text"><small class="text-muted"><span>Issue Date :</span>{{book.issue_date}}</small></p>
                         </div>
                     </div>
-                    <div class="col-md-3 mt-2">
-                        {% if book.book_file %}
-                        <p class="card-text"><small class="text-muted"><a href="{{ book.book_file.url }}"><button class="btn btn-outline-primary"><i class="fa-solid fa-download"></i></button></a></small> Press for download</p>
-						{% else %}
-						<p>File not uploaded</p>
-						{% endif %}
-                    </div>
+                   
                 </div>
             </div>  
         </div>      

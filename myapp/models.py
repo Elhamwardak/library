@@ -31,11 +31,11 @@ class CustomUser(AbstractUser):
 
     
 
-class Author(models.Model):
-    name = models.CharField(max_length=100,null=True, blank=True)
+# class Author(models.Model):
+#     name = models.CharField(max_length=100,null=True, blank=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
     
 class Category(models.Model):
     name = models.CharField(max_length=200)
@@ -53,13 +53,13 @@ class Books(models.Model):
     title = models.CharField(max_length=20)
     book_descriptions = models.TextField(max_length=1000, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    # author = models.ForeignKey(Author, on_delete=models.CASCADE)
     available_quantity = models.IntegerField(default=0)
     cover_photo = models.ImageField(
         upload_to='images/', null=True, blank=True,  default='images/default.jpg')
     issue_date = models.DateField(auto_now_add=True)
     book_file = models.FileField(upload_to="files/",null=True,blank=True)
-
+    author = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return self.title
@@ -94,3 +94,7 @@ class ContactUs(models.Model):
     phone_number = models.IntegerField()
     email = models.EmailField(max_length=50)
     message = models.TextField()
+    is_read = models.BooleanField(default=False, null=True)
+
+    class meta:
+        ordering = ['is_read']

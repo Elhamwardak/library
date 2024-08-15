@@ -156,7 +156,7 @@
     position: relative;
     background: #fff;
     padding: 16px;
-    border-radius: 20px;
+    border-radius: 10px; 
     display: flex;
     justify-content: space-between;
     cursor: pointer;
@@ -237,14 +237,11 @@
 }
 .footertags{
     color: #fff;
-    font-size: 100px;
-    width: 20%;
-    height: 38px;
+    font-size: 30px;
     text-align: center;
 }
 .footertags:hover{
-    color: #fff;
-    transform: scale(1);
+    color: black;
 }
 .tags{
     color:#fff;

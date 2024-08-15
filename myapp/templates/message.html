@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 
-{% block title %}Messages{% endblock title %}
+{% block title %}New Messages({{unreadCount}}){% endblock title %}
 
 {% block content %}
 
@@ -22,7 +22,11 @@
             <p><span class="text-dark fw-bold">Email: </span>{{message.email}}</p>
         </div>
         <div class="col-md-7">
-            <span class="text-dark fw-bold">(Message): </span>{{message.message}}
+            {% if message.is_read == False %}
+            <a href="{% url 'viewmessage' message.id %}" class="text-dark fw-bold " style="text-decoration: none;">(Message): </a>
+            {% else %}
+            <a href="{% url 'viewmessage' message.id %}" class="text-secondary" style="text-decoration: none;" >(Message): </a>
+            {% endif %}
         </div>
         <div class="col-md-1 mb-2">
             <a href="{% url 'delete-message' message.id %}" class="btn btn-danger" onclick="return confirm('Do you really want to delete this message?') ;">
