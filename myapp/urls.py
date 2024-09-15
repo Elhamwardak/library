@@ -32,7 +32,9 @@ urlpatterns = [
     # path('update-author/<str:id>/',views.update_author,name='update-author'),
     # path('delete-author/<str:id>', views.delete_author, name="delete-author"),
 
-    path('studentlist/',views.StudentList, name ="studentlist"),
+    path('studentlist/',views.StudentList.as_view(), name ="studentlist"),
+    path('add_student/',views.StudentCreate.as_view(), name ="add-student"),
+    path('update_student/<int:pk>',views.StudentUpdate.as_view(), name ="update-student"),
     path('teacherlist/',views.TeacherList, name ="teacherlist"),
 
 

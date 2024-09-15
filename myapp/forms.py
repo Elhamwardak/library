@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from .models import Books, IssueBook,Category, CustomUser,ContactUs
+from .models import Books, IssueBook,Category, CustomUser,ContactUs, Student, Teacher
 from django.core.validators import RegexValidator
 from django import forms
 
@@ -95,8 +95,7 @@ class UserForm(forms.ModelForm):
         label = 'Email address',min_length = 4, max_length = 30,
         validators=[RegexValidator(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',message="please enter the correct email address!")]
     )
-    GENDER_CHOICES = [('M','Male'),('F','Female')]
-    gender = forms.CharField(label='Gender',widget=forms.RadioSelect(choices=GENDER_CHOICES))
+    
     
     password = forms.CharField(
         label = 'Password',min_length = 4, max_length = 30,
@@ -105,13 +104,10 @@ class UserForm(forms.ModelForm):
     )
     class Meta:
         model=CustomUser
-        fields=['username', 'first_name','father_name', 'last_name', 'gender', 'phone_number', 'user_id', 'password', 'email', 'group']
+        fields=['username', 'user_id', 'password', 'email', 'group']
 
         widgets = {
-            'phone_number': forms.TextInput(attrs={'data-mask':'(00)00-000-0000'}),
-            # 'gender':forms.TextInput(attrs={'class':'form-check',type':'radio'}),
             'user_id': forms.TextInput(attrs={'placeholer':'Example= BCS-98-968'}),
-            # 'gender':forms.RadioSelect(attrs={'type':'radio'})
         }
 
 class ContactForm(forms.ModelForm):
@@ -123,3 +119,31 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactUs
         fields = '__all__'
+
+
+class StudentForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=CustomUser.objects.filter(group_id='2', student=None), required=False)
+    GENDER_CHOICES = [('M','Male'),('F','Female')]
+    gender = forms.CharField(label='Gender',widget=forms.Select(choices=GENDER_CHOICES))
+
+    class Meta:
+        model = Student
+        fields = '__all__'
+
+        widgets = {
+            'phone_number': forms.TextInput(attrs={'data-mask':'(00)00-000-0000'}),
+        }
+
+
+class TeacherForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=CustomUser.objects.filter(group_id='3', teacher=None), required=False)
+    GENDER_CHOICES = [('M','Male'),('F','Female')]
+    gender = forms.CharField(label='Gender',widget=forms.Select(choices=GENDER_CHOICES))
+
+    class Meta:
+        model = Teacher
+        fields = '__all__'
+
+        widgets = {
+            'phone_number': forms.TextInput(attrs={'data-mask':'(00)00-000-0000'}),
+        }

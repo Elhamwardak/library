@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
-from .forms import BookForm,CategoryForm, UserForm,ContactForm
+from .forms import BookForm,CategoryForm, UserForm,ContactForm, StudentForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenicated_user, allowed_users, admin_only
@@ -14,6 +14,9 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 
 
@@ -532,3 +535,43 @@ def viewMessage(request,id):
     message = ContactUs.objects.get(pk=id)
     context= {'message':message}
     return render(request,'viewmessage.html',context)
+
+# Ataie
+class StudentList(LoginRequiredMixin, ListView):
+    model = Student
+    template_name = 'studentlist.html'
+
+
+class StudentCreate(LoginRequiredMixin, CreateView):
+    model = Student
+    form_class = StudentForm
+    template_name = 'add_student.html'
+    success_url = reverse_lazy('studentlist')
+
+    def form_valid(self, form):
+        self.obj = form.save()
+        if self.obj.user:
+            user = CustomUser.objects.get(id=self.obj.user.id)
+            user.student = self.obj
+            user.save()
+        return super().form_valid(form)
+
+class StudentUpdate(LoginRequiredMixin, UpdateView):
+    model = Student
+    form_class = StudentForm
+    template_name = 'update_student.html'
+    success_url = reverse_lazy('studentlist')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        student = Student.objects.filter(id=self.kwargs.get('pk')).first()
+        context["student_user"] = student.user.username if student and student.user else None
+        return context
+    
+
+    # def form_valid(self, form):
+    #     print(form)
+    #     return 
+
+
+    

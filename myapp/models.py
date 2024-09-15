@@ -15,14 +15,15 @@ from django.utils import timezone
 class CustomUser(AbstractUser):
 
     email = models.EmailField(max_length=255, unique=True)
-    username = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=50, unique=True, null=True, blank=True)
     first_name = models.CharField(null=True, blank=True, max_length=100)
     father_name= models.CharField(null=True, blank=True, max_length=100)
     last_name = models.CharField(null=True, blank=True, max_length=100)
     phone_number = models.CharField(max_length=16)
     user_id = models.CharField(max_length=50,null=True,blank=True)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, default=2)
-    gender = models.CharField(max_length=1,null=True,blank=True)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE, null=True, blank=True)
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
@@ -98,3 +99,25 @@ class ContactUs(models.Model):
 
     class meta:
         ordering = ['is_read']
+
+
+class Student(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='student_user', null=True, blank=True)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    father_name = models.CharField(max_length=150)
+    phone_number = models.CharField(max_length=150)
+    gender = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+    
+
+
+class Teacher(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='teacher_user', null=True, blank=True)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    father_name = models.CharField(max_length=150)
+    phone_number = models.CharField(max_length=150)
+    gender = models.CharField(max_length=50, null=True, blank=True)
