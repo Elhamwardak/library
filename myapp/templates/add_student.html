@@ -2,7 +2,7 @@
 
 {% load crispy_forms_tags%}
 
-{% block title %}Add User {% endblock title %}
+{% block title %}Add Student {% endblock title %}
 
 {% block content %}
 
@@ -29,23 +29,4 @@
         </div>
     </div> 
 </div>
-<script>
-$(document).ready(function(){
-    $('#cpwd').keyup(function(){
-        var password = $('#id_password').val();
-        var cpwd = $('#cpwd').val();
-
-        if(cpwd!=password){
-            $('#showPasswordError').html('** Password are not matching');
-            $('#showPasswordError').css('color','red');
-            return false;
-        }else{
-            $('#showPasswordError').html('');
-            return true;
-        }
-        
-    });
-});
-
-</script>
 {% endblock %}

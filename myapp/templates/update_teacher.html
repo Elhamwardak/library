@@ -2,7 +2,7 @@
 
 {% load crispy_forms_tags%}
 
-{% block title %}Update Student {% endblock title %}
+{% block title %}Update Teacher {% endblock title %}
 
 {% block content %}
 
@@ -22,7 +22,7 @@
                             <div class="col-md-4">
                                 <div >
                                     <p class=" my-1">Current User</p>
-                                    <p class="" style="border: 1px solid lightgray; border-radius: 5px; padding: 6px 10px;   ">{{student_user}}</p>
+                                    <p class="" style="border: 1px solid lightgray; border-radius: 5px; padding: 6px 10px;   ">{{teacher_user}}</p>
                                 </div>
                             </div>
                             <div class="col-md-4">{{form.gender | as_crispy_field}}</div>

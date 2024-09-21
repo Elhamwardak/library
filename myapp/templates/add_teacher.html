@@ -2,7 +2,7 @@
 
 {% load crispy_forms_tags%}
 
-{% block title %}Update Student {% endblock title %}
+{% block title %}Add Teacher {% endblock title %}
 
 {% block content %}
 
@@ -19,16 +19,10 @@
                             <div class="col-md-4">{{form.last_name | as_crispy_field}}</div>
                             <div class="col-md-4">{{form.father_name | as_crispy_field}}</div>
                             <div class="col-md-4">{{form.phone_number | as_crispy_field}}</div>
-                            <div class="col-md-4">
-                                <div >
-                                    <p class=" my-1">Current User</p>
-                                    <p class="" style="border: 1px solid lightgray; border-radius: 5px; padding: 6px 10px;   ">{{student_user}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">{{form.gender | as_crispy_field}}</div>
                             <div class="col-md-4">{{form.user | as_crispy_field}}</div>
+                            <div class="col-md-4">{{form.gender | as_crispy_field}}</div>
                         </div>
-                        <input type="submit" value="Update" class="btn btn-secondary w-100 border-none">
+                        <input type="submit" value="Save" class="btn btn-secondary w-100 border-none">
                     </form>
                 </div>
             </div>

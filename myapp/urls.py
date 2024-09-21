@@ -35,7 +35,9 @@ urlpatterns = [
     path('studentlist/',views.StudentList.as_view(), name ="studentlist"),
     path('add_student/',views.StudentCreate.as_view(), name ="add-student"),
     path('update_student/<int:pk>',views.StudentUpdate.as_view(), name ="update-student"),
-    path('teacherlist/',views.TeacherList, name ="teacherlist"),
+    path('teacherlist/',views.TeacherList.as_view(), name ="teacherlist"),
+    path('add_teacher/',views.TeacherCreate.as_view(), name ="add-teacher"),
+    path('update_teacher/<int:pk>',views.TeacherUpdate.as_view(), name ="update-teacher"),
 
 
     path('add-user/', views.add_user, name="add-user"),

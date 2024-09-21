@@ -16,10 +16,6 @@ class CustomUser(AbstractUser):
 
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=50, unique=True, null=True, blank=True)
-    first_name = models.CharField(null=True, blank=True, max_length=100)
-    father_name= models.CharField(null=True, blank=True, max_length=100)
-    last_name = models.CharField(null=True, blank=True, max_length=100)
-    phone_number = models.CharField(max_length=16)
     user_id = models.CharField(max_length=50,null=True,blank=True)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, default=2)
     student = models.ForeignKey('Student', on_delete=models.CASCADE, null=True, blank=True)

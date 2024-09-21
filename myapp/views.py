@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
-from .forms import BookForm,CategoryForm, UserForm,ContactForm, StudentForm
+from .forms import BookForm,CategoryForm, UserForm,ContactForm, StudentForm, TeacherForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenicated_user, allowed_users, admin_only
@@ -573,5 +573,38 @@ class StudentUpdate(LoginRequiredMixin, UpdateView):
     #     print(form)
     #     return 
 
+class TeacherList(LoginRequiredMixin, ListView):
+    model = Teacher
+    template_name = 'teacherlist.html'
 
+
+class TeacherCreate(LoginRequiredMixin, CreateView):
+    model = Teacher
+    form_class = TeacherForm
+    template_name = 'add_teacher.html'
+    success_url = reverse_lazy('teacherlist')
+
+    def form_valid(self, form):
+        self.obj = form.save()
+        if self.obj.user:
+            user = CustomUser.objects.get(id=self.obj.user.id)
+            user.teacher = self.obj
+            user.save()
+        return super().form_valid(form)
     
+class TeacherUpdate(LoginRequiredMixin, UpdateView):
+    model = Teacher
+    form_class = TeacherForm
+    template_name = 'update_teacher.html'
+    success_url = reverse_lazy('teacherlist')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        teacher = Teacher.objects.filter(id=self.kwargs.get('pk')).first()
+        context["teacher_user"] = teacher.user.username if teacher and teacher.user else None
+        return context
+    
+
+    # def form_valid(self, form):
+    #     print(form)
+    #     return 

@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 
-{% block title %}Teacher List{% endblock title %}
+{% block title %}Student List{% endblock title %}
 
 {% block content %}
 
@@ -26,7 +26,9 @@
 		</div>
 	  </form>
 	</div>
-
+  <div class="mb-3">
+		<a href="{% url 'add-teacher' %}" class="btn" style="background-color: #455963; color: #fff;"><i class="fa-sharp fa-solid fa-plus me-2"></i>Add Student</a>
+	</div>
 </div>
 
 {% if messages %}
@@ -43,46 +45,35 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">User Id</th>
-                <th scope="col">User Name</th>
                 <th scope="col">First Name</th>
-                <th scope="col">Father Name</th>
                 <th scope="col">Last Name</th>
-                <th scope="col">Email</th>
+                <th scope="col">Father Name</th>
                 <th scope="col">Phone Number</th>
-                <th scope="col">Role</th>
-                <th scope="col">Gender</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
-          {% if users %}
-            {% for user in users %}
+          {% if object_list %}
+            {% for teacher in object_list %}
                 <tr>
-                    <td>{{user.id}}</td>
-                    <td>{{user.user_id}}</td>
-                    <td>{{user.username}}</td>
-                    <td>{{user.first_name}}</td>
-                    <td>{{user.father_name}}</td>
-                    <td>{{user.last_name}}</td> 
-                    <td>{{user.email}}</td>
-                    <td>{{user.phone_number}}</td>
-                    <td>{{user.group}}</td>
-                    <td>{{user.gender}}</td>
+                    <td>{{teacher.id}}</td>
+                    <td>{{teacher.first_name}}</td>
+                    <td>{{teacher.last_name}}</td> 
+                    <td>{{teacher.father_name}}</td>
+                    <td>{{teacher.phone_number}}</td>
                     <td>
-                        <a href="{% url 'update-user' user.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="{% url 'delete-user' user.id %}" onclick="return confirm('Do you really want to delete this user?') ;" class="delete" id="deleteBttn" data-toggle="modal"><i class="fa-solid fa-trash"></i></a>
-                    </td>
+                      <a href="{% url 'update-teacher' teacher.id %}" class="edit" data-toggle="modal"><i class="fa-solid fa-pen-to-square"></i></a>
+                  </td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
             {% else %}
-            <tr>
-              <td colspan="11">Empty</td>
-            </tr>
+                <tr>
+                  <td colspan="10">Empty</td>
+                </tr>
             {% endif %}
         </tbody>
     </table>
 </div>
 <br>
-    {% include 'pagination.html' with queryset=users custom_range=custom_range %}
+    <!-- {% include 'pagination.html' with queryset=users custom_range=custom_range %} -->
 {% endblock %}
