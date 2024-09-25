@@ -26,7 +26,8 @@
                                 </div>
                             </div>
                             <div class="col-md-4">{{form.gender | as_crispy_field}}</div>
-                            <div class="col-md-4">{{form.user | as_crispy_field}}</div>
+                            <div class="col-md-4"><input type="checkbox" name="change-user" id="change-user">Change User</div>
+                            <div class="col-md-4 d-none" id="change-user-container">{{form.user | as_crispy_field}}</div>
                         </div>
                         <input type="submit" value="Update" class="btn btn-secondary w-100 border-none">
                     </form>
@@ -35,4 +36,19 @@
         </div>
     </div> 
 </div>
+<script>
+    $(document).ready(function(){
+        $('#change-user').change(function(){
+            if(this.checked){
+                $('#change-user-container').removeClass('d-none')
+                
+            }else{
+                console.log('unchecked');
+                $('#change-user-container').addClass('d-none')
+            }
+            
+        });
+    });
+    
+    </script>
 {% endblock %}

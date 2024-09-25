@@ -569,10 +569,13 @@ class StudentUpdate(LoginRequiredMixin, UpdateView):
         return context
     
 
-    # def form_valid(self, form):
-    #     print(form)
-    #     return 
+    def form_valid(self, form):
+        # data = form.data
+        # student = self.get_object()
+        # if data.get('change-user'):
 
+        # return 
+        pass
 class TeacherList(LoginRequiredMixin, ListView):
     model = Teacher
     template_name = 'teacherlist.html'
