@@ -570,12 +570,21 @@ class StudentUpdate(LoginRequiredMixin, UpdateView):
     
 
     def form_valid(self, form):
-        # data = form.data
-        # student = self.get_object()
-        # if data.get('change-user'):
-
-        # return 
-        pass
+        data = form.data
+        student = self.get_object()
+        if data.get('change-user'):
+            if data.get('user'):
+                user = CustomUser.objects.filter(id=data.get('user')).first()
+                student.user = user
+            else:
+                student.user = None
+        student.first_name = data.get('first_name')                
+        student.last_name = data.get('last_name')                
+        student.father_name = data.get('father_name')                
+        student.phone_number = data.get('phone_number')                
+        student.gender = data.get('gender')                
+        student.save()
+        return super(StudentUpdate, self).form_valid(form)
 class TeacherList(LoginRequiredMixin, ListView):
     model = Teacher
     template_name = 'teacherlist.html'
