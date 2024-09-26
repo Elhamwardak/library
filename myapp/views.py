@@ -576,8 +576,14 @@ class StudentUpdate(LoginRequiredMixin, UpdateView):
             if data.get('user'):
                 user = CustomUser.objects.filter(id=data.get('user')).first()
                 student.user = user
+                user.student = student
+                user.save()
             else:
+                user = student.user
                 student.user = None
+                if user:
+                    user.student = None
+                    user.save()
         student.first_name = data.get('first_name')                
         student.last_name = data.get('last_name')                
         student.father_name = data.get('father_name')                
@@ -617,6 +623,25 @@ class TeacherUpdate(LoginRequiredMixin, UpdateView):
         return context
     
 
-    # def form_valid(self, form):
-    #     print(form)
-    #     return 
+    def form_valid(self, form):
+        data = form.data
+        teacher = self.get_object()
+        if data.get('change-user'):
+            if data.get('user'):
+                user = CustomUser.objects.filter(id=data.get('user')).first()
+                teacher.user = user
+                user.teacher = teacher
+                user.save()
+            else:
+                user = teacher.user
+                teacher.user = None
+                if user:
+                    user.teacher = None
+                    user.save()
+        teacher.first_name = data.get('first_name')                
+        teacher.last_name = data.get('last_name')                
+        teacher.father_name = data.get('father_name')                
+        teacher.phone_number = data.get('phone_number')                
+        teacher.gender = data.get('gender')                
+        teacher.save()
+        return super(TeacherUpdate, self).form_valid(form)
