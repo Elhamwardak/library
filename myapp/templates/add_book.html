@@ -21,8 +21,9 @@
                             <div class="col-md-6">{{form.author | as_crispy_field}}</div>
                             <div class="col-md-6">{{form.cover_photo | as_crispy_field}}</div>
                             <div class="col-md-6 required">{{form.book_file | as_crispy_field}}</div>
+                            <div class="col-md-6">{{form.available_quantity | as_crispy_field}}</div>
+                            <div class="col-md-6">{{form.book_language | as_crispy_field}}</div>
                             <div class="col-md-12">{{form.book_descriptions | as_crispy_field}} </div>
-                            <div class="col-md-12">{{form.available_quantity | as_crispy_field}}</div>
                         </div>
                         <input type="submit" value="Save" class="btn btn-secondary w-100 border-none">
                         </form>

@@ -1,53 +1,54 @@
 {% extends 'main.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}Update User{% endblock title %}
 
 {% block content %}
 
-<div class="container pt-4">
+<div class="container">
     <div class="row">
         <div class="col col-12">
             <div class="card">
                 <div class="card-body p-4">
-                    <form action="" method="POST">
+                    <form action="" method="POST" enctype="multipart/form-data" novalidate>
                         {% csrf_token %}
-                        <div class="row registerform p-2">
-                            <div class="col-md-6 ">
-                                <div class="form-group">
-                                    <label for="">Username :</label>
-                                    <input type="text" name="username" class="form-control mb-3" value="{{user.username}}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Email :</label>
-                                    <input type="email" name="email" id="" value="{{user.email}}" class="form-control mb-3">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">User Id :</label>
-                                    <input type="text" name="user_id" value="{{user.user_id}}" class="form-control mb-3">
-                                </div>
-                            </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ form.username | as_crispy_field }}</div>
+                            <div class="col-md-6">{{ form.email | as_crispy_field }}</div>
+                            <div class="col-md-6">{{ form.user_id | as_crispy_field }}</div>
+                            <div class="col-md-6">{{ form.group | as_crispy_field }}</div>
+                            <div class="col-md-12">{{ form.password | as_crispy_field }}</div>
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-secondary w-100" value="Update">
-                                </div>  
-                            </div>              
+                                <label for="">Password Confirmation</label>
+                                <input type="password" id="cpwd" class="form-control mb-3">
+                            </div>
+                            <div id="showPasswordError"></div>
                         </div>
+                        <input type="submit" value="Update" class="btn btn-secondary w-100 border-none">
                     </form>
                 </div>
-            </div> 
-        </div> 
-    </div> 
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    var password1 = document.getElementById('id_password1');
-    password1.className += 'form-control';
-    
-    var password2 = document.getElementById('id_password2');
-    password2.className += 'form-control';
+$(document).ready(function(){
+    $('#cpwd').keyup(function(){
+        var password = $('#id_password').val();
+        var cpwd = $('#cpwd').val();
+
+        if(cpwd != password){
+            $('#showPasswordError').html('** Passwords do not match');
+            $('#showPasswordError').css('color', 'red');
+            return false;
+        } else {
+            $('#showPasswordError').html('');
+            return true;
+        }
+    });
+});
 </script>
+
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from .models import Books, IssueBook,Category, CustomUser,ContactUs, Student, Teacher
+from .models import Books, IssueBook,Category, CustomUser,ContactUs, Student, Teacher,Language
 from django.core.validators import RegexValidator
 from django import forms
 
@@ -74,18 +74,7 @@ class CategoryForm(forms.ModelForm):
         }
 
 
-# class AuthorForm(forms.ModelForm):
-#     class Meta:
-#         model = Author
-#         fields =  ['name']
-
-#         widgets = {
-#             'name': forms.TextInput(attrs={'class': 'form-control'})   
-#         }
-
 class UserForm(forms.ModelForm):
-
-
     # VALIDATIONS
     username = forms.CharField(
         label = 'Username',min_length = 4, max_length = 30,
@@ -146,4 +135,17 @@ class TeacherForm(forms.ModelForm):
 
         widgets = {
             'phone_number': forms.TextInput(attrs={'data-mask':'(00)00-000-0000'}),
+        }
+
+class LanguageForm(forms.ModelForm):
+    class Meta:
+        model = Language
+        fields = ['name']
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+        labels = {
+            'name': 'Add Language',  # Custom label for the name field
         }

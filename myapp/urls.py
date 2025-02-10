@@ -27,18 +27,21 @@ urlpatterns = [
     path('add_category/', views.add_category, name='add_category'),
     path('update-category/<str:id>/',views.update_category,name='update-category'),
     path('delete-category/<str:id>', views.delete_category, name="delete-category"),
-    # path('Author/',views.authorslist, name="author-list"),
-    # path('add_author/', views.add_author, name='add_author'),
-    # path('update-author/<str:id>/',views.update_author,name='update-author'),
-    # path('delete-author/<str:id>', views.delete_author, name="delete-author"),
+    
+    path('language/',views.book_language_list, name="book-language-list"),
+    path('languages/add/',views.book_language_add, name='book-language-add'),
+    path('languages/edit/<int:pk>/',views.book_language_edit, name='book-language-edit'),
+    path('languages/delete/<int:pk>/', views.book_language_delete, name='book-language-delete'),
+
 
     path('studentlist/',views.StudentList.as_view(), name ="studentlist"),
     path('add_student/',views.StudentCreate.as_view(), name ="add-student"),
     path('update_student/<int:pk>',views.StudentUpdate.as_view(), name ="update-student"),
+    path('delet-student/<int:id>', views.StudentDelete, name='student_delete'),
     path('teacherlist/',views.TeacherList.as_view(), name ="teacherlist"),
     path('add_teacher/',views.TeacherCreate.as_view(), name ="add-teacher"),
     path('update_teacher/<int:pk>',views.TeacherUpdate.as_view(), name ="update-teacher"),
-
+    path('delet-teacher/<int:id>', views.TeacherDelete, name='teacher_delete'),
 
     path('add-user/', views.add_user, name="add-user"),
     path('update-user/<str:id>/', views.Update_user, name="update-user"),
@@ -47,7 +50,7 @@ urlpatterns = [
     path('login-page/', views.LoginPage, name="login-page"),
     path('logout/', views.logoutUser, name="logout"),
 
-    path('view-issue-to-student/', views.issuebook_to_student, name="view-issue-to-student"),
+    path('your-dashbord/', views.issuebook_to_student, name="view-issue-to-student"),
 
     path('profile/', views.user_profile, name="user-profile"),
     path('update-profile/<str:id>/',views.Update_profile, name="update-profile"),
@@ -59,6 +62,8 @@ urlpatterns = [
     path('my-favourites/', views.MyFavourites, name="my-favourites"),
 
     path('change-password/', views.ChangePassword, name="change-password"),
+
+    path('mark_as_read/', views.mark_as_read, name='mark_as_read'), 
 
 
 

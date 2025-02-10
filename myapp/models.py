@@ -27,13 +27,6 @@ class CustomUser(AbstractUser):
     objects = CutomUserManager()
 
     
-
-# class Author(models.Model):
-#     name = models.CharField(max_length=100,null=True, blank=True)
-
-#     def __str__(self):
-#         return self.name
-    
 class Category(models.Model):
     name = models.CharField(max_length=200)
     status = models.BooleanField(default=True)
@@ -45,13 +38,20 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+
+class Language(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Books(models.Model):
     isbn_number = models.CharField(max_length=20,null=True,blank=True)
     title = models.CharField(max_length=20)
     book_descriptions = models.TextField(max_length=1000, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    # author = models.ForeignKey(Author, on_delete=models.CASCADE)
     available_quantity = models.IntegerField(default=0)
+    book_language = models.ForeignKey(Language, on_delete=models.CASCADE, null=True, blank=True)
     cover_photo = models.ImageField(
         upload_to='images/', null=True, blank=True,  default='images/default.jpg')
     issue_date = models.DateField(auto_now_add=True)
@@ -97,8 +97,9 @@ class ContactUs(models.Model):
         ordering = ['is_read']
 
 
+
 class Student(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='student_user', null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='student_user', null=True, blank=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     father_name = models.CharField(max_length=150)
@@ -111,7 +112,7 @@ class Student(models.Model):
 
 
 class Teacher(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='teacher_user', null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='teacher_user', null=True, blank=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     father_name = models.CharField(max_length=150)

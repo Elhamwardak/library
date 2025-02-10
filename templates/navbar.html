@@ -1,7 +1,8 @@
 {% load static %}
 
 {% load custom_tags %}
-if {% if request.resolver_match.url_name == 'index' %}
+
+{% if request.resolver_match.url_name in "index,book-discription,contact-us" %}
 <nav class="navbar navbar-expand-lg backgroundcolor fixed-top bg-light">
   <div class="container">
     <a href="{% url 'index' %}"><img src="{% static 'images/en.png' %}" class="w-48" alt=""></a>
@@ -56,6 +57,10 @@ if {% if request.resolver_match.url_name == 'index' %}
             <a class="nav-link fw-bolder" href="{% url 'contact-us' %}">Contact us</a>
           </li>
         </ul>
+        <a href="{% url 'login-page' %}">
+          <button class="btn btn-primary">Login</button>
+        </a>
+        
       </div>
     </div>
   </nav>
@@ -68,16 +73,16 @@ if {% if request.resolver_match.url_name == 'index' %}
     <span class="ms-2 text-white">LIBRARY MANAGEMENT SYSTEM</span>
   </a>
   <div class="dropdown">
-    {% if request.user.username %}
+    {% if request.user.is_authenticated %}
       {% if request.user.is_staff %}
       <a href="{% url 'message' %}">
           <i class="fa-solid fa-message me-3 text-light"></i>
-          <span class="message-count"></span>
+          <!-- <span class="message-count {% if unreadCount %}bg-danger{% else %}bg-transparent{% endif %}"></span> -->
         </a>
       {% endif %}
         <a class="dropdown-toggle user-menu-item" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fa-solid fa-user me-2 text-white"></i>
-            <span class="text-white">{{request.user.username}}</span>
+            <!-- <span class="text-white">{{request.user.username}}</span> -->
         </a>
     
     <ul class="dropdown-menu dropdown-menu-lg-end mt-2">

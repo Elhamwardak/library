@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+
+{% block title %}Book Languages{% endblock title %}
+
+{% block content %}
+
+<div class="text-end mb-2 ">
+    <a href="{% url 'book-language-add' %}" class="add-language btn btn-secondary">Add Language</a>
+</div>
+<div class="p-4 shadow bg-white ">
+    <table class="table table-font-size table-hover">
+        <thead>
+            <tr>
+                <th>Language</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if languages %}
+                {% for language in languages %}
+                    <tr>
+                        <td>{{ language.name }}</td>
+                        <td style="width: 108px;">
+                            <a href="{% url 'book-language-edit' language.id %}" class="edit" data-toggle="modal">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a href="{% url 'book-language-delete' language.id %}" onclick="return confirm('Do you really want to delete this Language?');">
+                                <i class="fa-solid fa-trash text-danger" data-toggle="tooltip" title="delete"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2">No languages available.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

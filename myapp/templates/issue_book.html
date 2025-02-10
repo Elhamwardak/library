@@ -12,7 +12,7 @@
                 <label for="">Choose User :</label>
                 <select id="my-select" name="user_id" class="input-group mb-4" aria-label="Default select example">
                     {% for user in users %}
-                        <option value="{{user.id}}">{{user.first_name}}</option>
+                        <option value="{{user.id}}">{{user.username}}</option>
                     {% endfor %}
                 </select>
             </div>

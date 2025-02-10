@@ -26,15 +26,18 @@ def allowed_users(allowed_roles=[]):
         return wrapper_func
     return decorator
 
-
 def admin_only(view_func):
     def wrapper_function(request, *args, **kwargs):
         group = None
         if request.user.group:
             group = request.user.group.name
+
         if group == 'student':
-            return redirect('view-issue-to-student')
-        if group == 'admin':
-            return view_func(request, *args, **kwargs)
+            return redirect('view-issue-to-student')  # Redirect students to the appropriate page
+        elif group == 'teacher':
+            return redirect('view-issue-to-student')  # Redirect teachers to their own page (you can update this URL)
+        elif group == 'admin':
+            return view_func(request, *args, **kwargs)  # Proceed with the view for admins
 
     return wrapper_function
+

@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block title %}Add Language{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col col-md-12">
+            <div class="card">
+                <div class="card-body p-4">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Add Language" class="btn btn-secondary w-100 border-none">
+                    </form>
+                </div>    
+            </div>        
+        </div>
+    </div> 
+</div>
+<br>
+{% endblock content %}

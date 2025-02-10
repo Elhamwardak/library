@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponseRedirect,HttpResponse
 from .models import *
-from .forms import BookForm,CategoryForm, UserForm,ContactForm, StudentForm, TeacherForm
+from .forms import BookForm,CategoryForm, UserForm,ContactForm, StudentForm, TeacherForm,LanguageForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenicated_user, allowed_users, admin_only
@@ -17,25 +17,46 @@ from django.core.exceptions import ValidationError
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.http import JsonResponse
 
 
 
 
 User = get_user_model() 
-# Create your views here.
+#
+#  Create your views here.
 
 
 def Index(request):
+    languages = Language.objects.all() 
     books, search_book = searchbooks(request)
-    custom_range,  books = paginateBooks(request, books, 5)
 
+    # Filter by category if specified
     if request.GET.get('filter_by'):
         category = Category.objects.get(name=request.GET.get('filter_by'))
-        books = Books.objects.filter(category=category.id)
+        books = books.filter(category=category)  # Use the filtered queryset
+
+    # Filter by language if specified
+    if request.GET.get('language'):
+        language_id = request.GET.get('language')
+        books = books.filter(book_language_id=language_id)  # Use the correct field name
+
+    # Now apply pagination
+    custom_range, books = paginateBooks(request, books, 10)
 
     categories = Category.objects.all()  
-    context = {'books': books,'search_book':search_book,'custom_range':custom_range,'categories':categories}
-    return render(request,'index.html',context)
+    context = {
+        'books': books,
+        'search_book': search_book,
+        'custom_range': custom_range,
+        'categories': categories,
+        'languages': languages
+    }
+    
+    return render(request, 'index.html', context)
+
 
 def bookDiscriptions(request, id):
     book = Books.objects.get(pk=id)
@@ -217,40 +238,6 @@ def delete_category(request, id):
     category.delete()
     return redirect('category-list')
 
-# CRUD system for Authors section
-# @allowed_users(allowed_roles=['admin'])
-# @login_required(login_url='login-page')
-# def authorslist(request):
-#     author = Author.objects.all()
-#     context={'author':author}
-#     return render(request,'author_list.html',context)
-
-
-# def add_author(request):
-#     if request.method == 'POST':
-#         form = AuthorForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('author-list')
-#     else:
-#         form = AuthorForm()
-#     return render(request, 'add_author.html', {'form': form})
-
-# def update_author(request, id):
-#     author = Author.objects.get(pk=id)
-#     if request.method == 'POST':
-#         form = AuthorForm(request.POST, instance=author)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('author-list')
-#     else:
-#         form = AuthorForm(instance=author)
-#     return render(request,'update_author.html',{'form':form})
-
-# def delete_author(request, id):
-#     author = Author.objects.get(pk=id)
-#     author.delete()
-#     return redirect('author-list')
 
 # Users Managements
 @login_required(login_url='login-page')
@@ -283,24 +270,18 @@ def add_user(request):
 @allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login-page')
 def Update_user(request, id):
+    user = get_object_or_404(User, pk=id)
+    
     if request.method == 'POST':
-        user = User.objects.get(pk=id)
-        user.username = request.POST['username']
-        user.first_name = request.POST['first_name']
-        user.father_name = request.POST['father_name']
-        user.last_name = request.POST['last_name']
-        user.email = request.POST['email']
-        user.phone_number = request.POST['phone_number']
-        user.user_id = request.POST['user_id']
-        user.gender = request.POST['gender']
-        user = user.save()
-
-        messages.success(request,'You have Successfully updated the user')
-        return redirect('users-management')
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'You have successfully updated the user')
+            return redirect('users-management')
     else:
-       pass
-    user = User.objects.get(pk=id)
-    return render(request, 'update_user.html', {'user': user} )
+        form = UserForm(instance=user)
+
+    return render(request, 'update_user.html', {'form': form})
 
 
 @allowed_users(allowed_roles=['admin'])
@@ -345,13 +326,33 @@ def logoutUser(request):
     logout(request)
     return redirect('login-page')
 
+
 @login_required
 def user_profile(request):
     user = request.user
-    context = {
-        'user': user
-    }
+
+    # Check if the user is a student or a teacher
+    student = Student.objects.filter(user=user).first()
+    teacher = Teacher.objects.filter(user=user).first()
+
+    # Add the student or teacher info to the context if available
+    if student:
+        context = {
+            'user': user,
+            'student': student
+        }
+    elif teacher:
+        context = {
+            'user': user,
+            'teacher': teacher
+        }
+    else:
+        context = {
+            'user': user
+        }
+
     return render(request, 'user_profile.html', context)
+
 
 @login_required
 def Update_profile(request, id):
@@ -591,6 +592,12 @@ class StudentUpdate(LoginRequiredMixin, UpdateView):
         student.gender = data.get('gender')                
         student.save()
         return super(StudentUpdate, self).form_valid(form)
+
+def StudentDelete(request, id):
+    student = Student.objects.get(pk=id)
+    student.delete()
+    return redirect('studentlist')
+   
 class TeacherList(LoginRequiredMixin, ListView):
     model = Teacher
     template_name = 'teacherlist.html'
@@ -645,3 +652,57 @@ class TeacherUpdate(LoginRequiredMixin, UpdateView):
         teacher.gender = data.get('gender')                
         teacher.save()
         return super(TeacherUpdate, self).form_valid(form)
+    
+def TeacherDelete(request, id):
+    teacher = Teacher.objects.get(pk=id)
+    teacher.delete()
+    return redirect('teacherlist')
+
+def book_language_list(request):
+    languages = Language.objects.all()
+    return render(request,'book_language_list.html', {'languages': languages})
+
+def book_language_add(request):
+    if request.method == 'POST':
+        form = LanguageForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the new language to the database
+            return redirect('book-language-list',)  # Redirect to the language list page
+    else:
+        form = LanguageForm() 
+
+    return render(request, 'book_language_add.html', {'form': form})
+
+def book_language_edit(request,pk):
+    language = get_object_or_404(Language, pk=pk)  # Get the language by primary key
+
+    if request.method == 'POST':
+        form = LanguageForm(request.POST, instance=language)  # Bind the form to the instance
+        if form.is_valid():
+            form.save()  # Save the updated language
+            return redirect('book-language-list')  # Redirect to the language list page
+    else:
+        form = LanguageForm(instance=language)  # Populate the form with the existing language data
+
+    return render(request, 'book_language_edit.html', {'form': form})
+
+def book_language_delete(request,pk):
+    language = Language.objects.get(pk=pk)
+    language.delete()
+    return redirect('book-language-list')
+
+@csrf_exempt
+def mark_as_read(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        message_id = data.get('message_id')
+
+        try:
+            message = Message.objects.get(id=message_id)
+            message.is_read = True  # Assuming you have an 'is_read' field
+            message.save()
+            return JsonResponse({"status": "success"})
+        except Message.DoesNotExist:
+            return JsonResponse({"status": "failed", "message": "Message not found"})
+    return JsonResponse({"status": "failed", "message": "Invalid request"})
+
